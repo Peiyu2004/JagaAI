@@ -67,6 +67,38 @@ def test_qualified_visit_expires_outside_the_five_minute_window():
         assert engine.update(second, [person(x), *cars]) == []
 
 
+def test_one_vehicle_seen_as_car_and_truck_counts_once():
+    # Regression from public MEVA G424: a pickup tracked as both car and truck made a
+    # person walking past two vehicles look like a three-vehicle visit.
+    engine = visit_engine(min_vehicles=3)
+    hummer = car("car-a", .25)
+    pickup_as_car, pickup_as_truck = car("car-b", .7), {**car("truck-b", .7), "class": "truck"}
+    events = []
+    for step in range(9):
+        second = step * .5
+        events += engine.update(second, [person(.25), hummer])
+    for step in range(9):
+        second = 5 + step * .5
+        events += engine.update(second, [person(.7), pickup_as_car, pickup_as_truck])
+    assert events == []
+    # A genuinely third vehicle still qualifies.
+    third = car("car-c", .45)
+    for step in range(9):
+        second = 10 + step * .5
+        events += engine.update(second, [person(.45), third, hummer, pickup_as_truck])
+    assert [e["metrics"]["distinct_vehicles"] for e in events] == [3]
+
+
+def test_parked_vehicle_whose_track_id_switches_counts_once():
+    engine = visit_engine(min_vehicles=2)
+    events = []
+    for step in range(16):
+        second = step * .5
+        # Same parked car, new tracker ID halfway through the visit.
+        events += engine.update(second, [person(.3), car("car-a" if step < 8 else "car-a2", .3)])
+    assert events == []
+
+
 def test_line_only_crossing_through_an_exact_boundary_sample_emits_once():
     engine = RuleEngine({"R3": {"enabled": True,
                                  "active_start": "19:00", "active_end": "06:00",

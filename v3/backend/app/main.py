@@ -28,13 +28,13 @@ from sqlalchemy import update
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from . import jobs
+from . import jobs, live
 from .auth import COOKIE_NAME, admin, authenticated, aware, current_user, establish_session, hash_password, resident, staff, user_json, verify_password
 from .database import DATA_DIR, get_session, init_db, session_scope
 from .models import Alert, AppSettings, AuditLog, AuthSession, Camera, Event, Guard, Incident, Lead, Location, User, Video, uid, utcnow
 from .realtime import publish_refresh, snapshot
 from .retention import expire_videos, private_path
-from .serializers import alert_json, lead_json, record_json, video_json
+from .serializers import alert_json, camera_json, lead_json, record_json, video_json
 
 log = logging.getLogger(__name__)
 MAX_VIDEO_BYTES = int(os.environ.get("JAGAAI_MAX_VIDEO_MB", "512")) * 1024 * 1024
@@ -55,9 +55,11 @@ async def lifespan(_app):
     init_db()
     expire_videos()
     jobs.start_worker()
+    live.start_all()
     task = asyncio.create_task(retention_loop())
     yield
     task.cancel()
+    await asyncio.to_thread(live.stop_all)
     jobs.stop_worker()
 
 
@@ -175,6 +177,13 @@ class SearchPayload(Payload):
 
 class RulesPayload(Payload):
     rules: dict
+
+
+class StreamPayload(Payload):
+    # Omit url to keep the saved address (the client only ever sees it masked); "" removes it.
+    url: str | None = PydanticField(default=None, max_length=2000)
+    enabled: bool
+    segment_sec: int = 60
 
 
 class SettingsPatch(Payload):
@@ -339,7 +348,7 @@ def bootstrap(session: Session = Depends(get_session), user: User = Depends(staf
     ack = [(aware(item.reviewed_at) - aware(item.created_at)).total_seconds() for item in alerts if item.reviewed_at]
     return {"user": user_json(user),
             "locations": [record_json(item) for item in session.exec(select(Location)).all()],
-            "cameras": [record_json(item) for item in session.exec(select(Camera)).all()],
+            "cameras": [camera_json(item) for item in session.exec(select(Camera)).all()],
             "videos": [video_json(item) for item in videos],
             "events": [record_json(item) for item in session.exec(select(Event).order_by(Event.created_at.desc())).all() if not item.verification.get('superseded')],
             "alerts": [alert_json(item, session) for item in alerts], "leads": [lead_json(item) for item in leads],
@@ -744,7 +753,7 @@ def keyframe(video_id: str, filename: str, session: Session = Depends(get_sessio
 
 def validate_rules(rules):
     if set(rules) - {"R1", "R3"}:
-        raise HTTPException(422, "Only R1 vehicle loitering and R3 restricted entry are supported in M1.")
+        raise HTTPException(422, "Only R1 vehicle loitering and R3 restricted entry are supported in this workspace.")
     defaults = {"R1": {"enabled", "loiter_sec", "window_sec", "min_vehicles", "min_dwell_sec", "zone"},
                 "R3": {"enabled", "active_start", "active_end", "zone", "line"}}
     for rule, values in rules.items():
@@ -777,7 +786,41 @@ def camera_rules(camera_id: str, payload: RulesPayload, session: Session = Depen
     session.add(camera)
     audit(session, user, "camera.rules", camera.id, {"rules": payload.rules})
     commit_refresh(session, "camera", camera.id)
-    return record_json(camera)
+    return camera_json(camera)
+
+
+@app.put("/api/cameras/{camera_id}/stream")
+def camera_stream(camera_id: str, payload: StreamPayload, session: Session = Depends(get_session), user: User = Depends(admin)):
+    camera = require_record(session, Camera, camera_id)
+    if payload.segment_sec not in live.SEGMENT_CHOICES:
+        raise HTTPException(422, "Choose a segment length of 30, 60, 120 or 300 seconds.")
+    if payload.url is not None:
+        url = payload.url.strip()
+        if url and "***" in url:
+            raise HTTPException(422, "Enter the full camera address, or leave it blank to keep the saved one.")
+        if url and (message := live.validate_source(url)):
+            raise HTTPException(422, message)
+        camera.stream_url = url or None
+    if payload.enabled and not camera.stream_url:
+        raise HTTPException(422, "Add a camera address before turning on live recording.")
+    camera.stream_enabled = payload.enabled
+    camera.segment_sec = payload.segment_sec
+    camera.source_type = "stream" if camera.stream_url else "upload"
+    session.add(camera)
+    # The address may contain a password; the audit log keeps only the masked form.
+    audit(session, user, "camera.stream", camera.id, {"url": live.mask_url(camera.stream_url), "enabled": camera.stream_enabled,
+                                                       "segment_sec": camera.segment_sec})
+    session.commit()
+    live.sync(camera.id)
+    session.refresh(camera)
+    publish_refresh("camera", camera.id)
+    return camera_json(camera)
+
+
+@app.get("/api/live")
+def live_status(session: Session = Depends(get_session), user: User = Depends(staff)):
+    return {"cameras": [{"camera_id": c.id, "enabled": c.stream_enabled, "segment_sec": c.segment_sec, "status": live.status(c.id)}
+                        for c in session.exec(select(Camera)).all() if c.stream_url]}
 
 
 @app.get("/api/settings")

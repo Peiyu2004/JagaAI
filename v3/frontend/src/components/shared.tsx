@@ -1,10 +1,12 @@
-import { useRef, useEffect, type ReactNode, type ComponentType } from 'react';
+import { useRef, useEffect, useId, type ReactNode, type ComponentType } from 'react';
 import { Camera, VideoOff, MapPin, ArrowUpRight, ShieldCheck, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { dateTime, label, duration } from '../api';
 import { useApp } from '../context';
 import type { Event, Location, Video } from '../types';
-export function Brand({small=false}:{small?:boolean}){return <div className={'brand '+(small?'brand-small':'')}><span className="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 9h17v15c0 10-16 11-19 2l6-2c2 5 7 4 7-1v-8H12Z" fill="currentColor"/></svg></span><span>Jaga<span className="brand-ai">AI</span><small>Property security</small></span></div>}
+// JagaAI mark: a roof sheltering the J, for a team that looks after a community.
+export function LogoMark({className=''}:{className?:string}){const id='jg'+useId().replace(/[^a-zA-Z0-9]/g,'');return <svg className={'logo-mark '+className} viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id={id} x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse"><stop stopColor="#5f8fff"/><stop offset="1" stopColor="#1e4bd2"/></linearGradient></defs><path className="logo-roof" d="M8.5 21.5 24 8.5l15.5 13" fill="none" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/><path d="M31 22.5v9a7 7 0 0 1-14 0" fill="none" stroke={`url(#${id})`} strokeWidth="5.2" strokeLinecap="round"/></svg>}
+export function Brand({small=false}:{small?:boolean}){return <div className={'brand '+(small?'brand-small':'')}><span className="brand-mark"><LogoMark/></span><span>Jaga<span className="brand-ai">AI</span><small>Property security</small></span></div>}
 export function Badge({value,children}:{value:string;children?:ReactNode}){return <span className={'badge badge-'+value}>{children||label(value)}</span>}
 export function Panel({title,action,children,className=''}:{title?:string;action?:ReactNode;children:ReactNode;className?:string}){return <section className={'panel '+className}>{title&&<div className="panel-head"><h2>{title}</h2>{action}</div>}{children}</section>}
 export function Empty({icon:Icon=ShieldCheck,title,text,action,compact=false}:{icon?:ComponentType<{size?:number;strokeWidth?:number}>;title:string;text:string;action?:ReactNode;compact?:boolean}){return <div className={'empty '+(compact?'empty-compact':'')}><span className="empty-icon"><Icon size={26} strokeWidth={1.4}/></span><h3>{title}</h3><p>{text}</p>{action}</div>}

@@ -3,7 +3,7 @@
     "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
     "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
   },
-  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. The kerb-waiting case lowers the R1 dwell threshold from 120 s to a disclosed 90 s demo setting, because no public clip in the set has a person staying 120 s; two people waiting about 112 s for a pick-up are genuine footage, normal activity, and should be dismissed by a reviewer. Source dates are preserved under the existing MYT testing convention.",
   "cases": [
     {
       "id": "stairs-entry",
@@ -64,7 +64,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -89,7 +99,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 5.6,
             "keyframe": "sample-000005600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 5.6,
+              "keyframe": "sample-000005600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.36359353065490724,
+                    0.20857905540145746,
+                    0.42719345092773436,
+                    0.7859380812872023
+                  ],
+                  "score": 0.8054,
+                  "crop_score": 0.7918
+                },
+                {
+                  "box": [
+                    0.3673213243484497,
+                    0.5499003861798626,
+                    0.4002636432647705,
+                    0.7791073582753414
+                  ],
+                  "score": 0.5186,
+                  "crop_score": 0.6152
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -118,7 +159,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 7.4,
             "keyframe": "sample-000007400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 7.4,
+              "keyframe": "sample-000007400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.4538105487823486,
+                    0.3078183940812653,
+                    0.6188849925994873,
+                    0.9984079569327731
+                  ],
+                  "score": 0.9146,
+                  "crop_score": 0.9258
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -127,28 +189,29 @@
         "source_frames": 420,
         "sampled_frames": 140,
         "detector_cycles": 140,
-        "detector_calls": 280,
+        "detector_calls": 283,
         "boundary_focus_enabled": true,
         "motion_skipped_calls": 0,
-        "mean_inference_ms": 67.8,
-        "detection_wall_sec": 15.447,
-        "sampled_frames_per_wall_sec": 9.06,
+        "mean_inference_ms": 33.65,
+        "detection_wall_sec": 7.143,
+        "sampled_frames_per_wall_sec": 19.6,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
         "description_frames_total": 3,
         "description_frames_completed": 3,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 3,
         "description_error": null,
-        "semantic_wall_sec": 44.389,
-        "total_wall_sec": 65.267
+        "semantic_wall_sec": 24.534,
+        "total_wall_sec": 34.262
       },
-      "run_wall_sec": 0.16
+      "run_wall_sec": 34.39
     },
     {
       "id": "stairs-empty",
@@ -202,7 +265,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -214,25 +287,26 @@
         "detector_calls": 240,
         "boundary_focus_enabled": true,
         "motion_skipped_calls": 0,
-        "mean_inference_ms": 47.9,
-        "detection_wall_sec": 11.099,
-        "sampled_frames_per_wall_sec": 10.81,
+        "mean_inference_ms": 29.09,
+        "detection_wall_sec": 5.454,
+        "sampled_frames_per_wall_sec": 22.0,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
         "description_frames_total": 1,
         "description_frames_completed": 1,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 1,
         "description_error": null,
-        "semantic_wall_sec": 32.456,
-        "total_wall_sec": 43.615
+        "semantic_wall_sec": 15.642,
+        "total_wall_sec": 21.122
       },
-      "run_wall_sec": 0.14
+      "run_wall_sec": 21.23
     },
     {
       "id": "landing-entry",
@@ -298,7 +372,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -326,7 +410,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 5.0,
             "keyframe": "sample-000005000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 5.0,
+              "keyframe": "sample-000005000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.5781277656555176,
+                    0.2775048862318365,
+                    0.6298125743865967,
+                    0.4956575281479779
+                  ],
+                  "score": 0.707,
+                  "crop_score": 0.8403
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -350,7 +455,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 8.2,
             "keyframe": "sample-000008200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 8.2,
+              "keyframe": "sample-000008200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.40523691177368165,
+                    0.2926972119414172,
+                    0.4794497489929199,
+                    0.6443943055737921
+                  ],
+                  "score": 0.923,
+                  "crop_score": 0.9172
+                },
+                {
+                  "box": [
+                    0.4222529888153076,
+                    0.5994397759103641,
+                    0.45011091232299805,
+                    0.6514931900494573
+                  ],
+                  "score": 0.3999,
+                  "crop_score": 0.9094
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -359,28 +495,29 @@
         "source_frames": 420,
         "sampled_frames": 140,
         "detector_cycles": 140,
-        "detector_calls": 280,
+        "detector_calls": 283,
         "boundary_focus_enabled": true,
         "motion_skipped_calls": 0,
-        "mean_inference_ms": 47.64,
-        "detection_wall_sec": 12.921,
-        "sampled_frames_per_wall_sec": 10.84,
+        "mean_inference_ms": 28.73,
+        "detection_wall_sec": 6.326,
+        "sampled_frames_per_wall_sec": 22.13,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
         "description_frames_total": 3,
         "description_frames_completed": 3,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 3,
         "description_error": null,
-        "semantic_wall_sec": 43.094,
-        "total_wall_sec": 56.091
+        "semantic_wall_sec": 23.274,
+        "total_wall_sec": 29.63
       },
-      "run_wall_sec": 0.24
+      "run_wall_sec": 29.76
     },
     {
       "id": "courtyard-entry",
@@ -453,7 +590,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -488,7 +635,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 8.5,
             "keyframe": "sample-000008500.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 8.5,
+              "keyframe": "sample-000008500.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -520,7 +677,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 11.7,
             "keyframe": "sample-000011700.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 11.7,
+              "keyframe": "sample-000011700.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.586827278137207,
+                    0.4424506435875131,
+                    0.6088996887207031,
+                    0.5447059011592918
+                  ],
+                  "score": 0.4923,
+                  "crop_score": 0.6879
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -529,28 +707,29 @@
         "source_frames": 420,
         "sampled_frames": 140,
         "detector_cycles": 140,
-        "detector_calls": 280,
+        "detector_calls": 282,
         "boundary_focus_enabled": true,
         "motion_skipped_calls": 0,
-        "mean_inference_ms": 49.61,
-        "detection_wall_sec": 13.341,
-        "sampled_frames_per_wall_sec": 10.49,
+        "mean_inference_ms": 29.02,
+        "detection_wall_sec": 6.387,
+        "sampled_frames_per_wall_sec": 21.92,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
         "description_frames_total": 3,
         "description_frames_completed": 3,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 3,
         "description_error": null,
-        "semantic_wall_sec": 46.948,
-        "total_wall_sec": 60.384
+        "semantic_wall_sec": 25.769,
+        "total_wall_sec": 32.188
       },
-      "run_wall_sec": 0.21
+      "run_wall_sec": 32.38
     },
     {
       "id": "parking-people",
@@ -625,7 +804,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.043779623508453366,
+                    0.7211391872829861,
+                    0.1446672797203064,
+                    1.0
+                  ],
+                  "score": 0.9033,
+                  "crop_score": 0.913
+                },
+                {
+                  "box": [
+                    0.011143001914024352,
+                    0.592550065782335,
+                    0.09416810274124146,
+                    0.9739995320638021
+                  ],
+                  "score": 0.8872,
+                  "crop_score": 0.9349
+                },
+                {
+                  "box": [
+                    0.0002162329852581024,
+                    0.6917457580566406,
+                    0.021800771355628967,
+                    0.974295891655816
+                  ],
+                  "score": 0.3364,
+                  "crop_score": 0.8774
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -678,7 +898,58 @@
             "generation_attempts": 1,
             "observed_at_sec": 9.6,
             "keyframe": "sample-000009600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 9.6,
+              "keyframe": "sample-000009600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.16271309852600097,
+                    0.28955167134602866,
+                    0.21798667907714844,
+                    0.4766853332519531
+                  ],
+                  "score": 0.9022,
+                  "crop_score": 0.9265
+                },
+                {
+                  "box": [
+                    0.038538122177124025,
+                    0.3020929548475477,
+                    0.08956469297409057,
+                    0.5231803046332465
+                  ],
+                  "score": 0.8674,
+                  "crop_score": 0.9145
+                },
+                {
+                  "box": [
+                    0.10012357234954834,
+                    0.2671542697482639,
+                    0.14055869579315186,
+                    0.48944710625542537
+                  ],
+                  "score": 0.8399,
+                  "crop_score": 0.8977
+                },
+                {
+                  "box": [
+                    0.0,
+                    0.2983178456624349,
+                    0.02247801423072815,
+                    0.5141006893581814
+                  ],
+                  "score": 0.6402,
+                  "crop_score": 0.7569
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -724,7 +995,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 13.6,
             "keyframe": "sample-000013600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 13.6,
+              "keyframe": "sample-000013600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.11363931894302368,
+                    0.2449122534857856,
+                    0.14973218441009523,
+                    0.4241278754340278
+                  ],
+                  "score": 0.8692,
+                  "crop_score": 0.9066
+                },
+                {
+                  "box": [
+                    0.2410825729370117,
+                    0.24062427944607204,
+                    0.2736565113067627,
+                    0.4082275814480252
+                  ],
+                  "score": 0.8533,
+                  "crop_score": 0.9145
+                },
+                {
+                  "box": [
+                    0.1559997797012329,
+                    0.22580668131510417,
+                    0.20203135013580323,
+                    0.43484954833984374
+                  ],
+                  "score": 0.825,
+                  "crop_score": 0.8556
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -780,7 +1092,58 @@
             "generation_attempts": 1,
             "observed_at_sec": 16.0,
             "keyframe": "sample-000016000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 16.0,
+              "keyframe": "sample-000016000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.2884763956069946,
+                    0.22209112379286025,
+                    0.3229393243789673,
+                    0.37469774881998696
+                  ],
+                  "score": 0.8791,
+                  "crop_score": 0.9241
+                },
+                {
+                  "box": [
+                    0.17131184339523314,
+                    0.2220589107937283,
+                    0.20854535102844238,
+                    0.38691045973036026
+                  ],
+                  "score": 0.8666,
+                  "crop_score": 0.9084
+                },
+                {
+                  "box": [
+                    0.2324773073196411,
+                    0.22729657491048177,
+                    0.26842689514160156,
+                    0.3909122043185764
+                  ],
+                  "score": 0.8223,
+                  "crop_score": 0.899
+                },
+                {
+                  "box": [
+                    0.21478073596954345,
+                    0.20196601019965277,
+                    0.2428774356842041,
+                    0.3699352264404297
+                  ],
+                  "score": 0.7969,
+                  "crop_score": 0.8653
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -838,7 +1201,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 19.6,
             "keyframe": "sample-000019600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 19.6,
+              "keyframe": "sample-000019600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.2996347904205322,
+                    0.19946055942111546,
+                    0.32561705112457273,
+                    0.3417395909627279
+                  ],
+                  "score": 0.8417,
+                  "crop_score": 0.9013
+                },
+                {
+                  "box": [
+                    0.3217371940612793,
+                    0.1979000727335612,
+                    0.3462271213531494,
+                    0.3265072292751736
+                  ],
+                  "score": 0.7961,
+                  "crop_score": 0.8997
+                },
+                {
+                  "box": [
+                    0.25223000049591066,
+                    0.1905389149983724,
+                    0.2862172365188599,
+                    0.3374558342827691
+                  ],
+                  "score": 0.7412,
+                  "crop_score": 0.8363
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -892,7 +1296,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 22.8,
             "keyframe": "sample-000022800.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 22.8,
+              "keyframe": "sample-000022800.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.28942601680755614,
+                    0.1791335635715061,
+                    0.31444783210754396,
+                    0.3059221691555447
+                  ],
+                  "score": 0.7907,
+                  "crop_score": 0.885
+                },
+                {
+                  "box": [
+                    0.33771319389343263,
+                    0.17395240995619032,
+                    0.3697645902633667,
+                    0.30273369683159723
+                  ],
+                  "score": 0.7638,
+                  "crop_score": 0.8518
+                },
+                {
+                  "box": [
+                    0.3109338045120239,
+                    0.15964056650797526,
+                    0.33485333919525145,
+                    0.29410574171278214
+                  ],
+                  "score": 0.7262,
+                  "crop_score": 0.8161
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -956,7 +1401,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 26.6,
             "keyframe": "sample-000026600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 26.6,
+              "keyframe": "sample-000026600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.36519484519958495,
+                    0.158588621351454,
+                    0.38912167549133303,
+                    0.2764920128716363
+                  ],
+                  "score": 0.8056,
+                  "crop_score": 0.8926
+                },
+                {
+                  "box": [
+                    0.3328039884567261,
+                    0.14447339375813803,
+                    0.35353548526763917,
+                    0.26568349202473956
+                  ],
+                  "score": 0.737,
+                  "crop_score": 0.8812
+                },
+                {
+                  "box": [
+                    0.3476033926010132,
+                    0.16320315466986762,
+                    0.3690265417098999,
+                    0.2743194580078125
+                  ],
+                  "score": 0.6896,
+                  "crop_score": 0.8466
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1008,7 +1494,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 30.0,
             "keyframe": "sample-000030000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 30.0,
+              "keyframe": "sample-000030000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.3528786897659302,
+                    0.14806916978624132,
+                    0.3822264432907104,
+                    0.2627746158175998
+                  ],
+                  "score": 0.7364,
+                  "crop_score": 0.774
+                },
+                {
+                  "box": [
+                    0.38041298389434813,
+                    0.15274033016628688,
+                    0.4079011917114258,
+                    0.26315013037787544
+                  ],
+                  "score": 0.5483,
+                  "crop_score": 0.8392
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1062,7 +1579,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 40.0,
             "keyframe": "sample-000040000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 40.0,
+              "keyframe": "sample-000040000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.3469710826873779,
+                    0.1526788075764974,
+                    0.37515594959259035,
+                    0.26397938198513454
+                  ],
+                  "score": 0.7086,
+                  "crop_score": 0.8918
+                },
+                {
+                  "box": [
+                    0.38299169540405276,
+                    0.16177039676242405,
+                    0.4091702938079834,
+                    0.25945616828070744
+                  ],
+                  "score": 0.2819,
+                  "crop_score": 0.8477
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1110,7 +1658,58 @@
             "generation_attempts": 1,
             "observed_at_sec": 43.2,
             "keyframe": "sample-000043200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 43.2,
+              "keyframe": "sample-000043200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.2831308126449585,
+                    0.17595714992947048,
+                    0.30906405448913576,
+                    0.30587179395887587
+                  ],
+                  "score": 0.8235,
+                  "crop_score": 0.8917
+                },
+                {
+                  "box": [
+                    0.34367823600769043,
+                    0.15539626015557184,
+                    0.3668827056884766,
+                    0.2633719974093967
+                  ],
+                  "score": 0.8015,
+                  "crop_score": 0.9168
+                },
+                {
+                  "box": [
+                    0.31058976650238035,
+                    0.1521455552842882,
+                    0.33373944759368895,
+                    0.26944546169704864
+                  ],
+                  "score": 0.7792,
+                  "crop_score": 0.901
+                },
+                {
+                  "box": [
+                    0.384545636177063,
+                    0.15863869984944662,
+                    0.41313624382019043,
+                    0.2651441150241428
+                  ],
+                  "score": 0.6672,
+                  "crop_score": 0.8297
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1155,7 +1754,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 47.0,
             "keyframe": "sample-000047000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 47.0,
+              "keyframe": "sample-000047000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.16150642633438111,
+                    0.24126642015245225,
+                    0.19928910732269287,
+                    0.41370374891493056
+                  ],
+                  "score": 0.8673,
+                  "crop_score": 0.8812
+                },
+                {
+                  "box": [
+                    0.3022517204284668,
+                    0.18024671342637805,
+                    0.3346040487289429,
+                    0.316504881117079
+                  ],
+                  "score": 0.8537,
+                  "crop_score": 0.9235
+                },
+                {
+                  "box": [
+                    0.37713487148284913,
+                    0.140988466474745,
+                    0.4025130271911621,
+                    0.2631875779893663
+                  ],
+                  "score": 0.5322,
+                  "crop_score": 0.8221
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1194,7 +1834,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 49.2,
             "keyframe": "sample-000049200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 49.2,
+              "keyframe": "sample-000049200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.22180430889129638,
+                    0.21905625661214193,
+                    0.2613215923309326,
+                    0.391080813937717
+                  ],
+                  "score": 0.8941,
+                  "crop_score": 0.923
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -1203,26 +1864,29 @@
         "source_frames": 1500,
         "sampled_frames": 250,
         "detector_cycles": 250,
-        "detector_calls": 250,
+        "detector_calls": 285,
         "boundary_focus_enabled": false,
         "motion_skipped_calls": 0,
-        "mean_inference_ms": 34.5,
-        "detection_wall_sec": 22.256,
-        "sampled_frames_per_wall_sec": 11.23,
+        "mean_inference_ms": 14.46,
+        "detection_wall_sec": 9.302,
+        "sampled_frames_per_wall_sec": 26.88,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
+        "description_frames_total": 12,
+        "description_frames_completed": 12,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 12,
         "description_error": null,
-        "semantic_wall_sec": 154.936,
-        "total_wall_sec": 177.294
+        "semantic_wall_sec": 84.321,
+        "total_wall_sec": 93.675
       },
-      "run_wall_sec": 0.18
+      "run_wall_sec": 93.83
     },
     {
       "id": "parking-machine",
@@ -1291,7 +1955,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1334,7 +2008,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 15.0,
             "keyframe": "sample-000015000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 15.0,
+              "keyframe": "sample-000015000.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1381,7 +2065,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 30.0,
             "keyframe": "sample-000030000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 30.0,
+              "keyframe": "sample-000030000.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1429,7 +2123,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 45.0,
             "keyframe": "sample-000045000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 45.0,
+              "keyframe": "sample-000045000.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1472,7 +2176,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 60.0,
             "keyframe": "sample-000060000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 60.0,
+              "keyframe": "sample-000060000.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1515,7 +2229,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 65.4,
             "keyframe": "sample-000065400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 65.4,
+              "keyframe": "sample-000065400.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1563,7 +2287,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 76.4,
             "keyframe": "sample-000076400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 76.4,
+              "keyframe": "sample-000076400.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1610,7 +2344,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 90.0,
             "keyframe": "sample-000090000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 90.0,
+              "keyframe": "sample-000090000.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1653,7 +2397,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 93.2,
             "keyframe": "sample-000093200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 93.2,
+              "keyframe": "sample-000093200.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1696,7 +2450,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 108.2,
             "keyframe": "sample-000108200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 108.2,
+              "keyframe": "sample-000108200.jpg",
+              "boxes": [],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1747,7 +2511,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 117.2,
             "keyframe": "sample-000117200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 117.2,
+              "keyframe": "sample-000117200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.9807346343994141,
+                    0.5562452952067057,
+                    0.9994738578796387,
+                    0.667521243625217
+                  ],
+                  "score": 0.8099,
+                  "crop_score": 0.9092
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1797,7 +2582,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 119.6,
             "keyframe": "sample-000119600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 119.6,
+              "keyframe": "sample-000119600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.9228970527648925,
+                    0.5635809156629774,
+                    0.9569598197937011,
+                    0.6853836059570313
+                  ],
+                  "score": 0.7983,
+                  "crop_score": 0.8989
+                },
+                {
+                  "box": [
+                    0.8770179748535156,
+                    0.5612713707817926,
+                    0.9053289413452148,
+                    0.6730482737223308
+                  ],
+                  "score": 0.7903,
+                  "crop_score": 0.9103
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1845,7 +2661,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 123.0,
             "keyframe": "sample-000123000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 123.0,
+              "keyframe": "sample-000123000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.804331111907959,
+                    0.5685821109347873,
+                    0.8371522903442383,
+                    0.6904645707872179
+                  ],
+                  "score": 0.8588,
+                  "crop_score": 0.9007
+                },
+                {
+                  "box": [
+                    0.7629065036773681,
+                    0.5704684363471137,
+                    0.7902762413024902,
+                    0.6673667907714844
+                  ],
+                  "score": 0.806,
+                  "crop_score": 0.8476
+                }
+              ],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -1899,7 +2746,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 125.0,
             "keyframe": "sample-000125000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 125.0,
+              "keyframe": "sample-000125000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.8109637260437011,
+                    0.5683312310112847,
+                    0.8376486778259278,
+                    0.687981457180447
+                  ],
+                  "score": 0.8702,
+                  "crop_score": 0.8868
+                },
+                {
+                  "box": [
+                    0.6559970378875732,
+                    0.5714964972601997,
+                    0.6848462104797364,
+                    0.6846702151828342
+                  ],
+                  "score": 0.8469,
+                  "crop_score": 0.8993
+                },
+                {
+                  "box": [
+                    0.6975862503051757,
+                    0.5703973558213976,
+                    0.7202689170837402,
+                    0.6970633188883464
+                  ],
+                  "score": 0.8261,
+                  "crop_score": 0.8999
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -1953,7 +2841,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 130.2,
             "keyframe": "sample-000130200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 130.2,
+              "keyframe": "sample-000130200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.46731133460998536,
+                    0.5776803758409288,
+                    0.4919870853424072,
+                    0.7015614827473958
+                  ],
+                  "score": 0.8597,
+                  "crop_score": 0.8958
+                },
+                {
+                  "box": [
+                    0.44525985717773436,
+                    0.5762112511528863,
+                    0.46646509170532224,
+                    0.6870336320665148
+                  ],
+                  "score": 0.8001,
+                  "crop_score": 0.8905
+                }
+              ],
+              "rejected_candidates": 1
+            }
           }
         },
         {
@@ -2002,7 +2921,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 132.6,
             "keyframe": "sample-000132600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 132.6,
+              "keyframe": "sample-000132600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.3562833547592163,
+                    0.5792891184488932,
+                    0.39292254447937014,
+                    0.7064298841688368
+                  ],
+                  "score": 0.8062,
+                  "crop_score": 0.8806
+                }
+              ],
+              "rejected_candidates": 1
+            }
           }
         }
       ],
@@ -2011,26 +2951,2458 @@
         "source_frames": 4050,
         "sampled_frames": 675,
         "detector_cycles": 476,
-        "detector_calls": 476,
+        "detector_calls": 499,
         "boundary_focus_enabled": false,
         "motion_skipped_calls": 199,
-        "mean_inference_ms": 44.02,
-        "detection_wall_sec": 62.781,
-        "sampled_frames_per_wall_sec": 10.75,
+        "mean_inference_ms": 14.31,
+        "detection_wall_sec": 16.68,
+        "sampled_frames_per_wall_sec": 40.47,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
+        "description_frames_total": 16,
+        "description_frames_completed": 16,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 16,
         "description_error": null,
-        "semantic_wall_sec": 195.883,
-        "total_wall_sec": 258.77
+        "semantic_wall_sec": 104.436,
+        "total_wall_sec": 121.167
       },
-      "run_wall_sec": 0.21
+      "run_wall_sec": 121.58
+    },
+    {
+      "id": "kerb-waiting",
+      "source": "2018-03-15.14-55-07.15-00-07.hospital.G436",
+      "from": 70,
+      "to": 205,
+      "location": "zone-b",
+      "name": "Demo · Kerbside waiting (90 s demo threshold)",
+      "r1": true,
+      "r1_rules": {
+        "loiter_sec": 90,
+        "zone": [
+          [
+            0.03,
+            0.3
+          ],
+          [
+            0.36,
+            0.3
+          ],
+          [
+            0.36,
+            0.65
+          ],
+          [
+            0.03,
+            0.65
+          ]
+        ]
+      },
+      "max_vlm_frames": 48,
+      "expected_r1": 1,
+      "expected_r3": 0,
+      "split": "holdout",
+      "video_id": "demo-kerb-waiting",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-07.15-00-07.hospital.G436.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "9c76bd45a1a128b84369d40e04f5adc537e02235e64ccfa3055a7baf12e7aa7c",
+      "derived_sha256": "a2989ae0f612c4cf6e6d6f153e5218d814ace710ee572200e1c2a8d50b879219",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 1,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R1",
+          "start_sec": 29.4,
+          "end_sec": 119.4,
+          "metrics": {
+            "dwell_sec": 90.0,
+            "distinct_vehicles": 0,
+            "threshold_sec": 90,
+            "track_id": "0-15",
+            "person_check": {
+              "passed": true,
+              "score": 0.8493,
+              "method": "person_crop_recheck"
+            }
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "A surveillance view of a campus with several people and vehicles. In the foreground, a person in dark clothing walks on a paved path. Another person in a dark jacket stands near a sidewalk. A white car is parked on the right. A red vehicle is visible in the background. The scene is outdoors with grass and trees. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.08735207319259644,
+                    0.4808219485812717,
+                    0.10652010440826416,
+                    0.5578517489963107
+                  ],
+                  "score": 0.7748,
+                  "crop_score": 0.8266
+                },
+                {
+                  "box": [
+                    0.12887308597564698,
+                    0.42982732984754773,
+                    0.14582319259643556,
+                    0.5034033457438151
+                  ],
+                  "score": 0.7315,
+                  "crop_score": 0.8516
+                },
+                {
+                  "box": [
+                    0.23724992275238038,
+                    0.2972690582275391,
+                    0.25395474433898924,
+                    0.3541565153333876
+                  ],
+                  "score": 0.6163,
+                  "crop_score": 0.845
+                },
+                {
+                  "box": [
+                    0.14108513593673705,
+                    0.3690652635362413,
+                    0.15660567283630372,
+                    0.47030665079752604
+                  ],
+                  "score": 0.5502,
+                  "crop_score": 0.8299
+                },
+                {
+                  "box": [
+                    0.1355597734451294,
+                    0.38832723829481336,
+                    0.15228281021118165,
+                    0.49395272996690537
+                  ],
+                  "score": 0.4596,
+                  "crop_score": 0.8537
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with a winding road, grassy areas, and buildings. Several people are visible on the sidewalks and pathways. A white car is parked on the right side of the road. A red vehicle is parked in the background. The people are wearing various colors, including dark and light clothing. The scene is well-lit with clear visibility. Visibility: All objects are visible and in clear view. No occlusions or blurs.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 2.2,
+            "keyframe": "sample-000002200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 2.2,
+              "keyframe": "sample-000002200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.13026626110076905,
+                    0.3843727535671658,
+                    0.1525934100151062,
+                    0.4996490902370877
+                  ],
+                  "score": 0.6821,
+                  "crop_score": 0.869
+                },
+                {
+                  "box": [
+                    0.21902093887329102,
+                    0.31034651862250434,
+                    0.2356706142425537,
+                    0.3692320081922743
+                  ],
+                  "score": 0.6281,
+                  "crop_score": 0.8522
+                },
+                {
+                  "box": [
+                    0.06963214874267579,
+                    0.4934914906819661,
+                    0.08598710298538208,
+                    0.5771778106689454
+                  ],
+                  "score": 0.5715,
+                  "crop_score": 0.8399
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with winding roads, grassy areas, and buildings. Several people are visible on the sidewalks and pathways. A white car is parked on the right, and a red vehicle is in the background. The people are wearing various colors, including dark and light clothing. The scene is well-lit with no shadows or occlusions. Visibility: all objects are visible and in focus, no occlusions",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 4.2,
+            "keyframe": "sample-000004200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 4.2,
+              "keyframe": "sample-000004200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.2030255079269409,
+                    0.3268919203016493,
+                    0.2210765600204468,
+                    0.38272874620225694
+                  ],
+                  "score": 0.6361,
+                  "crop_score": 0.8546
+                },
+                {
+                  "box": [
+                    0.12694988250732422,
+                    0.40450871785481773,
+                    0.14602431058883666,
+                    0.5000267028808594
+                  ],
+                  "score": 0.6197,
+                  "crop_score": 0.841
+                },
+                {
+                  "box": [
+                    0.02151309996843338,
+                    0.5051424662272136,
+                    0.03781045079231262,
+                    0.5837774064805773
+                  ],
+                  "score": 0.5797,
+                  "crop_score": 0.8486
+                },
+                {
+                  "box": [
+                    0.14192894697189332,
+                    0.39494124518500434,
+                    0.1560726284980774,
+                    0.4788817935519748
+                  ],
+                  "score": 0.4871,
+                  "crop_score": 0.8686
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with a winding road, several people walking on a sidewalk, and vehicles parked. The people are wearing various colors, and the vehicles include a white car, a red car, and a dark-colored vehicle. The scene is mostly static with no movement. Visibility: all objects are visible and in focus, no occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "grey"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 9.4,
+            "keyframe": "sample-000009400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 9.4,
+              "keyframe": "sample-000009400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1072890281677246,
+                    0.4407192654079861,
+                    0.12498939037322998,
+                    0.5216629876030816
+                  ],
+                  "score": 0.7783,
+                  "crop_score": 0.7761
+                },
+                {
+                  "box": [
+                    0.12897377014160155,
+                    0.43163125779893663,
+                    0.14519621133804322,
+                    0.5019038730197483
+                  ],
+                  "score": 0.7105,
+                  "crop_score": 0.8488
+                },
+                {
+                  "box": [
+                    0.15093871355056762,
+                    0.3668293846978082,
+                    0.16903053522109984,
+                    0.4270709143744575
+                  ],
+                  "score": 0.4429,
+                  "crop_score": 0.8833
+                },
+                {
+                  "box": [
+                    0.142605984210968,
+                    0.401697752210829,
+                    0.15871796607971192,
+                    0.4700862036810981
+                  ],
+                  "score": 0.2642,
+                  "crop_score": 0.8452
+                }
+              ],
+              "rejected_candidates": 1
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with a winding road, grassy areas, and buildings. Several people are walking on the sidewalk, and a few vehicles are parked. The foreground shows a person in a grey jacket, another in a red jacket, and a white car parked on the right. A red car is visible in the background. The sky is clear. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "grey"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 11.4,
+            "keyframe": "sample-000011400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 11.4,
+              "keyframe": "sample-000011400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.13113521337509154,
+                    0.38491736518012154,
+                    0.15341845750808716,
+                    0.4991236792670356
+                  ],
+                  "score": 0.6184,
+                  "crop_score": 0.7915
+                },
+                {
+                  "box": [
+                    0.09597261548042298,
+                    0.45818159315321183,
+                    0.11333726644515991,
+                    0.5381598578559028
+                  ],
+                  "score": 0.5835,
+                  "crop_score": 0.8126
+                },
+                {
+                  "box": [
+                    0.12937426567077637,
+                    0.4263539208306207,
+                    0.14665749073028564,
+                    0.5021284739176433
+                  ],
+                  "score": 0.4159,
+                  "crop_score": 0.8535
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus with a winding road, grassy areas, and buildings. People are visible on the left sidewalk, and a white car is parked on the right. A red car is on the road. The person in the foreground is wearing a dark jacket and light-colored pants. The vehicle is a white car. The person is wearing a dark jacket and light-colored pants. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 13.4,
+            "keyframe": "sample-000013400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 13.4,
+              "keyframe": "sample-000013400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.11859011650085449,
+                    0.40309227837456596,
+                    0.1393227458000183,
+                    0.4930672539605035
+                  ],
+                  "score": 0.6183,
+                  "crop_score": 0.8449
+                },
+                {
+                  "box": [
+                    0.1410607099533081,
+                    0.39566930135091144,
+                    0.15546803474426268,
+                    0.4811740027533637
+                  ],
+                  "score": 0.5236,
+                  "crop_score": 0.8347
+                },
+                {
+                  "box": [
+                    0.1272410273551941,
+                    0.4115126291910807,
+                    0.1468568205833435,
+                    0.4991941663953993
+                  ],
+                  "score": 0.513,
+                  "crop_score": 0.8267
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with winding roads, grassy areas, and buildings. Three people are visible on the left, walking on a paved path. A white car is parked on the right, and a red vehicle is further in the distance. A white car is also visible in the foreground on the right. The people are wearing dark and light clothing. The scene is well-lit with clear shadows. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "red"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white car",
+              "red vehicle",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 20.0,
+            "keyframe": "sample-000020000.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 20.0,
+              "keyframe": "sample-000020000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12891398668289183,
+                    0.4308920118543837,
+                    0.14553346633911132,
+                    0.4993415832519531
+                  ],
+                  "score": 0.685,
+                  "crop_score": 0.8736
+                },
+                {
+                  "box": [
+                    0.14242856502532958,
+                    0.39706993103027344,
+                    0.15632872581481932,
+                    0.47655635409884983
+                  ],
+                  "score": 0.5643,
+                  "crop_score": 0.8554
+                },
+                {
+                  "box": [
+                    0.07564471364021301,
+                    0.49901182386610243,
+                    0.09901193380355836,
+                    0.5754839579264323
+                  ],
+                  "score": 0.3127,
+                  "crop_score": 0.8614
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with winding roads, grassy areas, and buildings. Two people are visible on the left, walking on a paved path. A white car is parked on the right, and a red car is further in the distance. A white vehicle is also visible in the background. The scene is well-lit, with no shadows or occlusions. Visibility: All objects are visible and in the foreground. No occlusions or shadows.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white car",
+              "red car",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 24.6,
+            "keyframe": "sample-000024600.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 24.6,
+              "keyframe": "sample-000024600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1320926547050476,
+                    0.403655030992296,
+                    0.15259332656860353,
+                    0.4994802686903212
+                  ],
+                  "score": 0.6168,
+                  "crop_score": 0.8505
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with winding roads, grassy areas, and buildings. Two people are visible on the left, standing near a sidewalk. A white car is parked on the right, and a red car is further in the distance. A white vehicle is seen in the background near the building. The scene is mostly static with no movement. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "building",
+              "tree",
+              "stop sign"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 29.4,
+            "keyframe": "sample-000029400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 29.4,
+              "keyframe": "sample-000029400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12942931652069092,
+                    0.4323561350504557,
+                    0.14691318273544313,
+                    0.4988661872016059
+                  ],
+                  "score": 0.6406,
+                  "crop_score": 0.8544
+                },
+                {
+                  "box": [
+                    0.1410619020462036,
+                    0.39517165289984807,
+                    0.15482648611068725,
+                    0.47929390801323785
+                  ],
+                  "score": 0.4517,
+                  "crop_score": 0.7658
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "Two people standing on a paved path near a grassy area. A white car is parked on the right. A dark-colored car is on the road. A white car is parked on the right. A white car is parked on the right. A white car is parked on the right. A white car is parked on the right. A white car is parked on the right. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 31.4,
+            "keyframe": "sample-000031400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 31.4,
+              "keyframe": "sample-000031400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12993037700653076,
+                    0.409555180867513,
+                    0.1482200264930725,
+                    0.49795235527886283
+                  ],
+                  "score": 0.5798,
+                  "crop_score": 0.8507
+                },
+                {
+                  "box": [
+                    0.13928470611572266,
+                    0.3944093916151259,
+                    0.15398354530334474,
+                    0.4799944135877821
+                  ],
+                  "score": 0.5433,
+                  "crop_score": 0.854
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "Two people standing on a sidewalk near a curved road. A white car is parked on the right. A red car is visible in the distance. A white vehicle is parked in a lot. A stop sign is on the ground. The scene is a campus or park area with grass and trees. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "red"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "stop sign",
+              "building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 34.4,
+            "keyframe": "sample-000034400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 34.4,
+              "keyframe": "sample-000034400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12926604747772216,
+                    0.4292433844672309,
+                    0.1461240291595459,
+                    0.49974916246202256
+                  ],
+                  "score": 0.6581,
+                  "crop_score": 0.7221
+                },
+                {
+                  "box": [
+                    0.14172558784484862,
+                    0.394258541531033,
+                    0.15661410093307496,
+                    0.4841129302978516
+                  ],
+                  "score": 0.5351,
+                  "crop_score": 0.7843
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "Two people standing on a sidewalk near a curved road. A black vehicle is on the road, and a white vehicle is parked. A stop sign is on the ground. The scene is a campus-like area with grass and trees. The people are wearing dark and light clothing. The vehicles are a black SUV and a white car. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "black SUV",
+              "white car",
+              "stop sign"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 49.4,
+            "keyframe": "sample-000049400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 49.4,
+              "keyframe": "sample-000049400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12852413654327394,
+                    0.43065660264756944,
+                    0.1455786108970642,
+                    0.499608400132921
+                  ],
+                  "score": 0.6593,
+                  "crop_score": 0.8609
+                },
+                {
+                  "box": [
+                    0.14245425462722777,
+                    0.3962760077582465,
+                    0.15671954154968262,
+                    0.48457179599338107
+                  ],
+                  "score": 0.4446,
+                  "crop_score": 0.8476
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A dark SUV is turning at a curved road intersection. Two people are standing on the sidewalk on the left. A white car is parked on the right. A stop sign is on the ground. The building is in the background. The sky is clear. Visibility: All objects are visible and in the foreground. No occlusion or blur.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "SUV",
+              "Person",
+              "Person",
+              "White car",
+              "Stop sign",
+              "Building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 64.4,
+            "keyframe": "sample-000064400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 64.4,
+              "keyframe": "sample-000064400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1287386655807495,
+                    0.43140394422743056,
+                    0.1455651640892029,
+                    0.4990879906548394
+                  ],
+                  "score": 0.6513,
+                  "crop_score": 0.8631
+                },
+                {
+                  "box": [
+                    0.14262427091598512,
+                    0.3960080040825738,
+                    0.15650221109390258,
+                    0.48018858167860246
+                  ],
+                  "score": 0.6371,
+                  "crop_score": 0.8457
+                },
+                {
+                  "box": [
+                    0.33155930042266846,
+                    0.11787041558159722,
+                    0.35063126087188723,
+                    0.16787217458089193
+                  ],
+                  "score": 0.3633,
+                  "crop_score": 0.6138
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A black SUV is on a curved road, approaching a junction. A silver SUV is in the foreground. Two people are standing on the sidewalk on the left. A white car is parked in the background. A person is walking in the distance. The building is in the background. The sky is clear. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "silver SUV",
+              "two people",
+              "white car",
+              "person",
+              "building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 75.8,
+            "keyframe": "sample-000075800.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 75.8,
+              "keyframe": "sample-000075800.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1288180947303772,
+                    0.43011271158854164,
+                    0.14511053562164306,
+                    0.4985244327121311
+                  ],
+                  "score": 0.6498,
+                  "crop_score": 0.8597
+                },
+                {
+                  "box": [
+                    0.14318836927413942,
+                    0.396672609117296,
+                    0.15726988315582274,
+                    0.4804725646972656
+                  ],
+                  "score": 0.5621,
+                  "crop_score": 0.8529
+                },
+                {
+                  "box": [
+                    0.470859432220459,
+                    0.2304380628797743,
+                    0.48395462036132814,
+                    0.2813635932074653
+                  ],
+                  "score": 0.2932,
+                  "crop_score": 0.8589
+                }
+              ],
+              "rejected_candidates": 1
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus intersection with a black SUV and a silver car on paved roads. Two people are standing on a sidewalk on the left, and a person is walking on the path. A white car is parked on the right. The buildings are in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "silver car",
+              "person in dark clothing",
+              "person in light clothing",
+              "person in dark clothing",
+              "person in light clothing"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 78.0,
+            "keyframe": "sample-000078000.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 78.0,
+              "keyframe": "sample-000078000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12899752855300903,
+                    0.4312071058485243,
+                    0.14493387937545776,
+                    0.4991691165500217
+                  ],
+                  "score": 0.6427,
+                  "crop_score": 0.8676
+                },
+                {
+                  "box": [
+                    0.14330747127532958,
+                    0.3962048000759549,
+                    0.15719819068908691,
+                    0.48095152113172746
+                  ],
+                  "score": 0.6164,
+                  "crop_score": 0.8569
+                },
+                {
+                  "box": [
+                    0.45357489585876465,
+                    0.23867329491509331,
+                    0.46636013984680175,
+                    0.2839217927720812
+                  ],
+                  "score": 0.4976,
+                  "crop_score": 0.8871
+                }
+              ],
+              "rejected_candidates": 1
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus intersection. Two people are standing on the sidewalk on the left, and a black SUV is on the road. A silver SUV is parked on the right. A black car is on the road. A white car is parked in the background. The buildings are in the background. The grass is green and brown. The sky is clear. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "black SUV",
+              "silver SUV",
+              "white car",
+              "black car",
+              "building",
+              "tree",
+              "light post"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 80.0,
+            "keyframe": "sample-000080000.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 80.0,
+              "keyframe": "sample-000080000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12923955917358398,
+                    0.42948553297254777,
+                    0.14580341577529907,
+                    0.4990217844645182
+                  ],
+                  "score": 0.66,
+                  "crop_score": 0.8724
+                },
+                {
+                  "box": [
+                    0.14331371784210206,
+                    0.3966475168863932,
+                    0.15710370540618895,
+                    0.47700475056966146
+                  ],
+                  "score": 0.6088,
+                  "crop_score": 0.8515
+                },
+                {
+                  "box": [
+                    0.4322704792022705,
+                    0.243777338663737,
+                    0.44591732025146485,
+                    0.2958576202392578
+                  ],
+                  "score": 0.4981,
+                  "crop_score": 0.8564
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A black SUV and a silver SUV are on a paved road in a campus-like area. Two people are standing on a sidewalk on the left. A white car is parked in a lot on the right. A person is walking on the path in the background. The scene is viewed from above, with trees and buildings in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "silver SUV",
+              "white car",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 85.0,
+            "keyframe": "sample-000085000.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 85.0,
+              "keyframe": "sample-000085000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12941428422927856,
+                    0.43114068773057723,
+                    0.14644523859024047,
+                    0.49942910936143664
+                  ],
+                  "score": 0.6651,
+                  "crop_score": 0.872
+                },
+                {
+                  "box": [
+                    0.14219638109207153,
+                    0.39687860276963977,
+                    0.15757527351379394,
+                    0.48042865329318574
+                  ],
+                  "score": 0.6106,
+                  "crop_score": 0.8367
+                },
+                {
+                  "box": [
+                    0.38798999786376953,
+                    0.26216744316948787,
+                    0.4020089149475098,
+                    0.31430178748236764
+                  ],
+                  "score": 0.4318,
+                  "crop_score": 0.8544
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus intersection. A black SUV is in the foreground, a silver sedan is on the road, and a white car is parked. Three people are visible: one in a dark jacket, another in a light-colored shirt, and a third in a dark outfit. A stop sign is on the road. The buildings are in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "grey",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "silver sedan",
+              "white car",
+              "person in dark jacket",
+              "person in light-colored shirt",
+              "person in dark outfit"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 87.2,
+            "keyframe": "sample-000087200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 87.2,
+              "keyframe": "sample-000087200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12894994020462036,
+                    0.42925804985894095,
+                    0.1456092357635498,
+                    0.4996522267659505
+                  ],
+                  "score": 0.5963,
+                  "crop_score": 0.6873
+                },
+                {
+                  "box": [
+                    0.36147103309631345,
+                    0.2697482215033637,
+                    0.3758180379867554,
+                    0.32387754652235246
+                  ],
+                  "score": 0.5907,
+                  "crop_score": 0.8857
+                },
+                {
+                  "box": [
+                    0.1425194501876831,
+                    0.39752205742730035,
+                    0.15767107009887696,
+                    0.48542984856499566
+                  ],
+                  "score": 0.4557,
+                  "crop_score": 0.7784
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A black SUV is in the foreground, a silver car is on a curved road, and a white car is parked. Two people are standing on the sidewalk. A person is walking on the road. A stop sign is visible. The buildings are in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "silver car",
+              "white car",
+              "two people",
+              "one person",
+              "stop sign"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 90.2,
+            "keyframe": "sample-000090200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 90.2,
+              "keyframe": "sample-000090200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12874385118484497,
+                    0.43091952006022133,
+                    0.1457181453704834,
+                    0.49958097669813367
+                  ],
+                  "score": 0.485,
+                  "crop_score": 0.6685
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus with a silver SUV turning at a road intersection. In the foreground, a black vehicle is partially visible. Two people are standing on the sidewalk near the intersection, and a person is walking on the grass. A white car is parked on the right. The buildings are in the background. Visibility: Some objects are occluded or partially visible, and the background is slightly blurred.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "silver SUV",
+              "black vehicle",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 94.2,
+            "keyframe": "sample-000094200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 94.2,
+              "keyframe": "sample-000094200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12883206605911254,
+                    0.43000123765733506,
+                    0.1456801176071167,
+                    0.5003498925103081
+                  ],
+                  "score": 0.6038,
+                  "crop_score": 0.8702
+                },
+                {
+                  "box": [
+                    0.2641133308410645,
+                    0.28628978729248045,
+                    0.2779762506484985,
+                    0.34654884338378905
+                  ],
+                  "score": 0.527,
+                  "crop_score": 0.8767
+                },
+                {
+                  "box": [
+                    0.14212318658828735,
+                    0.3977156745062934,
+                    0.15707420110702514,
+                    0.4921814388699002
+                  ],
+                  "score": 0.5259,
+                  "crop_score": 0.833
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus with a winding road, a silver SUV, and two people on the sidewalk. One person is wearing a red top, and another is in dark clothing. A white car is parked on the right. The scene is outdoors with grass and trees. The person in the red top is near the sidewalk, and the silver SUV is on the road. The white car is parked on the right side. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "silver SUV",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 99.2,
+            "keyframe": "sample-000099200.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 99.2,
+              "keyframe": "sample-000099200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.22010769844055175,
+                    0.30990250905354816,
+                    0.23362531661987304,
+                    0.3745580885145399
+                  ],
+                  "score": 0.4815,
+                  "crop_score": 0.8519
+                }
+              ],
+              "rejected_candidates": 1
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus intersection with a silver car and a person in a red top standing near it. A white car is parked on the right. A person in a dark outfit is walking in the background. The scene includes a stop sign, a sidewalk, and a grassy area. The buildings are in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "stop sign"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 103.8,
+            "keyframe": "sample-000103800.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 103.8,
+              "keyframe": "sample-000103800.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12674059867858886,
+                    0.4003636254204644,
+                    0.1457958459854126,
+                    0.4989160749647352
+                  ],
+                  "score": 0.7536,
+                  "crop_score": 0.5576
+                },
+                {
+                  "box": [
+                    0.18022154569625853,
+                    0.3383186340332031,
+                    0.19634562730789185,
+                    0.39392759535047744
+                  ],
+                  "score": 0.5927,
+                  "crop_score": 0.853
+                }
+              ],
+              "rejected_candidates": 1
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus area with a curved road, grassy patches, and buildings. In the foreground, a red SUV is partially visible on the left. A silver car is parked on the road, and a group of people are standing near it. A person is riding a bicycle in the distance. A white car is parked on the right. The sky is clear and sunny. Visibility: all objects are visible and in the frame",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "red SUV",
+              "silver car",
+              "group of people",
+              "person on bicycle",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 109.4,
+            "keyframe": "sample-000109400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 109.4,
+              "keyframe": "sample-000109400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1220478892326355,
+                    0.4025729709201389,
+                    0.13778890371322633,
+                    0.4904769049750434
+                  ],
+                  "score": 0.7254,
+                  "crop_score": 0.8341
+                },
+                {
+                  "box": [
+                    0.13737632036209108,
+                    0.38869438171386717,
+                    0.15420407056808472,
+                    0.4857905493842231
+                  ],
+                  "score": 0.6001,
+                  "crop_score": 0.8479
+                },
+                {
+                  "box": [
+                    0.14164626598358154,
+                    0.36921941969129773,
+                    0.15573911666870116,
+                    0.4598371717664931
+                  ],
+                  "score": 0.4463,
+                  "crop_score": 0.8456
+                },
+                {
+                  "box": [
+                    0.3156495809555054,
+                    0.16484684414333767,
+                    0.32985260486602785,
+                    0.19572414822048612
+                  ],
+                  "score": 0.2714,
+                  "crop_score": 0.684
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A red SUV is in the foreground, a silver car is parked on a paved area, and a group of people are standing near the car. A white car is parked in a lot. A person in a dark jacket is near the silver car. A person in a light-colored top is standing nearby. A person in a dark jacket is standing near the silver car. A person in a dark jacket is standing near the silver car. A person in a dark jacket is standing near the silver car. A person in a dark jacket is standing near the silver car. A person in a dark jacket is standing near the silver car. A person in a dark jacket is standing near the sil Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "red SUV",
+              "silver car",
+              "white car",
+              "person in dark jacket",
+              "person in light-colored top",
+              "person in dark jacket",
+              "person in dark jacket",
+              "person in dark jacket",
+              "person in dark jacket",
+              "person in dark jacket"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 111.4,
+            "keyframe": "sample-000111400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 111.4,
+              "keyframe": "sample-000111400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12307913303375244,
+                    0.38943824768066404,
+                    0.1408601760864258,
+                    0.47625885009765623
+                  ],
+                  "score": 0.6768,
+                  "crop_score": 0.749
+                },
+                {
+                  "box": [
+                    0.15832960605621338,
+                    0.41014989217122394,
+                    0.17695744037628175,
+                    0.4818944295247396
+                  ],
+                  "score": 0.6546,
+                  "crop_score": 0.8389
+                },
+                {
+                  "box": [
+                    0.13797264099121093,
+                    0.4110663096110026,
+                    0.1539904236793518,
+                    0.4755371517605252
+                  ],
+                  "score": 0.4499,
+                  "crop_score": 0.7998
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus intersection with a silver car, a red van, and several people near the silver car. The people are wearing dark and light clothing. The red van is in the foreground. The scene includes a mix of grass, paved paths, and buildings in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "silver car",
+              "red van",
+              "people",
+              "white car",
+              "white van",
+              "tree",
+              "building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 113.4,
+            "keyframe": "sample-000113400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 113.4,
+              "keyframe": "sample-000113400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12085275650024414,
+                    0.3998124864366319,
+                    0.1366726875305176,
+                    0.4750823974609375
+                  ],
+                  "score": 0.6856,
+                  "crop_score": 0.8661
+                },
+                {
+                  "box": [
+                    0.1616569995880127,
+                    0.4152088165283203,
+                    0.17975056171417236,
+                    0.4838938395182292
+                  ],
+                  "score": 0.6389,
+                  "crop_score": 0.788
+                },
+                {
+                  "box": [
+                    0.1472962021827698,
+                    0.4152380625406901,
+                    0.1619323968887329,
+                    0.4829496595594618
+                  ],
+                  "score": 0.5893,
+                  "crop_score": 0.7612
+                },
+                {
+                  "box": [
+                    0.10857511758804321,
+                    0.4022178649902344,
+                    0.12289304733276367,
+                    0.472866694132487
+                  ],
+                  "score": 0.5413,
+                  "crop_score": 0.8736
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus intersection with a silver car and a person in a red jacket near the curb. A white car is parked on the right. A person in a dark top is walking on the sidewalk. A person in a light-colored top is near the car. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A person in a dark top is walking on the sidewalk. A Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 115.4,
+            "keyframe": "sample-000115400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 115.4,
+              "keyframe": "sample-000115400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.11437246799468995,
+                    0.39919615851508244,
+                    0.13736749887466432,
+                    0.49071464538574217
+                  ],
+                  "score": 0.705,
+                  "crop_score": 0.8706
+                },
+                {
+                  "box": [
+                    0.14880237579345704,
+                    0.4151577419704861,
+                    0.16668072938919068,
+                    0.4847062004937066
+                  ],
+                  "score": 0.4808,
+                  "crop_score": 0.8205
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A wide-angle view of a campus intersection with a silver SUV and a white car parked. People are visible on the sidewalk and near the vehicles. The foreground shows a person in dark clothing and another in light clothing. A white car is parked on the right. The scene is outdoors with grass and trees. Visibility: Some people are partially occluded or in the distance. The vehicles are parked and not in motion.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "silver SUV",
+              "white car",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 118.6,
+            "keyframe": "sample-000118600.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 118.6,
+              "keyframe": "sample-000118600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.10041389465332032,
+                    0.4455986870659722,
+                    0.11951942443847656,
+                    0.5260904524061415
+                  ],
+                  "score": 0.7296,
+                  "crop_score": 0.8578
+                },
+                {
+                  "box": [
+                    0.12883906364440917,
+                    0.40738889906141496,
+                    0.14405473470687866,
+                    0.4795428805881076
+                  ],
+                  "score": 0.6444,
+                  "crop_score": 0.8391
+                },
+                {
+                  "box": [
+                    0.5610177040100097,
+                    0.15085862477620443,
+                    0.5807974338531494,
+                    0.1937900119357639
+                  ],
+                  "score": 0.3342,
+                  "crop_score": 0.7724
+                },
+                {
+                  "box": [
+                    0.15924164056777954,
+                    0.4219420962863498,
+                    0.19059816598892212,
+                    0.48361536661783855
+                  ],
+                  "score": 0.2981,
+                  "crop_score": 0.4398
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus intersection. A person in dark clothing walks on the sidewalk near a silver car. Another person in light clothing stands nearby. A blue car is parked on the right. A white car is parked further in the distance. A stop sign is visible on the road. The scene is outdoors with grass and trees. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "stop sign"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 122.4,
+            "keyframe": "sample-000122400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 122.4,
+              "keyframe": "sample-000122400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.12928097248077391,
+                    0.4081239488389757,
+                    0.14424548149108887,
+                    0.47992303636338973
+                  ],
+                  "score": 0.4852,
+                  "crop_score": 0.8533
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        },
+        {
+          "text": "A surveillance view of a campus intersection with a silver car turning left, a white car parked, and a person in light-colored clothing standing near the silver car. A person in a dark outfit is walking on the path. A white car is parked on the right. A blue car is visible in the background. The scene is outdoors with grass and trees. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "silver car",
+              "white car",
+              "blue car",
+              "person in light-colored clothing",
+              "person in dark clothing",
+              "person standing near silver car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 127.4,
+            "keyframe": "sample-000127400.jpg",
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 127.4,
+              "keyframe": "sample-000127400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.8523794174194336,
+                    0.11838673485649956,
+                    0.8692519187927246,
+                    0.1682610935635037
+                  ],
+                  "score": 0.3666,
+                  "crop_score": 0.7399
+                }
+              ],
+              "rejected_candidates": 0
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 4050,
+        "sampled_frames": 675,
+        "detector_cycles": 675,
+        "detector_calls": 759,
+        "boundary_focus_enabled": false,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 14.18,
+        "detection_wall_sec": 20.984,
+        "sampled_frames_per_wall_sec": 32.17,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "live_offset_sec": null,
+        "description_frames_total": 29,
+        "description_frames_completed": 29,
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 29,
+        "description_error": null,
+        "semantic_wall_sec": 192.303,
+        "total_wall_sec": 213.343
+      },
+      "run_wall_sec": 213.64
     },
     {
       "id": "parking-holdout",
@@ -2093,7 +5465,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 0.0,
             "keyframe": "sample-000000000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 0.0,
+              "keyframe": "sample-000000000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2130,7 +5512,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 15.0,
             "keyframe": "sample-000015000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 15.0,
+              "keyframe": "sample-000015000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2167,7 +5559,17 @@
             "generation_attempts": 1,
             "observed_at_sec": 30.0,
             "keyframe": "sample-000030000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 30.0,
+              "keyframe": "sample-000030000.jpg",
+              "boxes": [],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2206,7 +5608,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 36.0,
             "keyframe": "sample-000036000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 36.0,
+              "keyframe": "sample-000036000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.8186018943786622,
+                    0.7046919964274773,
+                    0.8326846122741699,
+                    0.757879433511686
+                  ],
+                  "score": 0.5411,
+                  "crop_score": 0.8214
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2247,7 +5670,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 45.6,
             "keyframe": "sample-000045600.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 45.6,
+              "keyframe": "sample-000045600.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.6574979782104492,
+                    0.679291498093378,
+                    0.6705395698547363,
+                    0.7280130680201768
+                  ],
+                  "score": 0.5271,
+                  "crop_score": 0.8716
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2286,7 +5730,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 51.0,
             "keyframe": "sample-000051000.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 51.0,
+              "keyframe": "sample-000051000.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.6155611991882324,
+                    0.660183775658701,
+                    0.6287373542785645,
+                    0.7058415773535976
+                  ],
+                  "score": 0.56,
+                  "crop_score": 0.8933
+                },
+                {
+                  "box": [
+                    0.04346727430820465,
+                    0.7897415802258403,
+                    0.059280800819396975,
+                    0.8792029629234507
+                  ],
+                  "score": 0.5445,
+                  "crop_score": 0.8435
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2329,7 +5804,48 @@
             "generation_attempts": 1,
             "observed_at_sec": 54.2,
             "keyframe": "sample-000054200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 54.2,
+              "keyframe": "sample-000054200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.1208798885345459,
+                    0.7919336313627013,
+                    0.1412692427635193,
+                    0.8794215440082283
+                  ],
+                  "score": 0.7236,
+                  "crop_score": 0.9227
+                },
+                {
+                  "box": [
+                    0.5924370288848877,
+                    0.6498057474943102,
+                    0.6044701099395752,
+                    0.6944906624759278
+                  ],
+                  "score": 0.4062,
+                  "crop_score": 0.88
+                },
+                {
+                  "box": [
+                    0.009079505503177644,
+                    0.6896401627057073,
+                    0.022663109004497528,
+                    0.7468123235622374
+                  ],
+                  "score": 0.2514,
+                  "crop_score": 0.7731
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2372,7 +5888,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 56.4,
             "keyframe": "sample-000056400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 56.4,
+              "keyframe": "sample-000056400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.18015284538269044,
+                    0.790213961561187,
+                    0.19754719734191895,
+                    0.8742341541108631
+                  ],
+                  "score": 0.7991,
+                  "crop_score": 0.9066
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2411,7 +5948,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 58.4,
             "keyframe": "sample-000058400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 58.4,
+              "keyframe": "sample-000058400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.23427772521972656,
+                    0.7812802611278886,
+                    0.25654211044311526,
+                    0.8742409927838323
+                  ],
+                  "score": 0.3678,
+                  "crop_score": 0.84
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2454,7 +6012,38 @@
             "generation_attempts": 1,
             "observed_at_sec": 60.8,
             "keyframe": "sample-000060800.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 60.8,
+              "keyframe": "sample-000060800.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.10318104028701783,
+                    0.6860649899608281,
+                    0.1173287034034729,
+                    0.7435537813758316
+                  ],
+                  "score": 0.6625,
+                  "crop_score": 0.7202
+                },
+                {
+                  "box": [
+                    0.3045091152191162,
+                    0.7862250491016719,
+                    0.3194230794906616,
+                    0.8711163176207983
+                  ],
+                  "score": 0.6405,
+                  "crop_score": 0.8836
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2497,7 +6086,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 63.4,
             "keyframe": "sample-000063400.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 63.4,
+              "keyframe": "sample-000063400.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.37515013217926024,
+                    0.787831367898722,
+                    0.3944148302078247,
+                    0.871922255230217
+                  ],
+                  "score": 0.7971,
+                  "crop_score": 0.9003
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2536,7 +6146,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 66.2,
             "keyframe": "sample-000066200.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 66.2,
+              "keyframe": "sample-000066200.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.18282480239868165,
+                    0.6812235514322916,
+                    0.19451913833618165,
+                    0.7339930601146709
+                  ],
+                  "score": 0.4916,
+                  "crop_score": 0.8406
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         },
         {
@@ -2582,7 +6213,28 @@
             "generation_attempts": 1,
             "observed_at_sec": 69.8,
             "keyframe": "sample-000069800.jpg",
-            "sampling": "periodic_and_activity_change"
+            "sampling": "periodic_and_activity_change",
+            "person_evidence": {
+              "version": 1,
+              "method": "frame_and_person_crop",
+              "detector": "YOLOX-S",
+              "provider": "CUDAExecutionProvider",
+              "observed_at_sec": 69.8,
+              "keyframe": "sample-000069800.jpg",
+              "boxes": [
+                {
+                  "box": [
+                    0.5436125755310058,
+                    0.7781346425288865,
+                    0.5601122856140137,
+                    0.8582104594767594
+                  ],
+                  "score": 0.8075,
+                  "crop_score": 0.9021
+                }
+              ],
+              "rejected_candidates": 0
+            }
           }
         }
       ],
@@ -2591,26 +6243,29 @@
         "source_frames": 2100,
         "sampled_frames": 350,
         "detector_cycles": 174,
-        "detector_calls": 174,
+        "detector_calls": 190,
         "boundary_focus_enabled": false,
         "motion_skipped_calls": 176,
-        "mean_inference_ms": 44.99,
-        "detection_wall_sec": 25.64,
-        "sampled_frames_per_wall_sec": 13.65,
+        "mean_inference_ms": 14.63,
+        "detection_wall_sec": 7.565,
+        "sampled_frames_per_wall_sec": 46.27,
         "detector": "YOLOX-S ONNX",
         "provider": "CUDAExecutionProvider",
         "tracker": "ByteTrack (supervision 0.25.1)",
         "rule_version": "1.1",
         "identity_scope": "this video and camera only",
         "source": "uploaded_recording",
+        "live_offset_sec": null,
+        "description_frames_total": 13,
+        "description_frames_completed": 13,
         "rejected_candidates": [],
         "sample_budget_exceeded": false,
         "description_frames": 13,
         "description_error": null,
-        "semantic_wall_sec": 163.405,
-        "total_wall_sec": 189.141
+        "semantic_wall_sec": 89.38,
+        "total_wall_sec": 96.986
       },
-      "run_wall_sec": 0.16
+      "run_wall_sec": 97.11
     }
   ]
 }

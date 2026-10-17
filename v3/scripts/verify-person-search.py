@@ -9,20 +9,22 @@ import time
 import httpx
 
 ROOT = Path(__file__).resolve().parents[1]
+# Red-top-and-white-car frames exist in both clips; see verify-ai-demo.py.
+RED = ('demo-parking-people', 'demo-kerb-waiting')
 parser = argparse.ArgumentParser()
 parser.add_argument('--rounds', type=int, default=3)
 parser.add_argument('--report', type=Path, default=ROOT/'output/ai-readiness/person-search-evaluation.json')
 args = parser.parse_args()
 positive = [
-    ('red-original-en', 'person wearing red near a white car', 'demo-parking-people'),
-    ('red-failed-variant', 'a person wearing a red jacket beside a white SUV', 'demo-parking-people'),
-    ('red-someone', 'show me someone in a red jacket near a white car', 'demo-parking-people'),
-    ('red-clothing', 'find people in red clothing beside a white vehicle', 'demo-parking-people'),
-    ('red-original-zh', '穿红衣服的人靠近白色汽车', 'demo-parking-people'),
-    ('red-coat-zh', '穿红色外套的人在白色车旁边', 'demo-parking-people'),
-    ('red-find-zh', '找穿红衣的人和白色汽车', 'demo-parking-people'),
-    ('red-orang', 'orang berbaju merah dekat kereta putih', 'demo-parking-people'),
-    ('red-lelaki', 'lelaki baju merah dekat kereta putih', 'demo-parking-people'),
+    ('red-original-en', 'person wearing red near a white car', RED),
+    ('red-failed-variant', 'a person wearing a red jacket beside a white SUV', RED),
+    ('red-someone', 'show me someone in a red jacket near a white car', RED),
+    ('red-clothing', 'find people in red clothing beside a white vehicle', RED),
+    ('red-original-zh', '穿红衣服的人靠近白色汽车', RED),
+    ('red-coat-zh', '穿红色外套的人在白色车旁边', RED),
+    ('red-find-zh', '找穿红衣的人和白色汽车', RED),
+    ('red-orang', 'orang berbaju merah dekat kereta putih', RED),
+    ('red-lelaki', 'lelaki baju merah dekat kereta putih', RED),
     ('black-zh', '穿黑色衣服的人在楼梯旁边', None),
     ('black-en', 'person wearing black near stairs', None),
     ('black-someone', 'someone in a black jacket near the stairs', None),
@@ -40,7 +42,7 @@ with httpx.Client(base_url='http://127.0.0.1:8766', trust_env=False, timeout=240
     client.post('/api/auth/login', json={'email':'admin@jagaai.local','password':'JagaAI-demo-2026!'}).raise_for_status()
     bootstrap = client.get('/api/bootstrap').json()
     videos = {v['id']:v for v in bootstrap['videos']}
-    assert len(videos)==7 and all(k.startswith('demo-') for k in videos), 'Use the isolated --demo profile.'
+    assert len(videos)==8 and all(k.startswith('demo-') for k in videos), 'Use the isolated --demo profile.'
     cases = [(ident, {'query':query}, 'positive', expected) for ident,query,expected in positive]
     cases += [(ident, {'query':query}, 'negative', None) for ident,query in negative]
     for video_id, start, end in [('demo-stairs-empty',3,8), ('demo-parking-machine',88,92)]:
@@ -61,7 +63,7 @@ with httpx.Client(base_url='http://127.0.0.1:8766', trust_env=False, timeout=240
             response=client.post('/api/search',json=payload);response.raise_for_status();result=response.json()
             shown=result['related']+result['nearest']
             if kind=='positive':
-                allowed={expected} if expected else {'demo-stairs-entry','demo-landing-entry'}
+                allowed=set(expected) if isinstance(expected,tuple) else {expected} if expected else {'demo-stairs-entry','demo-landing-entry'}
                 passed=bool(result['related']) and all(r['video_id'] in allowed for r in result['related'])
             elif kind in {'negative','empty'}:
                 passed=not result['related'] and not result['events']

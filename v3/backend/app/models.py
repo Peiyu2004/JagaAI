@@ -42,6 +42,10 @@ class Camera(SQLModel, table=True):
     status: str = "awaiting_upload"
     source_type: str = "upload"
     rules: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    # Live input. The URL may hold camera credentials: never serialise it unmasked.
+    stream_url: str | None = None
+    stream_enabled: bool = False
+    segment_sec: int = 60
 
 
 class Video(SQLModel, table=True):
@@ -54,6 +58,7 @@ class Video(SQLModel, table=True):
     status: str = "uploaded"
     error: str | None = None
     analysis_source: str | None = None
+    source: str = "upload"
     description_status: str = "not_started"
     analysis_metrics: dict = Field(default_factory=dict, sa_column=Column(JSON))
     processed_at: datetime | None = None

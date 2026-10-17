@@ -53,21 +53,29 @@ def constraints(query):
 
 
 def multilingual_attribute_query(query, requested):
-    """Add a shared retrieval phrase for recognised Chinese/Malay colour conditions.
+    """Add a shared retrieval phrase for recognised Chinese/Malay colour and object conditions.
 
     The original query remains in ranking. This is a visible-attribute lead, not
     a translation or verification of every relationship/action in the question.
     """
     if not (re.search('[\u4e00-\u9fff]',query) or re.search(r'\b(?:baju|berbaju|kereta|orang|lelaki|wanita|kenderaan)\b',query.casefold())):
         return None
-    if requested['other_colours'] or not (requested['person_colours'] or requested['vehicle_colours']):
+    if requested['other_colours']:
         return None
     subjects=[]
+    kind=next((k for k in ('car','truck','bus','bicycle','vehicle') if k in requested['objects']),None)
     if requested['person_colours']:
         subjects.append('person wearing '+' and '.join(requested['person_colours']))
+    elif 'person' in requested['objects']:
+        # Object-only questions (有人吗, ada orang) get the same shared phrase; the
+        # structured object and person checks still decide what counts as a match.
+        subjects.append('a person')
     if requested['vehicle_colours']:
-        kind=next((k for k in ('car','truck','bus','bicycle') if k in requested['objects']),'vehicle')
-        subjects.append('a '+' and '.join(requested['vehicle_colours'])+' '+kind)
+        subjects.append('a '+' and '.join(requested['vehicle_colours'])+' '+(kind or 'vehicle'))
+    elif kind:
+        subjects.append('a '+kind)
+    if not subjects:
+        return None
     relation=' near ' if re.search(r'靠近|附近|旁边|身边|\b(?:near|beside|dekat|berhampiran)\b',query.casefold()) else ' and '
     text=relation.join(subjects)
     others=[k for k in requested['objects'] if k not in {'person','vehicle','car','truck','bus','bicycle'}]

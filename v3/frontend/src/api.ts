@@ -5,4 +5,4 @@ export const clockTime=(value?:string)=>value?new Intl.DateTimeFormat('en-MY',{t
 export const localInput=(value?:string)=>{const d=value?new Date(value):new Date();return new Date(d.getTime()+8*3600000).toISOString().slice(0,16)};
 export const toUTC=(value:string)=>new Date(value+'+08:00').toISOString();
 export const duration=(sec:number)=>`${Math.floor(sec/60).toString().padStart(2,'0')}:${Math.floor(sec%60).toString().padStart(2,'0')}`;
-export const label=(value:string)=>({vehicle_loitering:'Vehicle loitering',restricted_entry:'Restricted entry',in_progress:'In progress',received:'Received',resolved:'Resolved',pending:'Pending review',confirmed:'Confirmed',dismissed:'Dismissed',open:'Open',assigned:'Assigned',closed:'Closed'}[value]||value.replaceAll('_',' '));
+export const label=(value:string)=>({vehicle_loitering:'Vehicle loitering',restricted_entry:'Restricted entry',in_progress:'In progress',received:'Received',resolved:'Resolved',pending:'Pending review',confirmed:'Confirmed',dismissed:'Dismissed',open:'Open',assigned:'Assigned',closed:'Closed'}[value]||(s=>s.charAt(0).toUpperCase()+s.slice(1))(value.replaceAll('_',' ')));

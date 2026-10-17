@@ -1,5 +1,6 @@
 """Sequential local analysis. Detection results and semantic descriptions are separate states."""
 from collections import defaultdict
+from datetime import timedelta
 from pathlib import Path
 import os
 import time
@@ -17,6 +18,9 @@ from .search import utc
 from .vision import Detector, RuleEngine, Tracker, check_person_crop, detect_frame, MODEL_NAME
 
 _detector = None
+# Per-camera tracker and rule state carried from one live segment to the next.
+_live_context = {}
+LIVE_GAP_SEC = 3.
 
 
 def get_detector():
@@ -24,6 +28,21 @@ def get_detector():
     if _detector is None:
         _detector = Detector()
     return _detector
+
+
+def live_context(camera_id, recorded_at, rules, sample_fps):
+    """Continue the previous segment's tracks and dwell timers when this segment follows it.
+
+    Returns (tracker, engine, offset_sec, carry). Rule state uses seconds since the first
+    segment of the continuous run, so a 120 s dwell can span two 60 s segments. carry is
+    False for a retried older segment, which must not replace the running camera's state.
+    """
+    context = _live_context.get(camera_id)
+    if (context and context['rules'] == rules and context['fps'] == round(sample_fps)
+            and abs((recorded_at - context['end_at']).total_seconds()) <= LIVE_GAP_SEC):
+        return context['tracker'], context['engine'], (recorded_at - context['start_at']).total_seconds(), True
+    carry = not context or recorded_at >= context['end_at']
+    return Tracker(round(sample_fps)), RuleEngine(rules, recorded_at), 0., carry
 
 
 def process_video(video_id):
@@ -38,6 +57,7 @@ def process_video(video_id):
         if not camera:
             raise RuntimeError('Camera no longer exists.')
         path,recorded_at,duration,rules,camera_id=media_path(video.path),utc(video.recorded_at),video.duration_sec,camera.rules,camera.id
+        is_live=video.source=='live'
         video.status='processing';video.error=None;video.description_status='not_started';session.commit()
     publish_refresh('analysis',video_id)
     try:
@@ -51,8 +71,14 @@ def process_video(video_id):
         target_fps=10 if restricted else 5
         step=max(1,round(fps/target_fps))
         sample_fps=fps/step
-        tracker=Tracker(round(sample_fps))
-        engine=RuleEngine(rules,recorded_at)
+        if is_live:
+            tracker,engine,offset,carry=live_context(camera_id,recorded_at,rules,sample_fps)
+            if carry:
+                _live_context.pop(camera_id,None)  # Restored below only if this segment finishes cleanly.
+            context={'tracker':tracker,'engine':engine,'rules':rules,'fps':round(sample_fps),
+                     'start_at':recorded_at-timedelta(seconds=offset)}
+        else:
+            tracker,engine,offset,carry=Tracker(round(sample_fps)),RuleEngine(rules,recorded_at),0.,False
         directory=DATA_DIR/'frames'/video_id
         directory.mkdir(parents=True,exist_ok=True)
         trajectory=defaultdict(list)
@@ -102,7 +128,11 @@ def process_video(video_id):
                         trajectory[ident].append({'t':round(second,3),'box':track['box']})
                 if sample_count==1:
                     cv2.imwrite(str(directory/'overview.jpg'),frame)
-                candidates=engine.update(second,tracks)
+                candidates=engine.update(offset+second,tracks)
+                for candidate in candidates:
+                    # Back to this segment's clock; a dwell that began earlier starts at 0 here.
+                    candidate['start_sec']=round(max(0.,candidate['start_sec']-offset),3)
+                    candidate['end_sec']=round(candidate['end_sec']-offset,3)
                 for candidate in candidates:
                     if candidate['rule_id']=='R1':
                         person=next((t for t in tracks if t['id']==candidate['metrics']['track_id']),None)
@@ -132,7 +162,8 @@ def process_video(video_id):
                     generated.append(candidate)
                 people=sum(t['class']=='person' for t in tracks)
                 activity_change=people>0 and people!=previous_people and second-last_sample>=2
-                wanted=second>=next_description or activity_change or (bool(candidates) and second-last_sample>=1)
+                # Live segments sample less often so one camera's descriptions keep pace with real time.
+                wanted=second>=next_description or (activity_change and not is_live) or (bool(candidates) and second-last_sample>=1)
                 if wanted and len(samples)<max_descriptions:
                     scaled=cv2.resize(frame,(min(768,frame.shape[1]),max(1,round(frame.shape[0]*min(768,frame.shape[1])/frame.shape[1]))))
                     ok_jpeg,jpeg=cv2.imencode('.jpg',scaled,[cv2.IMWRITE_JPEG_QUALITY,82])
@@ -145,7 +176,7 @@ def process_video(video_id):
                         evidence=check_frame_people(frame,fresh,detector,second,name)
                         samples.append((second,jpeg.tobytes(),name,evidence))
                         last_sample=second
-                    next_description=second+15
+                    next_description=second+(20 if is_live else 15)
                 elif wanted:
                     sample_budget_exceeded=True
                 if last_detect==second:
@@ -154,6 +185,8 @@ def process_video(video_id):
             cap.release()
         if sample_count==0:
             raise RuntimeError('The uploaded recording contains no decodable video frames.')
+        if carry:
+            _live_context[camera_id]={**context,'end_at':recorded_at+timedelta(seconds=frame_number/fps)}
         detection_seconds=time.perf_counter()-detection_started
         metrics={'sample_fps':round(sample_fps,3),'source_frames':frame_number,'sampled_frames':sample_count,
                  'detector_cycles':detection_calls,'detector_calls':getattr(detector,'inference_passes',detection_calls)-initial_passes,
@@ -161,7 +194,8 @@ def process_video(video_id):
                  'motion_skipped_calls':skipped,'mean_inference_ms':round(float(np.mean(inference_ms)),2),
                  'detection_wall_sec':round(detection_seconds,3),'sampled_frames_per_wall_sec':round(sample_count/max(detection_seconds,.001),2),
                  'detector':MODEL_NAME+' ONNX','provider':detector.provider,'tracker':'ByteTrack (supervision 0.25.1)',
-                 'rule_version':'1.1','identity_scope':'this video and camera only','source':'uploaded_recording',
+                 'rule_version':'1.1','identity_scope':'this camera; carried across consecutive live segments' if is_live else 'this video and camera only',
+                 'source':'live_segment' if is_live else 'uploaded_recording','live_offset_sec':round(offset,3) if is_live else None,
                  'description_frames_total':len(samples),'description_frames_completed':0,
                  'rejected_candidates':rejected,'sample_budget_exceeded':sample_budget_exceeded}
         with session_scope() as session:

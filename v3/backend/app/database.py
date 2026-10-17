@@ -47,6 +47,12 @@ def init_db():
     if 'attributes' not in {column['name'] for column in inspect(engine).get_columns('description')}:
         with engine.begin() as connection:
             connection.execute(text("ALTER TABLE description ADD COLUMN attributes JSON NOT NULL DEFAULT '{}'"))
+    for table, column, ddl in (("camera", "stream_url", "VARCHAR"), ("camera", "stream_enabled", "BOOLEAN NOT NULL DEFAULT 0"),
+                               ("camera", "segment_sec", "INTEGER NOT NULL DEFAULT 60"),
+                               ("video", "source", "VARCHAR NOT NULL DEFAULT 'upload'")):
+        if column not in {item['name'] for item in inspect(engine).get_columns(table)}:
+            with engine.begin() as connection:
+                connection.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}"))
     with Session(engine) as session:
         if not session.get(AppSettings, "global"):
             session.add(AppSettings())

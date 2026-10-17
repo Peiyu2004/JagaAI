@@ -10,7 +10,7 @@ Errors: HTTP appropriate status with `{"detail":"message"}`. All APIs below are 
 
 - User: id, email, name, role (`admin`/`supervisor`/`resident`)
 - Location: id, name, aliases (string[]), map_area (number[])
-- Camera: id, name, location_id, status, source_type, rules (object)
+- Camera: id, name, location_id, status, source_type, rules (object), stream_url (password masked as `***`), stream_enabled, segment_sec, live (recorder status or null)
 - Video: id, camera_id, filename, recorded_at, duration_sec, status
   (`uploaded`/`queued`/`processing`/`ready`/`failed`), error, analysis_source,
   description_status, expires_at. Media: `/api/videos/{id}/media`.
@@ -55,6 +55,8 @@ Errors: HTTP appropriate status with `{"detail":"message"}`. All APIs below are 
 - POST `/videos/{id}/analyse` -> Video (queued, idempotent).
 - GET `/videos/{id}/media`: staff-only Range capable original MP4, audited.
 - PUT `/cameras/{id}/rules`: `{rules:object}` -> Camera; rule IDs R1/R3 only in M1.
+- PUT `/cameras/{id}/stream` (admin): `{url?:string|null, enabled:boolean, segment_sec:30|60|120|300}` -> Camera. `url` is `rtsp://`, `rtsps://`, `http(s)://` or `demo:<uploaded video id>` (replays that recording in real time as a simulated camera). Omit `url` to keep the saved address; `""` removes it. A masked address is refused.
+- GET `/live` (staff): recorder status for each camera that has a stream address. Each finished segment becomes a Video with `source:"live"` and enters the normal analysis queue.
 - GET `/settings`: settings, guards, users (users admin only), audit_logs (admin only).
 - PATCH `/settings`: admin-only `{retention_days?,search_threshold?}`.
 - POST `/guards`: admin-only `{name,shift,phone}`. PATCH `/guards/{id}` same.

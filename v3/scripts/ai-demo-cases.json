@@ -1,5 +1,5 @@
 {
-  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. The kerb-waiting case lowers the R1 dwell threshold from 120 s to a disclosed 90 s demo setting, because no public clip in the set has a person staying 120 s; two people waiting about 112 s for a pick-up are genuine footage, normal activity, and should be dismissed by a reviewer. Source dates are preserved under the existing MYT testing convention.",
   "cases": [
     {"id":"stairs-entry","source":"2018-03-07.16-50-01.16-55-01.admin.G326","from":82,"to":96,"location":"perimeter","name":"Demo · Stair access boundary","r3_line":[[0.52,0.7],[0.52,1.0]],"expected_r1":0,"expected_r3":1},
     {"id":"stairs-empty","source":"2018-03-07.16-50-01.16-55-01.admin.G326","from":0,"to":12,"location":"perimeter","name":"Demo · Empty stair access","r3_line":[[0.52,0.7],[0.52,1.0]],"expected_r1":0,"expected_r3":0},
@@ -7,6 +7,7 @@
     {"id":"courtyard-entry","source":"2018-03-12.10-45-00.10-50-00.school.G638","from":285,"to":299,"location":"perimeter","name":"Demo · Courtyard boundary","r3_line":[[0.4,0.5],[0.4,0.9]],"expected_r1":0,"expected_r3":1},
     {"id":"parking-people","source":"2018-03-07.17-05-00.17-10-00.bus.G340","from":40,"to":90,"location":"zone-b","name":"Demo · People near parked vehicles","r1":true,"expected_r1":0,"expected_r3":0},
     {"id":"parking-machine","source":"2018-03-11.11-50-01.11-55-01.school.G424","from":130,"to":265,"location":"zone-b","name":"Demo · Parked machinery false-positive check","r1":true,"expected_r1":0,"expected_r3":0},
+    {"id":"kerb-waiting","source":"2018-03-15.14-55-07.15-00-07.hospital.G436","from":70,"to":205,"location":"zone-b","name":"Demo · Kerbside waiting (90 s demo threshold)","r1":true,"r1_rules":{"loiter_sec":90,"zone":[[0.03,0.3],[0.36,0.3],[0.36,0.65],[0.03,0.65]]},"max_vlm_frames":48,"expected_r1":1,"expected_r3":0},
     {"id":"parking-holdout","source":"2018-03-07.16-50-01.16-55-01.school.G328","from":70,"to":140,"location":"zone-b","name":"Demo · Separate-camera parking check","r1":true,"expected_r1":0,"expected_r3":0}
   ]
 }

@@ -10,6 +10,17 @@ from .retrieval import constraints, missing_attributes, multilingual_attribute_q
 from .person_evidence import person_evidence_status
 
 KL = ZoneInfo('Asia/Kuala_Lumpur')
+# A frame whose structured VLM attributes record every requested clothing/vehicle
+# colour and object may match this far below the similarity threshold. Captions
+# phrase the same scene many ways, so a close score plus checked facts is enough.
+ATTRIBUTE_MARGIN = .05
+
+
+def attribute_checked(attributes, requested):
+    """True when the request is specific and the frame has structured facts to check it."""
+    facts = attributes or {}
+    return (bool(requested['person_colours'] or requested['vehicle_colours']) and not requested['other_colours']
+            and isinstance(facts.get('people'), list) and isinstance(facts.get('vehicles'), list))
 
 
 def utc(value):
@@ -39,7 +50,8 @@ def parse_query(query, locations, now=None):
         start=current.replace(hour=0,minute=0,second=0,microsecond=0)
         end=start+timedelta(days=1)
     unsupported=any(t in compact for t in ['fight','fighting','打架','bergaduh','pergaduhan','fall','fallen','jatuh','跌倒','倒地','偷窃','盗窃','theft','stealing','mencuri'])
-    behaviour='vehicle_loitering' if any(t in compact for t in ['loiter','逗留','逐车','berkeliaran','berlegar']) else 'restricted_entry' if any(t in compact for t in ['fence','越线','翻越','限制区','禁区','pagar','restricted','kawasanlarangan']) else 'all' if any(t in compact for t in ['可疑','suspicious','mencurigakan','行为','behaviour']) else None
+    restricted_terms=['fence','越线','翻越','限制区','禁区','pagar','restricted','kawasanlarangan']
+    behaviour='vehicle_loitering' if any(t in compact for t in ['loiter','逗留','逐车','berkeliaran','berlegar']) else 'restricted_entry' if any(t in compact for t in restricted_terms) else 'all' if any(t in compact for t in ['可疑','suspicious','mencurigakan','行为','behaviour']) else None
     appearance=[name for name,words in [('red',['red','红','merah']),('white',['white','白','putih']),('blue',['blue','蓝','biru']),('black',['black','黑','hitam'])] if any(w in text for w in words)]
     location_id=None
     candidates=[]
@@ -47,6 +59,9 @@ def parse_query(query, locations, now=None):
         get=lambda k: location.get(k) if isinstance(location,dict) else getattr(location,k)
         for alias in [get('name'),*(get('aliases') or [])]:
             normal=re.sub(r'\s+','',alias.casefold())
+            # 限制区/pagar name the behaviour here; they must not also narrow the place.
+            if behaviour=='restricted_entry' and normal in restricted_terms:
+                continue
             if normal and normal in compact:
                 candidates.append((len(normal),get('id')))
     if candidates:
@@ -114,11 +129,11 @@ def search(session,payload):
     result={'supported':parsed['supported'],'message':'','interpreted':{k:v for k,v in parsed.items() if k not in ('supported','combined')},
             'events':[],'related':[],'nearest':[],'coverage':coverage(session,videos,behaviour),'threshold':threshold}
     if not parsed['supported']:
-        result['message']='This behaviour is not supported. M1 supports vehicle loitering and restricted entry, not fighting, falls or theft intent.'
+        result['message']='This behaviour is not supported. JagaAI checks vehicle loitering and restricted entry only; it does not identify fighting, falls or intent to steal.'
         return result
     if parsed['combined']:
         result['supported']=False
-        result['message']='Combined behaviour and appearance filters are planned for M2. Search for a behaviour or appearance separately.'
+        result['message']='Searching for a behaviour and an appearance together is not available yet. Search for a behaviour or an appearance separately.'
         return result
     indexed={v.id:v for v in videos}
     if behaviour:
@@ -135,7 +150,9 @@ def search(session,payload):
             from .serializers import record_json
             result['events'].append(record_json(event))
         result['events'].sort(key=lambda e:(e['created_at'],e['start_sec']),reverse=True)
-        result['message']='Behaviour events need human review.' if result['events'] else 'No supported behaviour events found in the analysed coverage.'
+        result['message']=('Behaviour events need human review.' if result['events'] else
+                           'No supported behaviour events found in the analysed coverage.' if result['coverage']['total'] else
+                           'Nothing was searched: no recordings fall inside the interpreted time and place. Edit the conditions or upload footage for that period.')
         return result
     descriptions=scoped_descriptions(session,indexed,start,end)
     if not descriptions:
@@ -184,13 +201,21 @@ def search(session,payload):
                            'analysis_source':row.analysis_source,'unmet_conditions':missing,
                            'keyframe_url':f'/api/videos/{row.video_id}/keyframes/{row.attributes["keyframe"]}' if row.attributes.get('keyframe') else None,
                            'observed_at_sec':row.attributes.get('observed_at_sec',row.start_sec),
-                           'person_supported':person_supported})
+                           'person_supported':person_supported,
+                           'match_basis':'similarity' if score>=threshold else 'visible_attributes'
+                               if not missing and attribute_checked(row.attributes,requested) and score>=threshold-ATTRIBUTE_MARGIN else None})
         ranked.sort(key=lambda r:r['score'],reverse=True)
-        result['related']=[r for r in ranked if r['score']>=threshold and not r['unmet_conditions']][:20]
-        result['nearest']=[r for r in ranked if r['score']<threshold or r['unmet_conditions']][:3]
+        result['related']=[r for r in ranked if r['match_basis'] and not r['unmet_conditions']][:20]
+        result['nearest']=[r for r in ranked if not r['match_basis'] or r['unmet_conditions']][:3]
+        for r in result['nearest']:
+            r['match_basis']=None
+        result['attribute_floor']=round(threshold-ATTRIBUTE_MARGIN,4)
         result['interpreted']['visible_conditions']=requested
         result['interpreted']['attribute_search_phrase']=expanded
         result['message']='Matches are leads for human review, not proof.' if result['related'] else 'No clear match above the configured threshold. Closest clips are for human review only.'
+        if any(r['match_basis']=='visible_attributes' for r in result['related']):
+            result['message']+=(' Some matches are slightly below the similarity threshold; they are shown because every requested '
+                                'colour and object was recorded for that frame.')
         if require_people:
             result['message']+=' Person searches only show sampled frames supported by detection and a crop recheck.'
             if result['coverage']['pending']:

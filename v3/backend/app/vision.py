@@ -138,13 +138,22 @@ class Tracker:
         return output
 
 
-def check_person_crop(frame, box, detector):
-    """Recheck a long-dwell trigger at a larger scale; no identity inference."""
+def check_person_crop(frame, box, detector, min_side=320):
+    """Recheck a long-dwell trigger at a larger scale; no identity inference.
+
+    The crop keeps at least min_side pixels of context (at most ~2x magnification at the
+    640 px model input). A distant person's tight box (about 25x70 px) was otherwise
+    magnified up to 9x and never passed. Measured on every stored demo evidence frame:
+    160 px still missed two people standing together in a re-encoded live segment; 320 px
+    kept all 59 earlier passes and still rejects the known machinery false person.
+    """
     height,width=frame.shape[:2]
     x1,y1,x2,y2=np.array(box)*[width,height,width,height]
     padx,pady=max(8,(x2-x1)*.3),max(8,(y2-y1)*.2)
-    left,top=max(0,int(x1-padx)),max(0,int(y1-pady))
-    right,bottom=min(width,int(x2+padx)),min(height,int(y2+pady))
+    cx,cy=(x1+x2)/2,(y1+y2)/2
+    half_w,half_h=max((x2-x1)/2+padx,min_side/2),max((y2-y1)/2+pady,min_side/2)
+    left,top=max(0,int(cx-half_w)),max(0,int(cy-half_h))
+    right,bottom=min(width,int(cx+half_w)),min(height,int(cy+half_h))
     if right<=left or bottom<=top:
         return {'passed':False,'score':0.,'method':'person_crop_recheck'}
     scores=[]
@@ -211,6 +220,13 @@ def crossed_segment(previous, current, line):
     return side(a, b, previous) * side(a, b, current) < 0 and side(previous, current, a) * side(previous, current, b) <= 0
 
 
+def box_iou(a, b):
+    w = max(0., min(a[2], b[2]) - max(a[0], b[0]))
+    h = max(0., min(a[3], b[3]) - max(a[1], b[1]))
+    union = (a[2]-a[0])*(a[3]-a[1]) + (b[2]-b[0])*(b[3]-b[1]) - w*h
+    return w*h/union if union > 0 else 0.
+
+
 class RuleEngine:
     def __init__(self, rules, recorded_at, cooldown_sec=600):
         self.rules = rules
@@ -219,10 +235,31 @@ class RuleEngine:
         self.cooldown = {}
         self.emitted = set()
         self.cooldown_sec = cooldown_sec
+        self.vehicle_alias = {}
+        self.vehicle_seen = {}
+
+    def _physical_vehicles(self, second, tracks, overlap=.6, memory=10.):
+        """Give one ID to one physical vehicle.
+
+        Tracking is per class, so a pickup seen as both car and truck, or a parked car
+        whose class or tracker ID flips, would otherwise count as several vehicles.
+        """
+        merged = {}
+        for track in (x for x in tracks if x['class'] in VEHICLES):
+            ident = self.vehicle_alias.get(track['id'])
+            if ident is None:
+                nearby = [(box_iou(track['box'], seen['box']), key) for key, seen in self.vehicle_seen.items()
+                          if second - seen['last'] <= memory]
+                score, key = max(nearby, default=(0., None))
+                ident = key if score >= overlap else track['id']
+                self.vehicle_alias[track['id']] = ident
+            self.vehicle_seen[ident] = {'box': track['box'], 'last': second}
+            merged.setdefault(ident, {**track, 'id': ident})
+        return list(merged.values())
 
     def update(self, second, tracks):
         events = []
-        vehicles = [x for x in tracks if x['class'] in VEHICLES]
+        vehicles = self._physical_vehicles(second, tracks)
         r1, r3 = self.rules.get('R1', {}), self.rules.get('R3', {})
         for person in (x for x in tracks if x['class'] == 'person'):
             ident, box = person['id'], person['box']

@@ -25,6 +25,7 @@ from app.worker import process_video
 from app.gpu import selected_gpu
 from sqlmodel import select
 
+default_budget = os.environ.get('JAGAAI_MAX_VLM_FRAMES', '24')
 plan = json.loads((ROOT/'scripts/ai-demo-cases.json').read_text(encoding='utf-8'))
 metadata = {r['clip_id']: r for r in csv.DictReader((ROOT/'data/meva/eval_candidates.csv').open(encoding='utf-8-sig'))}
 init_db()
@@ -55,6 +56,8 @@ for case in plan['cases']:
     video_id = 'demo-'+case['id']
     rules = default_rules()
     rules['R1']['enabled'] = bool(case.get('r1'))
+    # A case may state a lower, disclosed demo threshold or its own zone; defaults stay unchanged.
+    rules['R1'].update(case.get('r1_rules', {}))
     rules['R3'].update({'enabled': bool(case.get('r3_line')), 'line': case.get('r3_line'),
                        'zone': [], 'active_start': '00:00', 'active_end': '00:00'})
     recorded = datetime.fromisoformat(metadata[case['source']]['upload_recorded_at_myt_for_testing']).replace(
@@ -76,6 +79,8 @@ for case in plan['cases']:
         session.commit()
     start = time.perf_counter()
     if needs_analysis:
+        # Long clips with many people changes may need more sampled descriptions than the default.
+        os.environ['JAGAAI_MAX_VLM_FRAMES'] = str(case.get('max_vlm_frames', default_budget))
         process_video(video_id)
     with session_scope() as session:
         video = session.get(Video, video_id)
