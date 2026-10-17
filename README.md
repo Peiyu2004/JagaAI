@@ -1,8 +1,9 @@
-# JagaAI · Local community safety prototype
+# JagaAI
+#### JagaAI is a smart community management and safety platform that combines AI-driven surveillance with crowdsourced resident reporting and gamified participation. By bridging the gap between residents and security management, JagaAI ensures faster incident response times, efficient task resolution, and safer neighborhoods.
 
 > **Judges / evaluators:** the submission is **JagaAI v3**. Start with [`v3/README.md`](v3/README.md) (3-step quick start). The rest of this file documents the earlier prototype.
 
-基于 [新版 proposal](output/proposal/JagaAI_Proposal_v2.md) 逐步更新的本地原型，当前已接入本地 VLM、中英文自然语言录像搜索、居民上报自动回溯 → 人工审核 → 物业派单，以及发给居民的截图自动人脸／车牌打码。网页统一英文。代码、账号、数据库、照片与录像均保存在此电脑；没有上传 GitHub 或部署到云端。Argon 仅接收设计问题与必要代码片段用于评审，未接收录像、照片或账号数据。
+基于 [新版 proposal](output/proposal/JagaAI_Proposal_v2.md) 逐步更新的本地原型，当前已接入本地 VLM、中英文自然语言录像搜索、居民上报自动回溯 → 人工审核 → 物业派单，以及发给居民的截图自动人脸／车牌打码。网页统一英文。运行时的账号、数据库、照片与录像都保存在运行它的电脑上，推理也在本机完成，不上传云端；本仓库只附带公开 MEVA 素材制作的演示数据。Argon 仅接收设计问题与必要代码片段用于评审，未接收录像、照片或账号数据。
 
 ## 启动
 
