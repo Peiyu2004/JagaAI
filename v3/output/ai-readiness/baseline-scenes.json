@@ -1,0 +1,175 @@
+[
+  {
+    "clip_id": "2018-03-07.16-50-01.16-55-01.school.G328",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 9,
+      "truck": 4
+    }
+  },
+  {
+    "clip_id": "2018-03-11.11-50-01.11-55-01.school.G424",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 1,
+      "car": 11,
+      "truck": 2
+    }
+  },
+  {
+    "clip_id": "2018-03-11.16-20-04.16-25-04.school.G300",
+    "split": "debug",
+    "counts_at_150s": {
+      "car": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-15.14-55-07.15-00-07.hospital.G436",
+    "split": "holdout",
+    "counts_at_150s": {
+      "person": 2,
+      "car": 3,
+      "truck": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-07.17-05-00.17-10-00.school.G336",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 4
+    }
+  },
+  {
+    "clip_id": "2018-03-07.17-05-00.17-10-00.bus.G340",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 3,
+      "car": 15
+    }
+  },
+  {
+    "clip_id": "2018-03-12.10-00-02.10-05-02.school.G339",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 2,
+      "backpack": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-07.17-30-01.17-35-01.bus.G505",
+    "split": "holdout",
+    "counts_at_150s": {
+      "person": 1,
+      "car": 2,
+      "bus": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-15.14-50-06.14-55-06.hospital.G341",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-11.13-50-01.13-55-01.school.G328",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 8,
+      "truck": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-07.16-50-01.16-55-01.admin.G326",
+    "split": "debug",
+    "counts_at_150s": {}
+  },
+  {
+    "clip_id": "2018-03-07.16-50-07.16-55-07.hospital.G301",
+    "split": "debug",
+    "counts_at_150s": {
+      "car": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-07.17-05-00.17-10-00.school.G299",
+    "split": "debug",
+    "counts_at_150s": {}
+  },
+  {
+    "clip_id": "2018-03-07.16-50-00.16-55-00.admin.G329",
+    "split": "debug",
+    "counts_at_150s": {}
+  },
+  {
+    "clip_id": "2018-03-09.10-10-00.10-15-01.school.G328",
+    "split": "holdout",
+    "counts_at_150s": {
+      "car": 10,
+      "truck": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-12.10-45-00.10-50-00.school.G638",
+    "split": "debug",
+    "counts_at_150s": {
+      "car": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-07.16-50-06.16-55-06.school.G336",
+    "split": "holdout",
+    "counts_at_150s": {
+      "person": 2,
+      "car": 4
+    }
+  },
+  {
+    "clip_id": "2018-03-07.16-50-00.16-55-00.bus.G331",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 7,
+      "suitcase": 2
+    }
+  },
+  {
+    "clip_id": "2018-03-07.16-55-00.17-00-00.admin.G329",
+    "split": "debug",
+    "counts_at_150s": {}
+  },
+  {
+    "clip_id": "2018-03-11.11-30-01.11-35-01.school.G421",
+    "split": "debug",
+    "counts_at_150s": {}
+  },
+  {
+    "clip_id": "2018-03-11.13-50-00.13-54-59.school.G330",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 5
+    }
+  },
+  {
+    "clip_id": "2018-03-11.13-50-00.13-55-00.school.G299",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 7
+    }
+  },
+  {
+    "clip_id": "2018-03-12.10-00-01.10-05-01.school.G423",
+    "split": "debug",
+    "counts_at_150s": {
+      "person": 4,
+      "backpack": 1,
+      "suitcase": 1
+    }
+  },
+  {
+    "clip_id": "2018-03-13.17-30-05.17-35-05.bus.G340",
+    "split": "debug",
+    "counts_at_150s": {
+      "car": 4
+    }
+  }
+]

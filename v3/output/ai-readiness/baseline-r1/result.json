@@ -1,0 +1,35 @@
+{
+  "events": [],
+  "metrics": {
+    "sample_fps": 5.0,
+    "source_frames": 9000,
+    "sampled_frames": 1500,
+    "detector_calls": 651,
+    "motion_skipped_calls": 849,
+    "mean_inference_ms": 72.58,
+    "detection_wall_sec": 143.497,
+    "sampled_frames_per_wall_sec": 10.45,
+    "detector": "YOLOX-Tiny ONNX",
+    "provider": "CPUExecutionProvider",
+    "tracker": "ByteTrack (supervision 0.25.1)",
+    "rule_version": "1.0",
+    "identity_scope": "this video and camera only",
+    "source": "uploaded_recording",
+    "description_frames": 0,
+    "description_error": "Local VLM description is disabled by configuration.",
+    "semantic_wall_sec": 0.001,
+    "total_wall_sec": 155.072
+  },
+  "long_people": [
+    {
+      "id": "12",
+      "duration": 61.8,
+      "samples": 62
+    },
+    {
+      "id": "234",
+      "duration": 62.0,
+      "samples": 63
+    }
+  ]
+}

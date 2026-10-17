@@ -1,0 +1,30 @@
+{
+  "selected_gpu": {
+    "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
+  },
+  "amd_rocm_enabled": false,
+  "vulkan_enabled": false,
+  "loaded_models": [
+    {
+      "name": "qwen3-embedding:0.6b",
+      "model": "qwen3-embedding:0.6b",
+      "size": 2595057826,
+      "digest": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen3",
+        "families": [
+          "qwen3"
+        ],
+        "parameter_size": "595.78M",
+        "quantization_level": "Q8_0"
+      },
+      "expires_at": "2026-10-16T23:23:36.2245094+08:00",
+      "size_vram": 2345517710,
+      "context_length": 4096,
+      "runner": "llamacpp"
+    }
+  ]
+}

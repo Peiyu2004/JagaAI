@@ -1,0 +1,43 @@
+{
+  "original_business_data_unchanged": true,
+  "before": {
+    "integrity": "ok",
+    "content_sha256": "ad383cae8b887f346f8233929f601cf1e96f5fe66381b8605a9d3ec5d07c4cc3",
+    "counts": {
+      "user": 3,
+      "location": 4,
+      "guard": 0,
+      "auditlog": 58,
+      "appsettings": 1,
+      "authsession": 10,
+      "camera": 6,
+      "incident": 0,
+      "video": 1,
+      "lead": 0,
+      "track": 0,
+      "event": 0,
+      "description": 1,
+      "alert": 0
+    }
+  },
+  "after": {
+    "integrity": "ok",
+    "content_sha256": "ad383cae8b887f346f8233929f601cf1e96f5fe66381b8605a9d3ec5d07c4cc3",
+    "counts": {
+      "user": 3,
+      "location": 4,
+      "guard": 0,
+      "auditlog": 58,
+      "appsettings": 1,
+      "authsession": 10,
+      "camera": 6,
+      "incident": 0,
+      "video": 1,
+      "lead": 0,
+      "track": 0,
+      "event": 0,
+      "description": 1,
+      "alert": 0
+    }
+  }
+}

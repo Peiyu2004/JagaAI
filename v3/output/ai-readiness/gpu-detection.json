@@ -1,0 +1,46 @@
+{
+  "runtime": {
+    "detector": "YOLOX-S",
+    "installed": true,
+    "model_bytes": 35858002,
+    "providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "configured_provider": "CUDAExecutionProvider",
+    "active_provider": "CUDAExecutionProvider",
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
+    },
+    "tracker": "ByteTrack",
+    "rule_ids": [
+      "R1",
+      "R3"
+    ]
+  },
+  "model_sha256": "c5c2d13e59ae883e6af3b45daea64af4833a4951c92d116ec270d9ddbe998063",
+  "onnxruntime": "1.26.0",
+  "node_execution_providers": {
+    "CUDAExecutionProvider": 2436
+  },
+  "warm_mean_inference_ms": 34.8674818047915,
+  "inference_ms": [
+    1294.5094000315294,
+    34.78170000016689,
+    39.10080000059679,
+    34.496899985242635,
+    33.21189997950569,
+    36.946100008208305,
+    28.678299975581467,
+    38.534199993591756,
+    30.15179996145889,
+    43.25569997308776,
+    35.02769995247945,
+    29.357200022786856
+  ],
+  "profile": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\v3\\output\\ai-readiness\\ort-3050-s_2026-10-16_23-02-13_364.json",
+  "detections": 15,
+  "scope": "Repeated public frame; detector latency only, excluding decode/tracking/VLM. Not an accuracy measure."
+}

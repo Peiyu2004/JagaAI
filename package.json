@@ -1,0 +1,45 @@
+{
+  "name": "jagaai-local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "api": "tsx apps/api/src/index.ts",
+    "worker": "tsx apps/worker/src/index.ts",
+    "web": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/integration/*.test.ts",
+    "fixtures": "tsx scripts/create-fixtures.ts",
+    "ai:setup": "node scripts/setup-local-ai.mjs",
+    "demo:semantic": "tsx scripts/create-semantic-demo.ts",
+    "smoke:semantic": "tsx scripts/smoke-local-ai.ts",
+    "demo:report": "tsx scripts/create-report-demo.ts",
+    "verify:report": "tsx scripts/verify-report-workflow.ts",
+    "privacy:setup": "node scripts/setup-privacy.mjs",
+    "demo:privacy": "tsx scripts/create-privacy-demo.ts",
+    "verify:privacy": "tsx scripts/verify-privacy.ts"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "ffmpeg-static": "5.2.0",
+    "ffprobe-static": "3.1.0",
+    "lucide-react": "0.468.0",
+    "multer": "2.4.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.3",
+    "@types/multer": "2.0.0",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@vitejs/plugin-react": "5.1.0",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  }
+}

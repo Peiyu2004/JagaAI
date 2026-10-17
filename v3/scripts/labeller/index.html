@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEVA clip labelling</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--muted:#5b6673;--line:#d9dee4;--accent:#1e5bd8;--accent-ink:#fff;--ok:#1f7a4d;--warn:#b45309;--bad:#c4320a;--chip:#eef1f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#10161d;--card:#18202a;--ink:#e8edf2;--muted:#a3afbb;--line:#2c3744;--accent:#6e95df;--accent-ink:#0c1218;--ok:#5fc08c;--warn:#e0a24a;--bad:#ef8a6a;--chip:#232d39}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line)}
+h1{font-size:17px;margin:0}
+.grow{flex:1}
+label.inline{display:flex;gap:8px;align-items:center;color:var(--muted)}
+input[type=text],textarea{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+input[type=text]#who{width:170px}
+button{font:inherit;min-height:40px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+button:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px;padding:16px 20px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+.list{background:var(--card);border:1px solid var(--line);border-radius:12px;max-height:calc(100vh - 110px);overflow:auto;position:sticky;top:12px}
+.list button{display:grid;grid-template-columns:22px 1fr auto;gap:2px 8px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:9px 12px;min-height:56px;background:transparent}
+.list button[aria-current=true]{background:var(--chip);box-shadow:inset 3px 0 var(--accent)}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);align-self:center;grid-row:span 2}
+.dot.done{background:var(--ok);border-color:var(--ok)}.dot.part{border-color:var(--warn);background:linear-gradient(90deg,var(--warn) 50%,transparent 50%)}
+.small{font-size:12.5px;color:var(--muted)}
+.chip{font-size:12px;border-radius:999px;padding:1px 8px;background:var(--chip);color:var(--muted)}
+.chip.hold{background:#fde8d4;color:#7a3e00}@media (prefers-color-scheme:dark){.chip.hold{background:#4a3218;color:#f1c58d}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+#main{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+#banner,#agreement{grid-column:1/-1;margin:0}
+@media (min-width:1250px){#main{grid-template-columns:minmax(0,1.45fr) minmax(360px,1fr);align-items:start}#main>section:first-of-type{position:sticky;top:12px}video{max-height:70vh}}
+video{width:100%;max-height:60vh;background:#000;border-radius:8px;display:block}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.speed button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+fieldset{border:0;margin:0 0 10px;padding:0}legend{font-weight:600;margin-bottom:6px;padding:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer;min-height:36px}
+.opts label:has(input:checked){background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opts input{position:absolute;opacity:0;pointer-events:none}.opts label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.rule{font-size:13px;color:var(--muted);margin:0 0 8px}
+.banner{padding:10px 14px;border-radius:8px;background:var(--chip);border-left:4px solid var(--warn)}
+.banner.err{border-color:var(--bad)}
+.status{min-width:90px;text-align:right}
+footer{padding:0 20px 24px;color:var(--muted);font-size:12.5px}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>MEVA clip labelling</h1>
+  <label class="inline">Your name <input type="text" id="who" maxlength="40" autocomplete="off" placeholder="required"></label>
+  <span class="small" id="progress" aria-live="polite">Enter your name to start</span>
+  <span class="grow"></span>
+  <button id="export" class="primary">Export CSV</button>
+</header>
+<div class="layout">
+  <nav class="list" id="list" aria-label="Clips"></nav>
+  <main id="main">
+    <div class="banner" id="banner" hidden></div>
+    <section class="card" aria-label="Video">
+      <video id="video" controls preload="metadata"></video>
+      <div class="bar">
+        <span class="small">Speed</span>
+        <span class="speed" id="speed"></span>
+        <span class="grow"></span>
+        <span class="small" id="clock" aria-live="off"></span>
+      </div>
+      <p class="small">Keys: <kbd>Space</kbd> play/pause, <kbd>←</kbd><kbd>→</kbd> 10 s, <kbd>[</kbd><kbd>]</kbd> speed. Shortcuts are off while you type.</p>
+    </section>
+    <section class="card" aria-label="Labels" id="form">
+      <div id="meta" class="small" style="margin-bottom:6px"></div>
+      <fieldset><legend>Scene</legend><div class="opts" id="scene"></div></fieldset>
+      <fieldset><legend>R1 · vehicle loitering</legend>
+        <p class="rule">Yes if a person stays inside a parking area for 120 s or more, or goes up to 3 or more different vehicles within 5 minutes, 3 s or more at each. Otherwise No.</p>
+        <div class="opts" id="r1"></div></fieldset>
+      <fieldset><legend>R3 · restricted entry</legend>
+        <p class="rule">Pick one door or fence for this camera, describe it below, and use the same one for every clip of this camera. Yes if a person enters it or crosses the line.</p>
+        <div class="opts" id="r3"></div>
+        <label class="small" for="zone" style="display:block;margin-top:10px">Which door / fence, and where in the picture (same text for every clip of this camera)</label>
+        <input type="text" id="zone" maxlength="300" placeholder="e.g. glass door, left edge, lower third">
+      </fieldset>
+      <label class="small" for="notes">Notes (unclear parts, when it happens)</label>
+      <textarea id="notes" rows="2" maxlength="2000"></textarea>
+      <div class="bar">
+        <button id="stamp" type="button">Insert current time</button>
+        <button id="context" type="button">Show MEVA activity context</button>
+        <span class="grow"></span>
+        <span class="small status" id="saved" role="status"></span>
+        <button id="prev" type="button">Previous</button>
+        <button id="next" type="button">Next</button>
+        <button id="nextun" type="button" class="primary">Next unlabelled</button>
+      </div>
+      <p class="small" id="ctx" hidden></p>
+    </section>
+    <section class="card" id="agreement" hidden aria-label="Agreement"></section>
+  </main>
+</div>
+<footer>Clips: MEVA, Kitware Inc. and IARPA, CC BY 4.0, https://mevadata.org/. This page runs only on this computer; nothing is uploaded.
+Showing the MEVA activity context can bias your labels, so it is recorded in the export if you open it. Holdout clips: label them, but do not look at JagaAI's results on them until tuning is finished.</footer>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const SCENES = ["parking","entrance","walkway","other","unclear"], ANSWERS = ["yes","no","unclear"], SPEEDS = [1,2,4,8,16];
+const state = {clips:[], labels:{}, who:"", index:0, speed:4, timer:null, pending:null, pendingClip:null};
+const blank = () => ({scene_hint:"", r1:"", r3:"", zone_note:"", notes:"", context_viewed:false});
+function remember(key, value){ try{ if(value===undefined) return localStorage.getItem(key)||""; localStorage.setItem(key,value);}catch(e){return "";} }
+function mine(){ return (state.labels[state.who] = state.labels[state.who] || {}); }
+function current(){ return state.clips[state.index]; }
+function label(clip){ return Object.assign(blank(), mine()[clip.clip_id]||{}); }
+function status(clip){ const l = mine()[clip.clip_id]; if(!l) return "none"; return l.scene_hint && l.r1 && l.r3 ? "done" : (l.scene_hint||l.r1||l.r3||l.notes||l.zone_note) ? "part" : "none"; }
+function banner(text, error){ const b=$("banner"); b.hidden=!text; b.textContent=text||""; b.className="banner"+(error?" err":""); }
+
+function radios(host, name, values, onPick){
+  host.replaceChildren();
+  values.forEach(v => { const l=document.createElement("label"), i=document.createElement("input"); i.type="radio"; i.name=name; i.value=v;
+    i.addEventListener("change",()=>onPick(v)); l.append(i, document.createTextNode(v)); host.append(l); });
+}
+function setRadio(host, value){ host.querySelectorAll("input").forEach(i => { i.checked = i.value===value; }); }
+
+function renderList(){
+  const list=$("list"); list.replaceChildren();
+  state.clips.forEach((c,i)=>{ const b=document.createElement("button"); b.type="button"; if(i===state.index) b.setAttribute("aria-current","true");
+    const dot=document.createElement("span"); dot.className="dot "+status(c); dot.setAttribute("role","img"); dot.setAttribute("aria-label", status(c)==="done"?"labelled":status(c)==="part"?"partly labelled":"not labelled");
+    const t=document.createElement("span"); t.textContent=`${i+1}. ${c.camera} · ${c.site}`;
+    const sp=document.createElement("span"); sp.className="chip"+(c.split==="holdout"?" hold":""); sp.textContent=c.split;
+    const d=document.createElement("span"); d.className="small"; d.textContent=`${c.date} ${c.start_time}`;
+    b.append(dot,t,sp,d); b.addEventListener("click",()=>select(i)); list.append(b); });
+  const done=state.clips.filter(c=>status(c)==="done"), n=(s)=>done.filter(c=>c.split===s).length, t=(s)=>state.clips.filter(c=>c.split===s).length;
+  $("progress").textContent = state.who ? `${done.length} of ${state.clips.length} labelled · debug ${n("debug")}/${t("debug")} · holdout ${n("holdout")}/${t("holdout")}` : "Enter your name to start";
+}
+
+function select(i){
+  flush();
+  state.index = Math.max(0, Math.min(state.clips.length-1, i));
+  const c=current(), v=$("video"), src=`/media/${encodeURIComponent(c.clip_id)}.mp4`;
+  if(v.getAttribute("src")!==src){ v.src=src; } v.playbackRate = state.speed; v.defaultPlaybackRate = state.speed;
+  $("meta").textContent = `${c.clip_id} · ${c.split} · ${Math.round(c.duration_sec/60*10)/10} min`;
+  const l=label(c); setRadio($("scene"),l.scene_hint); setRadio($("r1"),l.r1); setRadio($("r3"),l.r3);
+  $("zone").value=l.zone_note; $("notes").value=l.notes; $("ctx").hidden=true; $("context").textContent=l.context_viewed?"Show MEVA activity context (already viewed)":"Show MEVA activity context";
+  $("saved").textContent=""; renderList(); agreement();
+  const locked=!state.who; $("form").querySelectorAll("input,textarea,button").forEach(e=>{ if(e.id!=="prev"&&e.id!=="next") e.disabled=locked; });
+}
+
+async function save(patch, clipId){
+  if(!state.who) return;
+  const c = clipId ? state.clips.find(x=>x.clip_id===clipId) : current();
+  if(state.pending && state.pendingClip===c.clip_id){ patch=Object.assign({}, state.pending, patch); state.pending=null; clearTimeout(state.timer); }
+  const l=Object.assign(label(c), patch); mine()[c.clip_id]=l; renderList();
+  $("saved").textContent="Saving…";
+  try{
+    const r = await fetch("/api/labels",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({labeller:state.who,clip_id:c.clip_id,label:l}),keepalive:true});
+    if(!r.ok) throw new Error((await r.json()).error||r.status);
+    $("saved").textContent="Saved ✓"; banner("");
+  }catch(e){ $("saved").textContent="Not saved"; banner("Could not save: "+e.message+". Your last change is only in this page; do not close it.", true); }
+  agreement();
+}
+// Typing is saved after a short pause. Pending text is kept per clip and is flushed before anything that could
+// change the current clip, so a quick click on Next can neither lose it nor attach it to the wrong clip.
+function later(patch){ state.pending=Object.assign(state.pending||{}, patch); state.pendingClip=current().clip_id; clearTimeout(state.timer); state.timer=setTimeout(flush,400); }
+function flush(){ return state.pending ? save({}, state.pendingClip) : Promise.resolve(); }
+
+function agreement(){
+  const box=$("agreement"), others=Object.keys(state.labels).filter(n=>n!==state.who);
+  const rows=others.map(o=>{ const shared=state.clips.filter(c=>state.labels[o][c.clip_id] && mine()[c.clip_id] && state.labels[o][c.clip_id].r1 && mine()[c.clip_id].r1);
+    if(!shared.length) return null; const eq=k=>shared.filter(c=>state.labels[o][c.clip_id][k]===mine()[c.clip_id][k]).length;
+    return `Compared with ${o}: ${shared.length} shared clips, R1 agree ${eq("r1")}/${shared.length}, R3 agree ${eq("r3")}/${shared.length}`; }).filter(Boolean);
+  box.hidden=!rows.length; box.replaceChildren(...rows.map(t=>{const p=document.createElement("p"); p.textContent=t; p.style.margin="0 0 4px"; return p;}));
+}
+
+function nextUnlabelled(){ for(let k=1;k<=state.clips.length;k++){ const i=(state.index+k)%state.clips.length; if(status(state.clips[i])!=="done"){ select(i); return; } } banner("Every clip is fully labelled. Export the CSV."); }
+function setSpeed(s){ state.speed=s; $("video").playbackRate=s; $("video").defaultPlaybackRate=s; $("speed").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(Number(b.dataset.s)===s))); }
+function fmt(t){ const m=Math.floor(t/60), s=Math.floor(t%60); return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`; }
+
+async function init(){
+  radios($("scene"),"scene",SCENES,v=>save({scene_hint:v})); radios($("r1"),"r1",ANSWERS,v=>save({r1:v})); radios($("r3"),"r3",ANSWERS,v=>save({r3:v}));
+  SPEEDS.forEach(s=>{ const b=document.createElement("button"); b.type="button"; b.dataset.s=s; b.textContent=s+"×"; b.addEventListener("click",()=>setSpeed(s)); $("speed").append(b); }); setSpeed(state.speed);
+  $("who").value=remember("meva-labeller"); state.who=$("who").value.trim();
+  // The browser also fires "change" when the field loses focus; ignore it unless the name really changed,
+  // otherwise the page re-renders between mouse-down and mouse-up and swallows the first click.
+  $("who").addEventListener("change",()=>{ const name=$("who").value.trim(); if(name===state.who) return; flush(); state.who=name; remember("meva-labeller",name); select(state.index); });
+  $("zone").addEventListener("input",()=>later({zone_note:$("zone").value})); $("notes").addEventListener("input",()=>later({notes:$("notes").value}));
+  $("stamp").addEventListener("click",()=>{ const n=$("notes"); n.value=(n.value?n.value+" ":"")+"["+fmt($("video").currentTime)+"]"; save({notes:n.value}); n.focus(); });
+  $("context").addEventListener("click",async()=>{ const r=await fetch("/api/context/"+encodeURIComponent(current().clip_id)); const j=await r.json();
+    $("ctx").textContent="MEVA annotators marked: "+j.activity_summary+" (context tag "+j.context_tag+"). This is not ground truth for R1 or R3."; $("ctx").hidden=false; $("context").textContent="Show MEVA activity context (already viewed)"; save({context_viewed:true}); });
+  $("prev").addEventListener("click",()=>select(state.index-1)); $("next").addEventListener("click",()=>select(state.index+1)); $("nextun").addEventListener("click",nextUnlabelled);
+  $("export").addEventListener("click",async()=>{ if(!state.who){ banner("Enter your name first.",true); return; }
+    await flush();
+    const r=await fetch("/api/export",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({labeller:state.who})}); const j=await r.json();
+    banner(r.ok?`Exported ${j.fully_labelled} of ${j.total} fully labelled clips to ${j.file}`:"Export failed: "+(j.error||r.status), !r.ok); });
+  $("video").addEventListener("timeupdate",()=>{ const v=$("video"); $("clock").textContent=fmt(v.currentTime)+" / "+fmt(v.duration||0); });
+  $("video").addEventListener("loadedmetadata",()=>{ $("video").playbackRate=state.speed; });
+  document.addEventListener("keydown",e=>{ if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName)&&e.target.type!=="radio"||e.ctrlKey||e.metaKey||e.altKey) return; const v=$("video");
+    if(e.key===" "&&e.target.tagName!=="BUTTON"&&e.target.type!=="radio"){ e.preventDefault(); v.paused?v.play():v.pause(); }
+    else if(e.key==="ArrowLeft"&&e.target.type!=="radio"){ v.currentTime=Math.max(0,v.currentTime-10); }
+    else if(e.key==="ArrowRight"&&e.target.type!=="radio"){ v.currentTime=Math.min(v.duration||1e9,v.currentTime+10); }
+    else if(e.key==="["){ setSpeed(SPEEDS[Math.max(0,SPEEDS.indexOf(state.speed)-1)]); }
+    else if(e.key==="]"){ setSpeed(SPEEDS[Math.min(SPEEDS.length-1,SPEEDS.indexOf(state.speed)+1)]); } });
+  addEventListener("pagehide",flush); document.addEventListener("visibilitychange",()=>{ if(document.hidden) flush(); });
+  try{ const r=await fetch("/api/clips"); const j=await r.json(); state.clips=j.clips; state.labels=j.labels; }
+  catch(e){ banner("Could not load the clip list. Is the labelling server running?",true); return; }
+  if(!state.clips.length){ banner("eval_candidates.csv has no clips.",true); return; }
+  select(0);
+}
+init();
+</script>
+</body>
+</html>

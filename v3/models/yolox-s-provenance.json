@@ -1,0 +1,7 @@
+{
+  "model": "YOLOX-S",
+  "source": "https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.onnx",
+  "license": "Apache-2.0",
+  "sha256_observed": "c5c2d13e59ae883e6af3b45daea64af4833a4951c92d116ec270d9ddbe998063",
+  "size_bytes": 35858002
+}

@@ -1,0 +1,83 @@
+{
+  "purpose": "Exploratory detector/tracker/rule run, not independent ground truth. Semantic analysis deliberately disabled.",
+  "source": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\v3\\data\\meva\\mp4\\2018-03-07.17-05-00.17-10-00.bus.G340.mp4",
+  "metrics": {
+    "sample_fps": 5.0,
+    "source_frames": 9000,
+    "sampled_frames": 1500,
+    "detector_cycles": 1074,
+    "detector_calls": 1074,
+    "boundary_focus_enabled": false,
+    "motion_skipped_calls": 426,
+    "mean_inference_ms": 54.62,
+    "detection_wall_sec": 193.706,
+    "sampled_frames_per_wall_sec": 7.74,
+    "detector": "YOLOX-S ONNX",
+    "provider": "CUDAExecutionProvider",
+    "tracker": "ByteTrack (supervision 0.25.1)",
+    "rule_version": "1.1",
+    "identity_scope": "this video and camera only",
+    "source": "uploaded_recording",
+    "description_frames_total": 24,
+    "description_frames_completed": 0,
+    "rejected_candidates": [],
+    "sample_budget_exceeded": true,
+    "description_frames": 0,
+    "description_error": "Local VLM description is disabled by configuration.",
+    "semantic_wall_sec": 0.002,
+    "total_wall_sec": 201.893
+  },
+  "events": [],
+  "longest_person_tracks": [
+    {
+      "track_id": "0-31",
+      "start_sec": 137.2,
+      "end_sec": 210.4
+    },
+    {
+      "track_id": "0-5",
+      "start_sec": 49.6,
+      "end_sec": 91.0
+    },
+    {
+      "track_id": "0-33",
+      "start_sec": 140.4,
+      "end_sec": 171.6
+    },
+    {
+      "track_id": "0-4",
+      "start_sec": 40.2,
+      "end_sec": 67.2
+    },
+    {
+      "track_id": "0-3",
+      "start_sec": 39.8,
+      "end_sec": 61.8
+    },
+    {
+      "track_id": "0-28",
+      "start_sec": 130.6,
+      "end_sec": 151.6
+    },
+    {
+      "track_id": "0-24",
+      "start_sec": 126.2,
+      "end_sec": 143.2
+    },
+    {
+      "track_id": "0-2",
+      "start_sec": 39.2,
+      "end_sec": 53.2
+    },
+    {
+      "track_id": "0-23",
+      "start_sec": 121.2,
+      "end_sec": 132.4
+    },
+    {
+      "track_id": "0-21",
+      "start_sec": 117.4,
+      "end_sec": 128.4
+    }
+  ]
+}

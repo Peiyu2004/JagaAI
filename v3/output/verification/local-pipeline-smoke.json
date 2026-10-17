@@ -1,0 +1,138 @@
+{
+  "input": "Original labelled synthetic clip, not a CCTV accuracy benchmark.",
+  "actual_yolox_inference": true,
+  "actual_vlm_and_embedding": true,
+  "video": {
+    "id": "a15d5f72-98db-4267-b2ee-a340198d96bc",
+    "camera_id": "cam-b1",
+    "filename": "synthetic-pipeline-smoke.mp4",
+    "recorded_at": "2026-10-15T12:11:40.879429+00:00",
+    "duration_sec": 5.0,
+    "status": "ready",
+    "error": null,
+    "analysis_source": "local_yolox_bytetrack",
+    "description_status": "ready",
+    "analysis_metrics": {
+      "sample_fps": 5.0,
+      "source_frames": 25,
+      "sampled_frames": 25,
+      "detector_calls": 5,
+      "motion_skipped_calls": 20,
+      "mean_inference_ms": 55.92,
+      "detection_wall_sec": 0.369,
+      "sampled_frames_per_wall_sec": 67.76,
+      "detector": "YOLOX-Tiny ONNX",
+      "provider": "CPUExecutionProvider",
+      "tracker": "ByteTrack (supervision 0.25.1)",
+      "rule_version": "1.0",
+      "identity_scope": "this video and camera only",
+      "source": "uploaded_recording",
+      "description_frames": 1,
+      "description_error": null,
+      "semantic_wall_sec": 32.823,
+      "total_wall_sec": 36.62
+    },
+    "processed_at": "2026-10-15T13:48:46.883299+00:00",
+    "created_at": "2026-10-15T13:11:40.955711+00:00",
+    "expires_at": "2026-11-14T13:11:40.955711+00:00",
+    "thumbnail_url": "/api/videos/a15d5f72-98db-4267-b2ee-a340198d96bc/keyframes/overview.jpg"
+  },
+  "searches": {
+    "有没有人打架": {
+      "supported": false,
+      "message": "This behaviour is not supported. M1 supports vehicle loitering and restricted entry, not fighting, falls or theft intent.",
+      "interpreted": {
+        "location_id": null,
+        "time_from": null,
+        "time_to": null,
+        "behaviour": null,
+        "appearance": []
+      },
+      "events": [],
+      "related": [],
+      "nearest": [],
+      "coverage": {
+        "analysed": 1,
+        "total": 1,
+        "pending": 0
+      },
+      "threshold": 0.65
+    },
+    "有人倒地吗": {
+      "supported": false,
+      "message": "This behaviour is not supported. M1 supports vehicle loitering and restricted entry, not fighting, falls or theft intent.",
+      "interpreted": {
+        "location_id": null,
+        "time_from": null,
+        "time_to": null,
+        "behaviour": null,
+        "appearance": []
+      },
+      "events": [],
+      "related": [],
+      "nearest": [],
+      "coverage": {
+        "analysed": 1,
+        "total": 1,
+        "pending": 0
+      },
+      "threshold": 0.65
+    },
+    "昨晚有大象吗": {
+      "supported": true,
+      "message": "No clear match. Upload and analyse footage to create searchable descriptions.",
+      "interpreted": {
+        "location_id": null,
+        "time_from": "2026-10-14T10:00:00+00:00",
+        "time_to": "2026-10-14T22:00:00+00:00",
+        "behaviour": null,
+        "appearance": []
+      },
+      "events": [],
+      "related": [],
+      "nearest": [],
+      "coverage": {
+        "analysed": 0,
+        "total": 0,
+        "pending": 0
+      },
+      "threshold": 0.65
+    },
+    "red rectangle near parking bays": {
+      "supported": true,
+      "message": "No clear match above the configured threshold. Closest clips are for human review only.",
+      "interpreted": {
+        "location_id": "zone-b",
+        "time_from": null,
+        "time_to": null,
+        "behaviour": null,
+        "appearance": [
+          "red"
+        ]
+      },
+      "events": [],
+      "related": [],
+      "nearest": [
+        {
+          "video_id": "a15d5f72-98db-4267-b2ee-a340198d96bc",
+          "camera_id": "cam-b1",
+          "start_sec": 0.0,
+          "end_sec": 5.0,
+          "text": "title: SYNTHETIC PIPELINE TEST - NOT CCTV, objects: 7 rectangular outlines (white), orange rectangle with pink rectangle attached to left, spatial relationships: title at top, rectangular outlines arranged horizontally, orange rectangle below rectangular outlines with pink rectangle attached to left Visibility: no coarse clothing or vehicle colours visible",
+          "score": 0.5915,
+          "model": "qwen3-vl:2b",
+          "analysis_source": "local_realtime"
+        }
+      ],
+      "coverage": {
+        "analysed": 1,
+        "total": 1,
+        "pending": 0
+      },
+      "threshold": 0.65
+    }
+  },
+  "private_range_playback": true,
+  "private_thumbnail": true,
+  "accuracy_evaluated": false
+}

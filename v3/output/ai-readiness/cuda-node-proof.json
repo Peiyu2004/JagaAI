@@ -1,0 +1,6 @@
+{
+  "node_execution_providers": {
+    "CUDAExecutionProvider": 2436
+  },
+  "profile": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\v3\\output\\ai-readiness\\ort-3050-s_2026-10-16_23-02-13_364.json"
+}

@@ -1,0 +1,17 @@
+{
+  "completed_at": "2026-10-16T15:56:35.735935+00:00",
+  "live_query_checks": 120,
+  "all_live_checks_passed": true,
+  "unit_tests": {
+    "passed": 105,
+    "warnings": 1
+  },
+  "indexed_frames": 51,
+  "all_frames_checked": true,
+  "known_false_frame_excluded": true,
+  "fresh_positive_negative_analysis_passed": true,
+  "original_data_unchanged": true,
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "demo_url": "http://127.0.0.1:5174/#ask",
+  "backup": "C:\\Users\\HP\\Downloads\\Sime darby\\backups\\jagaai-person-fix-20261016T154516Z"
+}

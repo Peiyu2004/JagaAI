@@ -1,0 +1,2616 @@
+{
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
+  },
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "cases": [
+    {
+      "id": "stairs-entry",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 82,
+      "to": 96,
+      "location": "perimeter",
+      "name": "Demo · Stair access boundary",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-stairs-entry",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/16/2018-03-07.16-50-01.16-55-01.admin.G326.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "913ff46ff1506ebf9c351fa9c933fcb54e3f7074360770c8f541cbaa14b15fdf",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 5.4,
+          "end_sec": 7.4,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-1",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a closed orange door with a window, white tiled walls, and a metal railing on a staircase. No people or vehicles are visible in the frame. Visibility: No people or vehicles visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a dark jacket is standing at the entrance of a building, opening a wooden door. The person is the only visible individual. The door is open, and the person is positioned at the threshold. The wall is tiled, and a light fixture is above the door. There is no vehicle visible in the frame. The person is wearing a dark jacket, and the door is wooden with a metal handle. The spatial relationship is that the person is at the entrance of the building, and the door is open. The lighting is from the overhead fixture. The person is the only visible subject. The door is open, and the person's Visibility: The person is partially visible, and the door is open. The lighting is from the overhead fixture. The person is at the entrance of the building, and the door is",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "light fixture",
+              "wall",
+              "tiled"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 5.6,
+            "keyframe": "sample-000005600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black jacket with a bright green hood is standing on a staircase in a building. The person is looking up at a door. The wall is tiled and there is a light fixture above. The person is in the foreground. Visibility: The person is in the foreground and the door is partially open. The wall is tiled and the light fixture is above the door. The handrail is on the right side of ",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "light fixture",
+              "stairs",
+              "wall",
+              "handrail"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 7.4,
+            "keyframe": "sample-000007400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 10.0,
+        "source_frames": 420,
+        "sampled_frames": 140,
+        "detector_cycles": 140,
+        "detector_calls": 280,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 67.8,
+        "detection_wall_sec": 15.447,
+        "sampled_frames_per_wall_sec": 9.06,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "description_frames_total": 3,
+        "description_frames_completed": 3,
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 44.389,
+        "total_wall_sec": 65.267
+      },
+      "run_wall_sec": 0.16
+    },
+    {
+      "id": "stairs-empty",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 0,
+      "to": 12,
+      "location": "perimeter",
+      "name": "Demo · Empty stair access",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-stairs-empty",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/16/2018-03-07.16-50-01.16-55-01.admin.G326.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "e5a63ecab2fc98ee7a509a66779e867396a6280ccb78426174c2dcd8db4a433e",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. A black mat is on the floor in front of the door. A red railing is visible on the right, leading down a staircase. The lighting is from a fluorescent fixture above. No people or vehicles are visible. Visibility: No people or vehicles visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "door",
+              "railing",
+              "mat",
+              "light"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 10.0,
+        "source_frames": 360,
+        "sampled_frames": 120,
+        "detector_cycles": 120,
+        "detector_calls": 240,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 47.9,
+        "detection_wall_sec": 11.099,
+        "sampled_frames_per_wall_sec": 10.81,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "description_frames_total": 1,
+        "description_frames_completed": 1,
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": null,
+        "semantic_wall_sec": 32.456,
+        "total_wall_sec": 43.615
+      },
+      "run_wall_sec": 0.14
+    },
+    {
+      "id": "landing-entry",
+      "source": "2018-03-07.16-50-00.16-55-00.admin.G329",
+      "from": 85,
+      "to": 99,
+      "location": "perimeter",
+      "name": "Demo · Landing boundary",
+      "r3_line": [
+        [
+          0.2,
+          0.75
+        ],
+        [
+          0.7,
+          0.75
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-landing-entry",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/16/2018-03-07.16-50-00.16-55-00.admin.G329.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "07930d287198509b0de4a28028c75964aaf7a110bbd918064a7c05119a37722e",
+      "derived_sha256": "b288cac58898b7c988d54cdb10e8424566abcf26b7312201c027ff64ee973c64",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 7.1,
+          "end_sec": 9.1,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-1",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "An empty, high-angle view of a staircase in a building. The walls are tiled, and the stairs are metal with handrails. A window and a radiator are visible in the background. No people or vehicles are visible. Visibility: empty",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "staircase",
+              "handrail",
+              "window",
+              "radiator"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a staircase in a building. A person in a dark jacket and light-colored pants is visible on the right, near the top of the stairs. The person is standing near a door. The wall is white, and the staircase is made of red metal. There is a window with a white frame in the background. The person is wearing a dark jacket and light pants. The upper clothing is dark. The vehicle is not visible. Visibility: The person is partially occluded by the staircase and the wall. The window is visible but not fully in focus. The door is partially visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "staircase",
+              "window",
+              "door",
+              "wall"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 5.0,
+            "keyframe": "sample-000005000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 8.2,
+            "keyframe": "sample-000008200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 10.0,
+        "source_frames": 420,
+        "sampled_frames": 140,
+        "detector_cycles": 140,
+        "detector_calls": 280,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 47.64,
+        "detection_wall_sec": 12.921,
+        "sampled_frames_per_wall_sec": 10.84,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "description_frames_total": 3,
+        "description_frames_completed": 3,
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 43.094,
+        "total_wall_sec": 56.091
+      },
+      "run_wall_sec": 0.24
+    },
+    {
+      "id": "courtyard-entry",
+      "source": "2018-03-12.10-45-00.10-50-00.school.G638",
+      "from": 285,
+      "to": 299,
+      "location": "perimeter",
+      "name": "Demo · Courtyard boundary",
+      "r3_line": [
+        [
+          0.4,
+          0.5
+        ],
+        [
+          0.4,
+          0.9
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-courtyard-entry",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/10/2018-03-12.10-45-00.10-50-00.school.G638.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "b99dd42cf44e446fcf290192210f54b6be89c32f92e063651f8a01fb4fbd87b7",
+      "derived_sha256": "35c60080a7d70d7e57bfb97dd1ab91c799c196eabe727983d583c25121fcee23",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 6.9,
+          "end_sec": 8.9,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-3",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "A surveillance view of a school building with a paved courtyard. No people are visible in the frame. Two vehicles are parked: a silver sedan and a white van. The silver sedan is in the foreground, and the white van is further back. The building has large windows and a brick facade. The sky is clear and sunny. Visibility: All vehicles are parked. No people are visible. The sky is clear and sunny.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a school courtyard. A person in dark clothing is visible near the entrance. A vehicle is partially visible on the right. The building has large windows and brickwork. The sky is clear. Visibility: The person is partially occluded, and the vehicle is partially visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "vehicle",
+              "building",
+              "window",
+              "door",
+              "plant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 8.5,
+            "keyframe": "sample-000008500.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 11.7,
+            "keyframe": "sample-000011700.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 10.0,
+        "source_frames": 420,
+        "sampled_frames": 140,
+        "detector_cycles": 140,
+        "detector_calls": 280,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 49.61,
+        "detection_wall_sec": 13.341,
+        "sampled_frames_per_wall_sec": 10.49,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "description_frames_total": 3,
+        "description_frames_completed": 3,
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 46.948,
+        "total_wall_sec": 60.384
+      },
+      "run_wall_sec": 0.21
+    },
+    {
+      "id": "parking-people",
+      "source": "2018-03-07.17-05-00.17-10-00.bus.G340",
+      "from": 40,
+      "to": 90,
+      "location": "zone-b",
+      "name": "Demo · People near parked vehicles",
+      "r1": true,
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-parking-people",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-05-00.17-10-00.bus.G340.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "12a6a12df24caba423613022dd9318fdeb113c800afec68b7ca24ee9962afa4a",
+      "derived_sha256": "79ba76bb255078febe3ccf191147d7799a274c6a19f8f72e50b22c46fd7e637f",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "Two people in the foreground: one in a black jacket and blue hoodie, the other in a dark jacket. A white SUV, a black SUV, and a red car are parked in the background. A white van is also visible. The scene is a parking lot with a building in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people standing on a sidewalk near a parking lot. A white SUV, a black SUV, and a white van are visible in the parking area. The people are wearing red, black, and blue clothing. The vehicles are parked in a row. The scene is outdoors on a paved area with grass. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 9.6,
+            "keyframe": "sample-000009600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people walking on a paved path in a parking lot. One person in a red jacket, another in a black jacket, and a third in a dark top. A white SUV, a black SUV, and a red car are visible in the background. The people are in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red car",
+              "white van",
+              "black van",
+              "red van",
+              "black van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 13.6,
+            "keyframe": "sample-000013600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Four people walking in a parking lot. A white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black van are parked. The people are in the foreground, walking on a paved area with grass. The vehicles are parked in a row. The people are wearing various colors of clothing. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "brown"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "pink"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "grey",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "person",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 16.0,
+            "keyframe": "sample-000016000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Four people are visible in the foreground, walking on a paved area near a grassy patch. They are wearing various colors: one in a red jacket, another in a blue jacket, and a third in a dark jacket. Several vehicles are parked in the background, including a white SUV, a black SUV, and a red sedan. A white van is also visible in the background. Visibility: Some vehicles are partially occluded or blurred, and the background is slightly out of focus.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "brown"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "green",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "white van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 19.6,
+            "keyframe": "sample-000019600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people in the foreground, one in a yellow jacket, another in a dark jacket, and a third in a pink jacket, are walking on a grassy area near a parking lot. Several vehicles are parked, including a white SUV, a black SUV, a red sedan, and a white van. The vehicles are parked in a row, and the people are standing near the white SUV. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "yellow"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "pink"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "green",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "white van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 22.8,
+            "keyframe": "sample-000022800.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people standing near a white SUV in a parking lot. A white van is parked nearby. A black SUV is parked behind the white SUV. A red car is parked in the background. A yellow building is visible in the background. The foreground shows a paved area with some dark stains. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "pink"
+              },
+              {
+                "clothing_color": "yellow"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              },
+              {
+                "color": "green",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red car",
+              "white van",
+              "yellow building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 26.6,
+            "keyframe": "sample-000026600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "blue"
+              },
+              {
+                "clothing_color": "yellow"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "grey",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "grey SUV",
+              "white van",
+              "black minivan"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 30.0,
+            "keyframe": "sample-000030000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, black, and blue clothing. Several vehicles are parked, including a white SUV, a black SUV, a red sedan, and a white van. The scene is viewed from a distance, with the foreground showing asphalt and grass. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "blue"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "green",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "white van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 40.0,
+            "keyframe": "sample-000040000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people in the foreground: one in a pink top, two in dark clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, and a white van. All are parked in a lot with a building in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "pink"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "grey",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "grey SUV",
+              "white van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 43.2,
+            "keyframe": "sample-000043200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              },
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "silver sedan",
+              "white van",
+              "black minivan"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 47.0,
+            "keyframe": "sample-000047000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "white SUV",
+              "black SUV",
+              "red sedan",
+              "white van",
+              "building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 49.2,
+            "keyframe": "sample-000049200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 1500,
+        "sampled_frames": 250,
+        "detector_cycles": 250,
+        "detector_calls": 250,
+        "boundary_focus_enabled": false,
+        "motion_skipped_calls": 0,
+        "mean_inference_ms": 34.5,
+        "detection_wall_sec": 22.256,
+        "sampled_frames_per_wall_sec": 11.23,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 12,
+        "description_error": null,
+        "semantic_wall_sec": 154.936,
+        "total_wall_sec": 177.294
+      },
+      "run_wall_sec": 0.18
+    },
+    {
+      "id": "parking-machine",
+      "source": "2018-03-11.11-50-01.11-55-01.school.G424",
+      "from": 130,
+      "to": 265,
+      "location": "zone-b",
+      "name": "Demo · Parked machinery false-positive check",
+      "r1": true,
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-parking-machine",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-50-01.11-55-01.school.G424.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "4d70d12d780f8e5dfa3dc173273412b2afd3e62b5f450cd6cb1d49fe3084fb3a",
+      "derived_sha256": "728bf0a0a5aaae097bec125818387b5a28e127797c1230526a331b4a836ab407",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a red pickup truck, a white SUV, a black Hummer, and a white sedan are visible. A red car is parked near a grassy area. An orange aerial lift is parked on the right. A red fire hydrant is visible on the left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "orange",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "red pickup truck",
+              "white SUV",
+              "black Hummer",
+              "white sedan",
+              "orange aerial lift",
+              "red car",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance frame showing a parking lot with several vehicles. In the foreground, a black Hummer SUV is parked. A red pickup truck is on the left, and a red sedan is in the middle. An orange aerial work platform is parked near the center. A white SUV is visible in the background. The scene includes grass, trees, and buildings. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black Hummer SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial work platform",
+              "white SUV",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 15.0,
+            "keyframe": "sample-000015000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left, and a red sedan is parked in the middle. An orange aerial work platform is on the right. A black Hummer is in the lower right. A white SUV is partially visible in the lower left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial work platform",
+              "black Hummer",
+              "white SUV"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 30.0,
+            "keyframe": "sample-000030000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance frame showing a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left, and a red sedan is in the middle. A black Hummer is in the center. A white SUV is partially visible in the lower left. A red fire hydrant is on the grass. A yellow and orange aerial lift is parked. The background includes buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "yellow",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "black Hummer",
+              "white SUV",
+              "yellow and orange aerial lift",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 45.0,
+            "keyframe": "sample-000045000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left. A red sedan is parked on the grass. An orange aerial lift is on the right. A white SUV is parked in the background. A red fire hydrant is visible. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial lift",
+              "white SUV",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 60.0,
+            "keyframe": "sample-000060000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left. A red sedan is parked near the center. An orange aerial lift is on the right. A white SUV is parked in the background. A red fire hydrant is visible on the left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial lift",
+              "white SUV",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 65.4,
+            "keyframe": "sample-000065400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. A red pickup truck is on the left, a black SUV is in the foreground, and a red sedan is parked in the middle. A black Hummer is in the center, and an orange aerial lift is on the right. A white SUV is parked near the building in the background. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "red pickup truck",
+              "black SUV",
+              "red sedan",
+              "orange aerial lift",
+              "black Hummer",
+              "white SUV",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 76.4,
+            "keyframe": "sample-000076400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking area with several vehicles. In the foreground, a black Hummer SUV is parked. A red pickup truck is on the left, and a red sedan is parked in the middle. An orange aerial work platform is on the right. A white SUV is parked near the right edge. A person in red upper clothing is visible near the red pickup truck. The background shows buildings and trees. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black Hummer SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial work platform",
+              "white SUV",
+              "person in red upper clothing"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 90.0,
+            "keyframe": "sample-000090000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking area with several vehicles. In the foreground, a black Hummer SUV is parked. To the left, a red pickup truck is visible. A red sedan is parked on the grass. An orange and yellow aerial lift is parked on the right. A white SUV is parked in the background. The scene includes a white mobile home and a few trees. No people are visible. Visibility: all vehicles are parked, no people visible, some occluded",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black Hummer SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange and yellow aerial lift",
+              "white SUV",
+              "white mobile home"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 93.2,
+            "keyframe": "sample-000093200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left. A red sedan is parked in the middle. An orange aerial work platform is on the right. A white SUV is parked near the right edge. A red fire hydrant is visible on the left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange aerial work platform",
+              "white SUV",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 108.2,
+            "keyframe": "sample-000108200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles. A red pickup truck, a black SUV, a red sedan, and a white SUV are visible. A person in dark clothing is seen on the right side. A yellow and orange aerial work platform is parked. The background shows buildings and trees. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "yellow",
+                "type": "truck"
+              }
+            ],
+            "objects": [
+              "red pickup truck",
+              "black SUV",
+              "red sedan",
+              "white SUV",
+              "aerial work platform",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 117.2,
+            "keyframe": "sample-000117200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance frame showing a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left. A red sedan is parked in the middle. An orange and yellow aerial work platform is on the right. Two people are walking on the right side of the frame. The background includes buildings and trees. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "truck"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "red sedan",
+              "orange and yellow aerial work platform",
+              "two people",
+              "white SUV",
+              "silver sedan",
+              "white car",
+              "red fire hydrant"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 119.6,
+            "keyframe": "sample-000119600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a parking lot with several vehicles and two people walking. The foreground shows a black SUV, a red pickup truck, a black Hummer, a red sedan, and a white SUV. Two people are walking on the right side of the frame. The background includes grass, trees, and buildings. The people are wearing dark clothing. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "orange",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "black Hummer",
+              "red sedan",
+              "white SUV",
+              "two people",
+              "orange aerial lift"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 123.0,
+            "keyframe": "sample-000123000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance frame showing several vehicles and people in a parking area. In the foreground, a black SUV, a red pickup truck, and a black Hummer are visible. Two people are walking on the paved area, and a person in a dark jacket is walking on the right. A red car is parked on the grass. A white and a blue car are parked in the background. The scene is outdoors with trees and buildings in the distance. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "black SUV",
+              "red pickup truck",
+              "black Hummer",
+              "red car",
+              "white car",
+              "blue car",
+              "person in dark jacket",
+              "person in light grey",
+              "person in white",
+              "person in light grey"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 125.0,
+            "keyframe": "sample-000125000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is parked on the left. A black Hummer is in the foreground. An orange aerial lift is parked on the right. A white SUV is partially visible in the lower left. A blue car is in the middle ground. A white building is in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "blue",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "red pickup truck",
+              "black Hummer",
+              "red car",
+              "orange aerial lift",
+              "white SUV",
+              "blue car",
+              "white building"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 130.2,
+            "keyframe": "sample-000130200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Two people in dark clothing walk on a paved area near a red pickup truck and a black SUV. A red sedan is parked nearby. A large orange and yellow aerial lift is on the right. Several other vehicles are parked in the background. The scene is a wide outdoor area with grass and trees. Visibility: Some vehicles are partially occluded or blurred. The background is distant and not clearly visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "truck"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "red pickup truck",
+              "black SUV",
+              "red sedan",
+              "orange and yellow aerial lift",
+              "white SUV",
+              "black and white vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 132.6,
+            "keyframe": "sample-000132600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 4050,
+        "sampled_frames": 675,
+        "detector_cycles": 476,
+        "detector_calls": 476,
+        "boundary_focus_enabled": false,
+        "motion_skipped_calls": 199,
+        "mean_inference_ms": 44.02,
+        "detection_wall_sec": 62.781,
+        "sampled_frames_per_wall_sec": 10.75,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 16,
+        "description_error": null,
+        "semantic_wall_sec": 195.883,
+        "total_wall_sec": 258.77
+      },
+      "run_wall_sec": 0.21
+    },
+    {
+      "id": "parking-holdout",
+      "source": "2018-03-07.16-50-01.16-55-01.school.G328",
+      "from": 70,
+      "to": 140,
+      "location": "zone-b",
+      "name": "Demo · Separate-camera parking check",
+      "r1": true,
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "holdout",
+      "video_id": "demo-parking-holdout",
+      "source_url": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/16/2018-03-07.16-50-01.16-55-01.school.G328.r13.avi",
+      "license": "CC-BY-4.0",
+      "attribution": "MEVA, Kitware Inc. and IARPA, https://mevadata.org/",
+      "source_sha256": "a636371c29f29186fc841680c99e24de903db2bcec9767edc723a6eecbfd2d97",
+      "derived_sha256": "1620f75647ac205cd5ad4e5ccfdf26eab63225dfb2c1e31282741687fa6b2853",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "A wide view of a schoolyard with several parked vehicles. In the foreground, a white van, a red SUV, a black pickup truck, and a white sedan are visible. A person in a light-colored top is seen near the center. The sky is overcast with clouds. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "white"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              }
+            ],
+            "objects": [
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white sedan",
+              "person in light-colored top"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several parked vehicles. In the foreground, a white van, a red SUV, a black pickup truck, and a white sedan are visible. A white van is parked on the right side of the road. The sky is overcast with clouds. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white sedan",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white sedan"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 15.0,
+            "keyframe": "sample-000015000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several parked vehicles. In the foreground, a white van, a red SUV, a black pickup truck, and a silver sedan are visible. A white van is parked on the right side of the road. The sky is overcast with clouds. No people are visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "silver sedan",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "silver sedan"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 30.0,
+            "keyframe": "sample-000030000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a schoolyard with several parked vehicles. A person in dark clothing walks on the right side of the frame. A white van, a red SUV, and a black pickup truck are visible. A white car is parked in the foreground. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white car",
+              "black car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 36.0,
+            "keyframe": "sample-000036000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A surveillance view of a schoolyard with several parked vehicles. A person in dark clothing walks near a white van and a red SUV. The foreground shows a mix of cars, including a white van, a red SUV, and a black pickup truck. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white car",
+              "silver car",
+              "black car",
+              "silver van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 45.6,
+            "keyframe": "sample-000045600.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing stands near a van. A white van is parked, and a red SUV is visible. A person in dark clothing walks near the white van. A black pickup truck is parked. A white van is parked. A red SUV is parked. A white van is parked. A black pickup truck is parked. A white van is parked. A red SUV is parked. A white van is parked. A black pickup truck is parked. A white van is parked. A red SUV is parked. A white van is parked. A black pickup truck is parked. A white van is parked. A red SUV is in Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "van",
+              "SUV",
+              "pickup truck",
+              "white van",
+              "red SUV"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 51.0,
+            "keyframe": "sample-000051000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near parked cars. A white van, a red SUV, and a black pickup truck are visible. A person in dark clothing walks near the white van. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 54.2,
+            "keyframe": "sample-000054200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a school campus with several vehicles and people. In the foreground, a person in dark clothing walks near parked cars. A white van, a red SUV, and a black pickup truck are visible. A person in dark clothing is walking on the left side of the frame. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 56.4,
+            "keyframe": "sample-000056400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van, a red SUV, and a black pickup truck are parked. A white van is visible on the right. The sky is overcast. No other people are clearly visible. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "car",
+              "van",
+              "SUV",
+              "pickup truck",
+              "white van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 58.4,
+            "keyframe": "sample-000058400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van and a black pickup truck are parked. A red SUV is visible. A person in dark clothing walks on the left. A white van is parked on the right. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "car",
+              "van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 60.8,
+            "keyframe": "sample-000060800.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks on the pavement. A white van, a black pickup truck, and a red SUV are parked. A white car is in the middle of the road. The sky is overcast. The buildings are in the background. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "white van",
+              "black pickup truck",
+              "red SUV",
+              "white car",
+              "black car",
+              "white car",
+              "black car",
+              "red car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 63.4,
+            "keyframe": "sample-000063400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles and people. A person in dark clothing walks in the foreground. A white van, a red SUV, a black pickup truck, and a white car are parked. A person in a dark jacket is visible near the center. The sky is overcast. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white car"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 66.2,
+            "keyframe": "sample-000066200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "truck"
+              },
+              {
+                "color": "yellow",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "person",
+              "white van",
+              "red SUV",
+              "black pickup truck",
+              "white sedan",
+              "silver SUV",
+              "yellow van"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "generation_attempts": 1,
+            "observed_at_sec": 69.8,
+            "keyframe": "sample-000069800.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 2100,
+        "sampled_frames": 350,
+        "detector_cycles": 174,
+        "detector_calls": 174,
+        "boundary_focus_enabled": false,
+        "motion_skipped_calls": 176,
+        "mean_inference_ms": 44.99,
+        "detection_wall_sec": 25.64,
+        "sampled_frames_per_wall_sec": 13.65,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 13,
+        "description_error": null,
+        "semantic_wall_sec": 163.405,
+        "total_wall_sec": 189.141
+      },
+      "run_wall_sec": 0.16
+    }
+  ]
+}

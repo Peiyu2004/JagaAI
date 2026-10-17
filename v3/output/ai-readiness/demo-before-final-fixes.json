@@ -1,0 +1,518 @@
+{
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
+  },
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "cases": [
+    {
+      "id": "stairs-entry",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 82,
+      "to": 96,
+      "location": "perimeter",
+      "name": "Demo · Stair access boundary",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-stairs-entry",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "913ff46ff1506ebf9c351fa9c933fcb54e3f7074360770c8f541cbaa14b15fdf",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 5.4,
+          "end_sec": 7.4,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-1",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a red door with a window, white tiled walls, and a staircase with orange railings. No people or vehicles are visible in the frame. Visibility: None observed.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "door",
+              "staircase",
+              "railings",
+              "tiled wall",
+              "light fixture"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black and neon green top stands at the entrance of a building. The door is open, revealing a view of the outside. The person is holding the door handle. The scene is indoors, with a tiled wall and a staircase with orange railings. No vehicles are visible. Visibility: 15 words",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "staircase",
+              "wall",
+              "rail"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 5.8,
+            "keyframe": "sample-000005800.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black jacket with a neon green hoodie stands on a staircase. The person is facing right, near a red door. No vehicles or other people are visible. Visibility: 15 words",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "jacket",
+              "hoodie"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 7.4,
+            "keyframe": "sample-000007400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_cycles": 38,
+        "detector_calls": 76,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 32,
+        "mean_inference_ms": 113.5,
+        "detection_wall_sec": 9.156,
+        "sampled_frames_per_wall_sec": 7.65,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 25.433,
+        "total_wall_sec": 41.908
+      },
+      "run_wall_sec": 42.13
+    },
+    {
+      "id": "stairs-empty",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 0,
+      "to": 12,
+      "location": "perimeter",
+      "name": "Demo · Empty stair access",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-stairs-empty",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "e5a63ecab2fc98ee7a509a66779e867396a6280ccb78426174c2dcd8db4a433e",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a closed orange door with a window, white tiled walls, and a staircase with orange railings. No people or vehicles are visible in the frame. Visibility: None observed.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "door",
+              "staircase",
+              "railings",
+              "tiled wall",
+              "light fixture"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 360,
+        "sampled_frames": 60,
+        "detector_cycles": 14,
+        "detector_calls": 28,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 46,
+        "mean_inference_ms": 79.79,
+        "detection_wall_sec": 4.028,
+        "sampled_frames_per_wall_sec": 14.9,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": null,
+        "semantic_wall_sec": 33.648,
+        "total_wall_sec": 37.728
+      },
+      "run_wall_sec": 37.89
+    },
+    {
+      "id": "landing-entry",
+      "source": "2018-03-07.16-50-00.16-55-00.admin.G329",
+      "from": 85,
+      "to": 99,
+      "location": "perimeter",
+      "name": "Demo · Landing boundary",
+      "r3_line": [
+        [
+          0.2,
+          0.75
+        ],
+        [
+          0.7,
+          0.75
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-landing-entry",
+      "source_sha256": "07930d287198509b0de4a28028c75964aaf7a110bbd918064a7c05119a37722e",
+      "derived_sha256": "b288cac58898b7c988d54cdb10e8424566abcf26b7312201c027ff64ee973c64",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 7.2,
+          "end_sec": 9.2,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-1",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "Two people in red upper-clothing visible on the right staircase. No vehicles or other people visible. No occluded objects. No unknown objects. No other details. Visibility: 15 words",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "red"
+              }
+            ],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "person",
+              "person",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "Two people visible. One in a black and green jacket, the other in a dark jacket. No vehicles visible. The person in the foreground is standing near the stairs. Visibility: 15 words",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "person"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 5.2,
+            "keyframe": "sample-000005200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black jacket with a green hood walks down a staircase in a building. The person is the only visible subject. No vehicles are visible. Visibility: 15 words",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "black jacket",
+              "green hood"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 8.4,
+            "keyframe": "sample-000008400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_cycles": 49,
+        "detector_calls": 98,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 21,
+        "mean_inference_ms": 58.24,
+        "detection_wall_sec": 7.613,
+        "sampled_frames_per_wall_sec": 9.19,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 44.416,
+        "total_wall_sec": 52.116
+      },
+      "run_wall_sec": 52.38
+    },
+    {
+      "id": "courtyard-entry",
+      "source": "2018-03-12.10-45-00.10-50-00.school.G638",
+      "from": 285,
+      "to": 299,
+      "location": "perimeter",
+      "name": "Demo · Courtyard boundary",
+      "r3_line": [
+        [
+          0.4,
+          0.5
+        ],
+        [
+          0.4,
+          0.9
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-courtyard-entry",
+      "source_sha256": "b99dd42cf44e446fcf290192210f54b6be89c32f92e063651f8a01fb4fbd87b7",
+      "derived_sha256": "35c60080a7d70d7e57bfb97dd1ab91c799c196eabe727983d583c25121fcee23",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": false,
+      "events": [],
+      "captions": [
+        {
+          "text": "No people or vehicles visible in the frame. The scene shows a building with a paved courtyard, a metal structure in the foreground, and a few parked cars in the background. No distinct upper-clothing colors are visible. Visibility: No people or vehicles visible in the frame.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "white",
+                "type": "car"
+              },
+              {
+                "color": "black",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_cycles": 15,
+        "detector_calls": 30,
+        "boundary_focus_enabled": true,
+        "motion_skipped_calls": 55,
+        "mean_inference_ms": 71.73,
+        "detection_wall_sec": 4.406,
+        "sampled_frames_per_wall_sec": 15.89,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": null,
+        "semantic_wall_sec": 36.527,
+        "total_wall_sec": 41.015
+      },
+      "run_wall_sec": 41.27
+    },
+    {
+      "id": "parking-people",
+      "source": "2018-03-07.17-05-00.17-10-00.bus.G340",
+      "from": 40,
+      "to": 90,
+      "location": "zone-b",
+      "name": "Demo · People near parked vehicles",
+      "r1": true,
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-parking-people",
+      "source_sha256": "12a6a12df24caba423613022dd9318fdeb113c800afec68b7ca24ee9962afa4a",
+      "derived_sha256": "79ba76bb255078febe3ccf191147d7799a274c6a19f8f72e50b22c46fd7e637f",
+      "status": "ready",
+      "description_status": "failed",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 1500,
+        "sampled_frames": 250,
+        "detector_cycles": 87,
+        "detector_calls": 87,
+        "boundary_focus_enabled": false,
+        "motion_skipped_calls": 163,
+        "mean_inference_ms": 58.46,
+        "detection_wall_sec": 18.922,
+        "sampled_frames_per_wall_sec": 13.21,
+        "detector": "YOLOX-S ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": "Local VLM output was incomplete. Retry the recording analysis.",
+        "semantic_wall_sec": 47.772,
+        "total_wall_sec": 66.808
+      },
+      "run_wall_sec": 67.0
+    }
+  ]
+}

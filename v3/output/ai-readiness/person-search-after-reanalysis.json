@@ -1,0 +1,2782 @@
+{
+  "checked_at": "2026-10-16T15:55:35.044355+00:00",
+  "rounds": 1,
+  "threshold": 0.65,
+  "queries": [
+    {
+      "round": 1,
+      "id": "red-original-en",
+      "payload": {
+        "query": "person wearing red near a white car"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.767,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6612,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.644,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6324,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.6272,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-failed-variant",
+      "payload": {
+        "query": "a person wearing a red jacket beside a white SUV"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.733,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.7317,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.6822,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 48.2,
+            "end_sec": 50.0,
+            "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+            "score": 0.7122,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000049200.jpg",
+            "observed_at_sec": 49.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 21.8,
+            "end_sec": 23.8,
+            "text": "Three people in the foreground, one in a yellow jacket, another in a dark jacket, and a third in a pink jacket, are walking on a grassy area near a parking lot. Several vehicles are parked, including a white SUV, a black SUV, a red sedan, and a white van. The vehicles are parked in a row, and the people are standing near the white SUV. Visibility: blur, size, occlusion",
+            "score": 0.6643,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000022800.jpg",
+            "observed_at_sec": 22.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 0.0,
+            "end_sec": 1.0,
+            "text": "Two people in the foreground: one in a black jacket and blue hoodie, the other in a dark jacket. A white SUV, a black SUV, and a red car are parked in the background. A white van is also visible. The scene is a parking lot with a building in the background. Visibility: blur, size, occlusion",
+            "score": 0.6501,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000000000.jpg",
+            "observed_at_sec": 0.0,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-someone",
+      "payload": {
+        "query": "show me someone in a red jacket near a white car"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.628,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.7529,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 12.6,
+            "end_sec": 14.6,
+            "text": "Three people walking on a paved path in a parking lot. One person in a red jacket, another in a black jacket, and a third in a dark top. A white SUV, a black SUV, and a red car are visible in the background. The people are in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.686,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000013600.jpg",
+            "observed_at_sec": 13.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.6789,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 39.0,
+            "end_sec": 41.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, black, and blue clothing. Several vehicles are parked, including a white SUV, a black SUV, a red sedan, and a white van. The scene is viewed from a distance, with the foreground showing asphalt and grass. Visibility: blur, size, occlusion",
+            "score": 0.6531,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000040000.jpg",
+            "observed_at_sec": 40.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 48.2,
+            "end_sec": 50.0,
+            "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+            "score": 0.7275,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000049200.jpg",
+            "observed_at_sec": 49.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 129.2,
+            "end_sec": 131.2,
+            "text": "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is parked on the left. A black Hummer is in the foreground. An orange aerial lift is parked on the right. A white SUV is partially visible in the lower left. A blue car is in the middle ground. A white building is in the background. Visibility: blur, size, occlusion",
+            "score": 0.7122,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000130200.jpg",
+            "observed_at_sec": 130.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.6994,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-clothing",
+      "payload": {
+        "query": "find people in red clothing beside a white vehicle"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.667,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "vehicle"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.7628,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.744,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 39.0,
+            "end_sec": 41.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, black, and blue clothing. Several vehicles are parked, including a white SUV, a black SUV, a red sedan, and a white van. The scene is viewed from a distance, with the foreground showing asphalt and grass. Visibility: blur, size, occlusion",
+            "score": 0.7244,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000040000.jpg",
+            "observed_at_sec": 40.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 8.6,
+            "end_sec": 10.6,
+            "text": "Three people standing on a sidewalk near a parking lot. A white SUV, a black SUV, and a white van are visible in the parking area. The people are wearing red, black, and blue clothing. The vehicles are parked in a row. The scene is outdoors on a paved area with grass. Visibility: blur, size, occlusion",
+            "score": 0.7239,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000009600.jpg",
+            "observed_at_sec": 9.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 12.6,
+            "end_sec": 14.6,
+            "text": "Three people walking on a paved path in a parking lot. One person in a red jacket, another in a black jacket, and a third in a dark top. A white SUV, a black SUV, and a red car are visible in the background. The people are in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.7138,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000013600.jpg",
+            "observed_at_sec": 13.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 18.6,
+            "end_sec": 20.6,
+            "text": "Four people are visible in the foreground, walking on a paved area near a grassy patch. They are wearing various colors: one in a red jacket, another in a blue jacket, and a third in a dark jacket. Several vehicles are parked in the background, including a white SUV, a black SUV, and a red sedan. A white van is also visible in the background. Visibility: Some vehicles are partially occluded or blurred, and the background is slightly out of focus.",
+            "score": 0.6953,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000019600.jpg",
+            "observed_at_sec": 19.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 25.6,
+            "end_sec": 27.6,
+            "text": "Three people standing near a white SUV in a parking lot. A white van is parked nearby. A black SUV is parked behind the white SUV. A red car is parked in the background. A yellow building is visible in the background. The foreground shows a paved area with some dark stains. Visibility: blur, size, occlusion",
+            "score": 0.6947,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000026600.jpg",
+            "observed_at_sec": 26.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 15.0,
+            "end_sec": 17.0,
+            "text": "Four people walking in a parking lot. A white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black van are parked. The people are in the foreground, walking on a paved area with grass. The vehicles are parked in a row. The people are wearing various colors of clothing. Visibility: blur, size, occlusion",
+            "score": 0.6829,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000016000.jpg",
+            "observed_at_sec": 16.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 129.2,
+            "end_sec": 131.2,
+            "text": "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is parked on the left. A black Hummer is in the foreground. An orange aerial lift is parked on the right. A white SUV is partially visible in the lower left. A blue car is in the middle ground. A white building is in the background. Visibility: blur, size, occlusion",
+            "score": 0.7549,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000130200.jpg",
+            "observed_at_sec": 130.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.7534,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.7522,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-original-zh",
+      "payload": {
+        "query": "穿红衣服的人靠近白色汽车"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.713,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": "person wearing red near a white car"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6612,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 53.2,
+            "end_sec": 55.2,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near parked cars. A white van, a red SUV, and a black pickup truck are visible. A person in dark clothing walks near the white van. The sky is overcast. Visibility: blur, size, occlusion",
+            "score": 0.6441,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000054200.jpg",
+            "observed_at_sec": 54.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.644,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6434,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-coat-zh",
+      "payload": {
+        "query": "穿红色外套的人在白色车旁边"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.617,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "vehicle"
+            ]
+          },
+          "attribute_search_phrase": "person wearing red near a white vehicle"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6788,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.6728,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6638,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 48.2,
+            "end_sec": 50.0,
+            "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+            "score": 0.648,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000049200.jpg",
+            "observed_at_sec": 49.2,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-find-zh",
+      "payload": {
+        "query": "找穿红衣的人和白色汽车"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.658,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": "person wearing red and a white car"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6529,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6173,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 48.2,
+            "end_sec": 50.0,
+            "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+            "score": 0.6095,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000049200.jpg",
+            "observed_at_sec": 49.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 129.2,
+            "end_sec": 131.2,
+            "text": "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is parked on the left. A black Hummer is in the foreground. An orange aerial lift is parked on the right. A white SUV is partially visible in the lower left. A blue car is in the middle ground. A white building is in the background. Visibility: blur, size, occlusion",
+            "score": 0.6081,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000130200.jpg",
+            "observed_at_sec": 130.2,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-orang",
+      "payload": {
+        "query": "orang berbaju merah dekat kereta putih"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.654,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": "person wearing red near a white car"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6612,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.644,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6324,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.6272,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "red-lelaki",
+      "payload": {
+        "query": "lelaki baju merah dekat kereta putih"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.663,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "red",
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": "person wearing red near a white car"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 46.0,
+            "end_sec": 48.0,
+            "text": "Three people and several vehicles are visible in a parking lot. A person in a red jacket walks on the left, a person in a dark jacket walks in the center, and a person in a dark jacket stands near a white SUV. The vehicles include a white SUV, a black SUV, a red sedan, a silver sedan, a white van, and a black minivan. The person in the red jacket is in the foreground, and the vehicles are parked in the background. Visibility: blur, size, occlusion",
+            "score": 0.6612,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000047000.jpg",
+            "observed_at_sec": 47.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.644,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6324,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: red"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "Three people standing near a white SUV in a parking lot. The people are wearing red, blue, and yellow clothing. Vehicles include a white SUV, a black SUV, a red sedan, a grey SUV, a white van, and a black minivan. The white SUV is in the foreground, and the people are near it. Visibility: blur, size, occlusion",
+            "score": 0.6272,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "black-zh",
+      "payload": {
+        "query": "穿黑色衣服的人在楼梯旁边"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.772,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "black"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "black"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "stairs"
+            ]
+          },
+          "attribute_search_phrase": "person wearing black near stairs"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 6.4,
+            "end_sec": 8.4,
+            "text": "A person in a black jacket with a bright green hood is standing on a staircase in a building. The person is looking up at a door. The wall is tiled and there is a light fixture above. The person is in the foreground. Visibility: The person is in the foreground and the door is partially open. The wall is tiled and the light fixture is above the door. The handrail is on the right side of ",
+            "score": 0.663,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000007400.jpg",
+            "observed_at_sec": 7.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 4.0,
+            "end_sec": 6.0,
+            "text": "A surveillance view of a staircase in a building. A person in a dark jacket and light-colored pants is visible on the right, near the top of the stairs. The person is standing near a door. The wall is white, and the staircase is made of red metal. There is a window with a white frame in the background. The person is wearing a dark jacket and light pants. The upper clothing is dark. The vehicle is not visible. Visibility: The person is partially occluded by the staircase and the wall. The window is visible but not fully in focus. The door is partially visible.",
+            "score": 0.6552,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000005000.jpg",
+            "observed_at_sec": 5.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 7.2,
+            "end_sec": 9.2,
+            "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+            "score": 0.7149,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000008200.jpg",
+            "observed_at_sec": 8.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 4.6,
+            "end_sec": 6.6,
+            "text": "A person in a dark jacket is standing at the entrance of a building, opening a wooden door. The person is the only visible individual. The door is open, and the person is positioned at the threshold. The wall is tiled, and a light fixture is above the door. There is no vehicle visible in the frame. The person is wearing a dark jacket, and the door is wooden with a metal handle. The spatial relationship is that the person is at the entrance of the building, and the door is open. The lighting is from the overhead fixture. The person is the only visible subject. The door is open, and the person's Visibility: The person is partially visible, and the door is open. The lighting is from the overhead fixture. The person is at the entrance of the building, and the door is",
+            "score": 0.5343,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000005600.jpg",
+            "observed_at_sec": 5.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.512,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "black-en",
+      "payload": {
+        "query": "person wearing black near stairs"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.581,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "black"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "black"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "stairs"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 6.4,
+            "end_sec": 8.4,
+            "text": "A person in a black jacket with a bright green hood is standing on a staircase in a building. The person is looking up at a door. The wall is tiled and there is a light fixture above. The person is in the foreground. Visibility: The person is in the foreground and the door is partially open. The wall is tiled and the light fixture is above the door. The handrail is on the right side of ",
+            "score": 0.663,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000007400.jpg",
+            "observed_at_sec": 7.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 4.0,
+            "end_sec": 6.0,
+            "text": "A surveillance view of a staircase in a building. A person in a dark jacket and light-colored pants is visible on the right, near the top of the stairs. The person is standing near a door. The wall is white, and the staircase is made of red metal. There is a window with a white frame in the background. The person is wearing a dark jacket and light pants. The upper clothing is dark. The vehicle is not visible. Visibility: The person is partially occluded by the staircase and the wall. The window is visible but not fully in focus. The door is partially visible.",
+            "score": 0.6552,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000005000.jpg",
+            "observed_at_sec": 5.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 7.2,
+            "end_sec": 9.2,
+            "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+            "score": 0.7149,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000008200.jpg",
+            "observed_at_sec": 8.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 4.6,
+            "end_sec": 6.6,
+            "text": "A person in a dark jacket is standing at the entrance of a building, opening a wooden door. The person is the only visible individual. The door is open, and the person is positioned at the threshold. The wall is tiled, and a light fixture is above the door. There is no vehicle visible in the frame. The person is wearing a dark jacket, and the door is wooden with a metal handle. The spatial relationship is that the person is at the entrance of the building, and the door is open. The lighting is from the overhead fixture. The person is the only visible subject. The door is open, and the person's Visibility: The person is partially visible, and the door is open. The lighting is from the overhead fixture. The person is at the entrance of the building, and the door is",
+            "score": 0.5343,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000005600.jpg",
+            "observed_at_sec": 5.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.512,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "black-someone",
+      "payload": {
+        "query": "someone in a black jacket near the stairs"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.628,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "black"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "black"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "stairs"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 6.4,
+            "end_sec": 8.4,
+            "text": "A person in a black jacket with a bright green hood is standing on a staircase in a building. The person is looking up at a door. The wall is tiled and there is a light fixture above. The person is in the foreground. Visibility: The person is in the foreground and the door is partially open. The wall is tiled and the light fixture is above the door. The handrail is on the right side of ",
+            "score": 0.7017,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000007400.jpg",
+            "observed_at_sec": 7.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 4.0,
+            "end_sec": 6.0,
+            "text": "A surveillance view of a staircase in a building. A person in a dark jacket and light-colored pants is visible on the right, near the top of the stairs. The person is standing near a door. The wall is white, and the staircase is made of red metal. There is a window with a white frame in the background. The person is wearing a dark jacket and light pants. The upper clothing is dark. The vehicle is not visible. Visibility: The person is partially occluded by the staircase and the wall. The window is visible but not fully in focus. The door is partially visible.",
+            "score": 0.6942,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000005000.jpg",
+            "observed_at_sec": 5.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 7.2,
+            "end_sec": 9.2,
+            "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+            "score": 0.6684,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000008200.jpg",
+            "observed_at_sec": 8.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 4.6,
+            "end_sec": 6.6,
+            "text": "A person in a dark jacket is standing at the entrance of a building, opening a wooden door. The person is the only visible individual. The door is open, and the person is positioned at the threshold. The wall is tiled, and a light fixture is above the door. There is no vehicle visible in the frame. The person is wearing a dark jacket, and the door is wooden with a metal handle. The spatial relationship is that the person is at the entrance of the building, and the door is open. The lighting is from the overhead fixture. The person is the only visible subject. The door is open, and the person's Visibility: The person is partially visible, and the door is open. The lighting is from the overhead fixture. The person is at the entrance of the building, and the door is",
+            "score": 0.5655,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000005600.jpg",
+            "observed_at_sec": 5.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 48.2,
+            "end_sec": 50.0,
+            "text": "A person in a dark jacket walks in the foreground. Several vehicles are parked in a lot, including a white SUV, a black SUV, and a red sedan. A white van is visible in the background. The person is in the center-left of the frame. Visibility: blur, size, occlusion",
+            "score": 0.4876,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000049200.jpg",
+            "observed_at_sec": 49.2,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "black-ms",
+      "payload": {
+        "query": "orang berbaju hitam dekat tangga"
+      },
+      "kind": "positive",
+      "passed": true,
+      "seconds": 0.754,
+      "result": {
+        "supported": true,
+        "message": "Matches are leads for human review, not proof. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "black"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "black"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "stairs"
+            ]
+          },
+          "attribute_search_phrase": "person wearing black near stairs"
+        },
+        "events": [],
+        "related": [
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 6.4,
+            "end_sec": 8.4,
+            "text": "A person in a black jacket with a bright green hood is standing on a staircase in a building. The person is looking up at a door. The wall is tiled and there is a light fixture above. The person is in the foreground. Visibility: The person is in the foreground and the door is partially open. The wall is tiled and the light fixture is above the door. The handrail is on the right side of ",
+            "score": 0.663,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000007400.jpg",
+            "observed_at_sec": 7.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 4.0,
+            "end_sec": 6.0,
+            "text": "A surveillance view of a staircase in a building. A person in a dark jacket and light-colored pants is visible on the right, near the top of the stairs. The person is standing near a door. The wall is white, and the staircase is made of red metal. There is a window with a white frame in the background. The person is wearing a dark jacket and light pants. The upper clothing is dark. The vehicle is not visible. Visibility: The person is partially occluded by the staircase and the wall. The window is visible but not fully in focus. The door is partially visible.",
+            "score": 0.6552,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000005000.jpg",
+            "observed_at_sec": 5.0,
+            "person_supported": true
+          }
+        ],
+        "nearest": [
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 7.2,
+            "end_sec": 9.2,
+            "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+            "score": 0.7149,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000008200.jpg",
+            "observed_at_sec": 8.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 4.6,
+            "end_sec": 6.6,
+            "text": "A person in a dark jacket is standing at the entrance of a building, opening a wooden door. The person is the only visible individual. The door is open, and the person is positioned at the threshold. The wall is tiled, and a light fixture is above the door. There is no vehicle visible in the frame. The person is wearing a dark jacket, and the door is wooden with a metal handle. The spatial relationship is that the person is at the entrance of the building, and the door is open. The lighting is from the overhead fixture. The person is the only visible subject. The door is open, and the person's Visibility: The person is partially visible, and the door is open. The lighting is from the overhead fixture. The person is at the entrance of the building, and the door is",
+            "score": 0.5343,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000005600.jpg",
+            "observed_at_sec": 5.6,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "start_sec": 10.7,
+            "end_sec": 12.7,
+            "text": "A person in dark clothing walks in the courtyard. A red vehicle is visible in the background. A white vehicle is partially visible on the right. The building has a brick facade with large windows. The person is near the entrance, and the vehicle is in the distance. Visibility: blur, size, occlusion",
+            "score": 0.5192,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: stairs"
+            ],
+            "keyframe_url": "/api/videos/demo-courtyard-entry/keyframes/sample-000011700.jpg",
+            "observed_at_sec": 11.7,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "purple-zh",
+      "payload": {
+        "query": "穿紫色衣服的人"
+      },
+      "kind": "negative",
+      "passed": true,
+      "seconds": 0.575,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [
+              "purple"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person"
+            ]
+          },
+          "attribute_search_phrase": "person wearing purple"
+        },
+        "events": [],
+        "related": [],
+        "nearest": [
+          {
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "start_sec": 7.2,
+            "end_sec": 9.2,
+            "text": "A person in a black and lime green hoodie walks down a staircase in a building corridor. The person is the only visible subject. Visibility: The person is in the foreground, walking down the stairs. The surrounding environment is a building corridor with stairs and walls. The lighting is artificial, ",
+            "score": 0.4943,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-landing-entry/keyframes/sample-000008200.jpg",
+            "observed_at_sec": 8.2,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 55.4,
+            "end_sec": 57.4,
+            "text": "A wide-angle view of a school campus with several vehicles and people. In the foreground, a person in dark clothing walks near parked cars. A white van, a red SUV, and a black pickup truck are visible. A person in dark clothing is walking on the left side of the frame. The sky is overcast. Visibility: blur, size, occlusion",
+            "score": 0.49,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000056400.jpg",
+            "observed_at_sec": 56.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.4872,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "purple-en",
+      "payload": {
+        "query": "a person wearing purple beside a white car"
+      },
+      "kind": "negative",
+      "passed": true,
+      "seconds": 0.54,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "purple"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 59.8,
+            "end_sec": 61.8,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van and a black pickup truck are parked. A red SUV is visible. A person in dark clothing walks on the left. A white van is parked on the right. The sky is overcast. Visibility: blur, size, occlusion",
+            "score": 0.6537,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000060800.jpg",
+            "observed_at_sec": 60.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 57.4,
+            "end_sec": 59.4,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van, a red SUV, and a black pickup truck are parked. A white van is visible on the right. The sky is overcast. No other people are clearly visible. Visibility: blur, size, occlusion",
+            "score": 0.6509,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000058400.jpg",
+            "observed_at_sec": 58.4,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 53.2,
+            "end_sec": 55.2,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near parked cars. A white van, a red SUV, and a black pickup truck are visible. A person in dark clothing walks near the white van. The sky is overcast. Visibility: blur, size, occlusion",
+            "score": 0.6497,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000054200.jpg",
+            "observed_at_sec": 54.2,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "purple-ms",
+      "payload": {
+        "query": "orang berbaju ungu dekat kereta putih"
+      },
+      "kind": "negative",
+      "passed": true,
+      "seconds": 0.552,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [
+            "white"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "purple"
+            ],
+            "vehicle_colours": [
+              "white"
+            ],
+            "other_colours": [],
+            "objects": [
+              "person",
+              "car"
+            ]
+          },
+          "attribute_search_phrase": "person wearing purple near a white car"
+        },
+        "events": [],
+        "related": [],
+        "nearest": [
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 59.8,
+            "end_sec": 61.8,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van and a black pickup truck are parked. A red SUV is visible. A person in dark clothing walks on the left. A white van is parked on the right. The sky is overcast. Visibility: blur, size, occlusion",
+            "score": 0.6552,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000060800.jpg",
+            "observed_at_sec": 60.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 68.8,
+            "end_sec": 70.0,
+            "text": "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreground shows a person in dark clothing walking near a white van and a red SUV. A person in dark clothing is standing near the white van. The sky is overcast. The vehicles include a white van, a red SUV, a black pickup truck, a white sedan, a silver SUV, and a yellow van. The person in the foreground is wearing dark clothing. Visibility: blur, size, occlusion",
+            "score": 0.6543,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000069800.jpg",
+            "observed_at_sec": 69.8,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-holdout",
+            "camera_id": "demo-parking-holdout",
+            "start_sec": 57.4,
+            "end_sec": 59.4,
+            "text": "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a person in dark clothing walks near a white car. A white van, a red SUV, and a black pickup truck are parked. A white van is visible on the right. The sky is overcast. No other people are clearly visible. Visibility: blur, size, occlusion",
+            "score": 0.6533,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "person clothing: purple"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-holdout/keyframes/sample-000058400.jpg",
+            "observed_at_sec": 58.4,
+            "person_supported": true
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "elephant-zh",
+      "payload": {
+        "query": "有没有大象"
+      },
+      "kind": "negative",
+      "passed": true,
+      "seconds": 0.537,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "elephant"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 14.0,
+            "end_sec": 16.0,
+            "text": "A surveillance frame showing a parking lot with several vehicles. In the foreground, a black Hummer SUV is parked. A red pickup truck is on the left, and a red sedan is in the middle. An orange aerial work platform is parked near the center. A white SUV is visible in the background. The scene includes grass, trees, and buildings. No people are visible. Visibility: blur, size, occlusion",
+            "score": 0.3829,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000015000.jpg",
+            "observed_at_sec": 15.0,
+            "person_supported": false
+          },
+          {
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "start_sec": 0.0,
+            "end_sec": 1.0,
+            "text": "A surveillance frame shows a closed orange door with a window, white tiled walls, and a metal railing on a staircase. No people or vehicles are visible in the frame. Visibility: No people or vehicles visible.",
+            "score": 0.3824,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-stairs-entry/keyframes/sample-000000000.jpg",
+            "observed_at_sec": 0.0,
+            "person_supported": false
+          },
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left, and a red sedan is parked in the middle. An orange aerial work platform is on the right. A black Hummer is in the lower right. A white SUV is partially visible in the lower left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+            "score": 0.3554,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": false
+          }
+        ],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "elephant-en",
+      "payload": {
+        "query": "an elephant in the parking lot"
+      },
+      "kind": "negative",
+      "passed": true,
+      "seconds": 0.573,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only.",
+        "interpreted": {
+          "location_id": "zone-b",
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "elephant"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [
+          {
+            "video_id": "demo-parking-people",
+            "camera_id": "demo-parking-people",
+            "start_sec": 0.0,
+            "end_sec": 1.0,
+            "text": "Two people in the foreground: one in a black jacket and blue hoodie, the other in a dark jacket. A white SUV, a black SUV, and a red car are parked in the background. A white van is also visible. The scene is a parking lot with a building in the background. Visibility: blur, size, occlusion",
+            "score": 0.5653,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-people/keyframes/sample-000000000.jpg",
+            "observed_at_sec": 0.0,
+            "person_supported": true
+          },
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 107.2,
+            "end_sec": 109.2,
+            "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left. A red sedan is parked in the middle. An orange aerial work platform is on the right. A white SUV is parked near the right edge. A red fire hydrant is visible on the left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+            "score": 0.549,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000108200.jpg",
+            "observed_at_sec": 108.2,
+            "person_supported": false
+          },
+          {
+            "video_id": "demo-parking-machine",
+            "camera_id": "demo-parking-machine",
+            "start_sec": 29.0,
+            "end_sec": 31.0,
+            "text": "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV is parked. A red pickup truck is on the left, and a red sedan is parked in the middle. An orange aerial work platform is on the right. A black Hummer is in the lower right. A white SUV is partially visible in the lower left. The background shows buildings and trees. No people are visible. Visibility: blur, size, occlusion",
+            "score": 0.5442,
+            "model": "qwen3-vl:2b-instruct",
+            "analysis_source": "local_realtime",
+            "unmet_conditions": [
+              "visible object: elephant"
+            ],
+            "keyframe_url": "/api/videos/demo-parking-machine/keyframes/sample-000030000.jpg",
+            "observed_at_sec": 30.0,
+            "person_supported": false
+          }
+        ],
+        "coverage": {
+          "analysed": 3,
+          "total": 3,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-stairs-empty-a person",
+      "payload": {
+        "query": "a person",
+        "time_from": "2018-03-07T08:50:04+00:00",
+        "time_to": "2018-03-07T08:50:09+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.112,
+      "result": {
+        "supported": true,
+        "message": "No clear match, but only 1 of 1 recordings in range have finished semantic analysis. Retry failed analysis from Cameras, or wait for it to finish.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-07T08:50:04Z",
+          "time_to": "2018-03-07T08:50:09Z",
+          "behaviour": null,
+          "appearance": []
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-stairs-empty-someone in red clothing",
+      "payload": {
+        "query": "someone in red clothing",
+        "time_from": "2018-03-07T08:50:04+00:00",
+        "time_to": "2018-03-07T08:50:09+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.082,
+      "result": {
+        "supported": true,
+        "message": "No clear match, but only 1 of 1 recordings in range have finished semantic analysis. Retry failed analysis from Cameras, or wait for it to finish.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-07T08:50:04Z",
+          "time_to": "2018-03-07T08:50:09Z",
+          "behaviour": null,
+          "appearance": [
+            "red"
+          ]
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-stairs-empty-有人吗",
+      "payload": {
+        "query": "有人吗",
+        "time_from": "2018-03-07T08:50:04+00:00",
+        "time_to": "2018-03-07T08:50:09+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.102,
+      "result": {
+        "supported": true,
+        "message": "No clear match, but only 1 of 1 recordings in range have finished semantic analysis. Retry failed analysis from Cameras, or wait for it to finish.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-07T08:50:04Z",
+          "time_to": "2018-03-07T08:50:09Z",
+          "behaviour": null,
+          "appearance": []
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-stairs-empty-ada orang",
+      "payload": {
+        "query": "ada orang",
+        "time_from": "2018-03-07T08:50:04+00:00",
+        "time_to": "2018-03-07T08:50:09+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.13,
+      "result": {
+        "supported": true,
+        "message": "No clear match, but only 1 of 1 recordings in range have finished semantic analysis. Retry failed analysis from Cameras, or wait for it to finish.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-07T08:50:04Z",
+          "time_to": "2018-03-07T08:50:09Z",
+          "behaviour": null,
+          "appearance": []
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-parking-machine-a person",
+      "payload": {
+        "query": "a person",
+        "time_from": "2018-03-11T03:53:39+00:00",
+        "time_to": "2018-03-11T03:53:43+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.619,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-11T03:53:39Z",
+          "time_to": "2018-03-11T03:53:43Z",
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-parking-machine-someone in red clothing",
+      "payload": {
+        "query": "someone in red clothing",
+        "time_from": "2018-03-11T03:53:39+00:00",
+        "time_to": "2018-03-11T03:53:43+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.739,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-11T03:53:39Z",
+          "time_to": "2018-03-11T03:53:43Z",
+          "behaviour": null,
+          "appearance": [
+            "red"
+          ],
+          "visible_conditions": {
+            "person_colours": [
+              "red"
+            ],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-parking-machine-有人吗",
+      "payload": {
+        "query": "有人吗",
+        "time_from": "2018-03-11T03:53:39+00:00",
+        "time_to": "2018-03-11T03:53:43+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.608,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-11T03:53:39Z",
+          "time_to": "2018-03-11T03:53:43Z",
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "demo-parking-machine-ada orang",
+      "payload": {
+        "query": "ada orang",
+        "time_from": "2018-03-11T03:53:39+00:00",
+        "time_to": "2018-03-11T03:53:43+00:00"
+      },
+      "kind": "empty",
+      "passed": true,
+      "seconds": 0.615,
+      "result": {
+        "supported": true,
+        "message": "No clear match above the configured threshold. Closest clips are for human review only. Person searches only show sampled frames supported by detection and a crop recheck.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": "2018-03-11T03:53:39Z",
+          "time_to": "2018-03-11T03:53:43Z",
+          "behaviour": null,
+          "appearance": [],
+          "visible_conditions": {
+            "person_colours": [],
+            "vehicle_colours": [],
+            "other_colours": [],
+            "objects": [
+              "person"
+            ]
+          },
+          "attribute_search_phrase": null
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 1,
+          "total": 1,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "behaviour-en",
+      "payload": {
+        "query": "Show restricted entry events"
+      },
+      "kind": "event",
+      "passed": true,
+      "seconds": 0.056,
+      "result": {
+        "supported": true,
+        "message": "Behaviour events need human review.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": "restricted_entry",
+          "appearance": []
+        },
+        "events": [
+          {
+            "id": "9771f55d-a30d-5635-b8b5-1895accf1d62",
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "type": "restricted_entry",
+            "start_sec": 6.9,
+            "end_sec": 8.9,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-3",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "Tracking rule only; review the original video. Frame descriptions do not verify behaviour."
+            },
+            "keyframes": [
+              "/api/videos/demo-courtyard-entry/keyframes/event-R3-0-3.jpg"
+            ],
+            "created_at": "2026-10-16T15:01:04.424973+00:00"
+          },
+          {
+            "id": "ce42bd79-443e-566b-bee9-35e730c97c1f",
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "type": "restricted_entry",
+            "start_sec": 7.1,
+            "end_sec": 9.1,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-landing-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:37:11.434152+00:00"
+          },
+          {
+            "id": "911e5bbf-67fa-5756-b19f-83015791edf4",
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "type": "restricted_entry",
+            "start_sec": 5.4,
+            "end_sec": 7.4,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-stairs-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:36:00.158687+00:00"
+          }
+        ],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "behaviour-zh",
+      "payload": {
+        "query": "有没有人进入限制区域"
+      },
+      "kind": "event",
+      "passed": true,
+      "seconds": 0.052,
+      "result": {
+        "supported": true,
+        "message": "Behaviour events need human review.",
+        "interpreted": {
+          "location_id": "perimeter",
+          "time_from": null,
+          "time_to": null,
+          "behaviour": "restricted_entry",
+          "appearance": []
+        },
+        "events": [
+          {
+            "id": "9771f55d-a30d-5635-b8b5-1895accf1d62",
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "type": "restricted_entry",
+            "start_sec": 6.9,
+            "end_sec": 8.9,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-3",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "Tracking rule only; review the original video. Frame descriptions do not verify behaviour."
+            },
+            "keyframes": [
+              "/api/videos/demo-courtyard-entry/keyframes/event-R3-0-3.jpg"
+            ],
+            "created_at": "2026-10-16T15:01:04.424973+00:00"
+          },
+          {
+            "id": "ce42bd79-443e-566b-bee9-35e730c97c1f",
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "type": "restricted_entry",
+            "start_sec": 7.1,
+            "end_sec": 9.1,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-landing-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:37:11.434152+00:00"
+          },
+          {
+            "id": "911e5bbf-67fa-5756-b19f-83015791edf4",
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "type": "restricted_entry",
+            "start_sec": 5.4,
+            "end_sec": 7.4,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-stairs-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:36:00.158687+00:00"
+          }
+        ],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 4,
+          "total": 4,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "behaviour-ms",
+      "payload": {
+        "query": "orang masuk kawasan larangan"
+      },
+      "kind": "event",
+      "passed": true,
+      "seconds": 0.058,
+      "result": {
+        "supported": true,
+        "message": "Behaviour events need human review.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": "restricted_entry",
+          "appearance": []
+        },
+        "events": [
+          {
+            "id": "9771f55d-a30d-5635-b8b5-1895accf1d62",
+            "video_id": "demo-courtyard-entry",
+            "camera_id": "demo-courtyard-entry",
+            "type": "restricted_entry",
+            "start_sec": 6.9,
+            "end_sec": 8.9,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-3",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "Tracking rule only; review the original video. Frame descriptions do not verify behaviour."
+            },
+            "keyframes": [
+              "/api/videos/demo-courtyard-entry/keyframes/event-R3-0-3.jpg"
+            ],
+            "created_at": "2026-10-16T15:01:04.424973+00:00"
+          },
+          {
+            "id": "ce42bd79-443e-566b-bee9-35e730c97c1f",
+            "video_id": "demo-landing-entry",
+            "camera_id": "demo-landing-entry",
+            "type": "restricted_entry",
+            "start_sec": 7.1,
+            "end_sec": 9.1,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-landing-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:37:11.434152+00:00"
+          },
+          {
+            "id": "911e5bbf-67fa-5756-b19f-83015791edf4",
+            "video_id": "demo-stairs-entry",
+            "camera_id": "demo-stairs-entry",
+            "type": "restricted_entry",
+            "start_sec": 5.4,
+            "end_sec": 7.4,
+            "metrics": {
+              "crossed_line": true,
+              "entered_zone": false,
+              "track_id": "0-1",
+              "active_hours": "00:00–00:00"
+            },
+            "rule_id": "R3",
+            "rule_version": "1.1",
+            "verification": {
+              "status": "not_reviewed",
+              "method": "tracking_rule",
+              "note": "VLM event verification is planned for M2.",
+              "superseded": false
+            },
+            "keyframes": [
+              "/api/videos/demo-stairs-entry/keyframes/event-R3-0-1.jpg"
+            ],
+            "created_at": "2026-10-16T14:36:00.158687+00:00"
+          }
+        ],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    },
+    {
+      "round": 1,
+      "id": "unsupported",
+      "payload": {
+        "query": "有没有人打架"
+      },
+      "kind": "unsupported",
+      "passed": true,
+      "seconds": 0.049,
+      "result": {
+        "supported": false,
+        "message": "This behaviour is not supported. M1 supports vehicle loitering and restricted entry, not fighting, falls or theft intent.",
+        "interpreted": {
+          "location_id": null,
+          "time_from": null,
+          "time_to": null,
+          "behaviour": null,
+          "appearance": []
+        },
+        "events": [],
+        "related": [],
+        "nearest": [],
+        "coverage": {
+          "analysed": 7,
+          "total": 7,
+          "pending": 0
+        },
+        "threshold": 0.65
+      }
+    }
+  ],
+  "media": [
+    {
+      "video_id": "demo-parking-holdout",
+      "passed": true
+    },
+    {
+      "video_id": "demo-parking-machine",
+      "passed": true
+    },
+    {
+      "video_id": "demo-parking-people",
+      "passed": true
+    },
+    {
+      "video_id": "demo-courtyard-entry",
+      "passed": true
+    },
+    {
+      "video_id": "demo-landing-entry",
+      "passed": true
+    },
+    {
+      "video_id": "demo-stairs-empty",
+      "passed": true
+    },
+    {
+      "video_id": "demo-stairs-entry",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "median_seconds": 0.611
+}

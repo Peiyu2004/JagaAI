@@ -1,0 +1,12 @@
+{
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "cases": [
+    {"id":"stairs-entry","source":"2018-03-07.16-50-01.16-55-01.admin.G326","from":82,"to":96,"location":"perimeter","name":"Demo · Stair access boundary","r3_line":[[0.52,0.7],[0.52,1.0]],"expected_r1":0,"expected_r3":1},
+    {"id":"stairs-empty","source":"2018-03-07.16-50-01.16-55-01.admin.G326","from":0,"to":12,"location":"perimeter","name":"Demo · Empty stair access","r3_line":[[0.52,0.7],[0.52,1.0]],"expected_r1":0,"expected_r3":0},
+    {"id":"landing-entry","source":"2018-03-07.16-50-00.16-55-00.admin.G329","from":85,"to":99,"location":"perimeter","name":"Demo · Landing boundary","r3_line":[[0.2,0.75],[0.7,0.75]],"expected_r1":0,"expected_r3":1},
+    {"id":"courtyard-entry","source":"2018-03-12.10-45-00.10-50-00.school.G638","from":285,"to":299,"location":"perimeter","name":"Demo · Courtyard boundary","r3_line":[[0.4,0.5],[0.4,0.9]],"expected_r1":0,"expected_r3":1},
+    {"id":"parking-people","source":"2018-03-07.17-05-00.17-10-00.bus.G340","from":40,"to":90,"location":"zone-b","name":"Demo · People near parked vehicles","r1":true,"expected_r1":0,"expected_r3":0},
+    {"id":"parking-machine","source":"2018-03-11.11-50-01.11-55-01.school.G424","from":130,"to":265,"location":"zone-b","name":"Demo · Parked machinery false-positive check","r1":true,"expected_r1":0,"expected_r3":0},
+    {"id":"parking-holdout","source":"2018-03-07.16-50-01.16-55-01.school.G328","from":70,"to":140,"location":"zone-b","name":"Demo · Separate-camera parking check","r1":true,"expected_r1":0,"expected_r3":0}
+  ]
+}

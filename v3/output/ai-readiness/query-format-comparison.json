@@ -1,0 +1,367 @@
+[
+  {
+    "query": "person wearing red near a white car",
+    "strategies": [
+      [
+        [
+          0.6612255481048693,
+          "demo-parking-people",
+          "Three people and several vehicles are visible in a parking lot. A person in a red jacket w"
+        ],
+        [
+          0.6439537732984877,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6357377320973552,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ]
+      ],
+      [
+        [
+          0.6544827785776265,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ],
+        [
+          0.6473575984426061,
+          "demo-parking-machine",
+          "A surveillance frame showing several vehicles and people in a parking area. In the foregro"
+        ],
+        [
+          0.632122820947577,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ]
+      ],
+      [
+        [
+          0.712142437780756,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6948477932413154,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ],
+        [
+          0.6925743503072219,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ]
+      ],
+      [
+        [
+          0.6957316228785285,
+          "demo-parking-machine",
+          "A surveillance frame showing several vehicles and people in a parking area. In the foregro"
+        ],
+        [
+          0.6865155901082471,
+          "demo-courtyard-entry",
+          "A surveillance view of a school courtyard. A person in dark clothing is visible near the e"
+        ],
+        [
+          0.6844785064761264,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ]
+      ]
+    ]
+  },
+  {
+    "query": "穿红衣服的人靠近白色汽车",
+    "strategies": [
+      [
+        [
+          0.6440687309066414,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ],
+        [
+          0.6433776036004014,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreg"
+        ],
+        [
+          0.6363526596755024,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ]
+      ],
+      [
+        [
+          0.63841823005591,
+          "demo-parking-machine",
+          "A surveillance frame showing several vehicles and people in a parking area. In the foregro"
+        ],
+        [
+          0.6327663553304478,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ],
+        [
+          0.6234798490183274,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ]
+      ],
+      [
+        [
+          0.6658147642458552,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6576177411075659,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ],
+        [
+          0.6566776221958397,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreg"
+        ]
+      ],
+      [
+        [
+          0.6659636576118462,
+          "demo-parking-machine",
+          "A surveillance frame showing several vehicles and people in a parking area. In the foregro"
+        ],
+        [
+          0.6547219218879999,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6502466383084419,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ]
+      ]
+    ]
+  },
+  {
+    "query": "orang berbaju merah dekat kereta putih",
+    "strategies": [
+      [
+        [
+          0.5646520511950011,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.5545280968448723,
+          "demo-parking-machine",
+          "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is par"
+        ],
+        [
+          0.550936398627886,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ]
+      ],
+      [
+        [
+          0.587609272269736,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ],
+        [
+          0.5866886692679162,
+          "demo-courtyard-entry",
+          "A surveillance view of a school courtyard. A person in dark clothing is visible near the e"
+        ],
+        [
+          0.567301707131705,
+          "demo-parking-machine",
+          "A surveillance frame showing several vehicles and people in a parking area. In the foregro"
+        ]
+      ],
+      [
+        [
+          0.671245901213488,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6558134543732802,
+          "demo-parking-machine",
+          "Two people in dark clothing walk near a red car and a black SUV. A red pickup truck is par"
+        ],
+        [
+          0.6434514996238272,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles and people. In the foreground, a p"
+        ]
+      ],
+      [
+        [
+          0.6553704535687535,
+          "demo-courtyard-entry",
+          "A surveillance view of a school courtyard. A person in dark clothing is visible near the e"
+        ],
+        [
+          0.651037932218117,
+          "demo-courtyard-entry",
+          "A person in dark clothing walks in the courtyard. A red vehicle is visible in the backgrou"
+        ],
+        [
+          0.6450299742146132,
+          "demo-parking-machine",
+          "A surveillance view of a parking area with several vehicles. In the foreground, a black Hu"
+        ]
+      ]
+    ]
+  },
+  {
+    "query": "有没有大象",
+    "strategies": [
+      [
+        [
+          0.3829284165789517,
+          "demo-parking-machine",
+          "A surveillance frame showing a parking lot with several vehicles. In the foreground, a bla"
+        ],
+        [
+          0.38244332461559305,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.3553728016691917,
+          "demo-parking-machine",
+          "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV"
+        ]
+      ],
+      [
+        [
+          0.5558345273387229,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.5108861529260824,
+          "demo-stairs-empty",
+          "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. "
+        ],
+        [
+          0.47941231950240415,
+          "demo-parking-machine",
+          "A surveillance frame showing a parking lot with several vehicles. In the foreground, a bla"
+        ]
+      ],
+      [
+        [
+          0.32161169303668163,
+          "demo-parking-machine",
+          "A surveillance frame showing a parking lot with several vehicles. In the foreground, a bla"
+        ],
+        [
+          0.30888105106817076,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.29238348267619174,
+          "demo-parking-machine",
+          "A surveillance view of a parking lot with several vehicles. In the foreground, a black SUV"
+        ]
+      ],
+      [
+        [
+          0.574450106157781,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.5269147533242321,
+          "demo-stairs-empty",
+          "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. "
+        ],
+        [
+          0.4978162887637476,
+          "demo-parking-machine",
+          "A surveillance frame showing a parking lot with several vehicles. In the foreground, a bla"
+        ]
+      ]
+    ]
+  },
+  {
+    "query": "穿紫色衣服的人",
+    "strategies": [
+      [
+        [
+          0.49434853788458943,
+          "demo-landing-entry",
+          "A person in a black and lime green hoodie walks down a staircase in a building corridor. T"
+        ],
+        [
+          0.48724889128936155,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreg"
+        ],
+        [
+          0.48318659010034365,
+          "demo-parking-holdout",
+          "A wide-angle view of a school campus with several vehicles and people. In the foreground, "
+        ]
+      ],
+      [
+        [
+          0.5467134109172112,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.5067627643967911,
+          "demo-stairs-empty",
+          "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. "
+        ],
+        [
+          0.48962531367651246,
+          "demo-courtyard-entry",
+          "A surveillance view of a school courtyard. A person in dark clothing is visible near the e"
+        ]
+      ],
+      [
+        [
+          0.45374869328816225,
+          "demo-parking-holdout",
+          "A wide-angle view of a schoolyard with several vehicles parked and a few people. The foreg"
+        ],
+        [
+          0.45292414058489033,
+          "demo-landing-entry",
+          "A person in a black and lime green hoodie walks down a staircase in a building corridor. T"
+        ],
+        [
+          0.4474585946732307,
+          "demo-parking-people",
+          "Three people and several vehicles are visible in a parking lot. A person in a red jacket w"
+        ]
+      ],
+      [
+        [
+          0.5555375880830951,
+          "demo-stairs-entry",
+          "A surveillance frame shows a closed orange door with a window, white tiled walls, and a me"
+        ],
+        [
+          0.5136377718612838,
+          "demo-stairs-empty",
+          "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. "
+        ],
+        [
+          0.4885709022802098,
+          "demo-courtyard-entry",
+          "A surveillance view of a school courtyard. A person in dark clothing is visible near the e"
+        ]
+      ]
+    ]
+  }
+]

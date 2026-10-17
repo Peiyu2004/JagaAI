@@ -1,0 +1,10 @@
+{
+  "model": "YOLOX-Tiny",
+  "release": "0.1.1rc0",
+  "source": "https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_tiny.onnx",
+  "upstream_docs": "https://github.com/Megvii-BaseDetection/YOLOX/tree/main/demo/ONNXRuntime",
+  "sha256_observed": "427cc366d34e27ff7a03e2899b5e3671425c262ea2291f88bb942bc1cc70b0f7",
+  "checksum_note": "Observed local digest, not an independently published upstream checksum.",
+  "size_bytes": 20219662,
+  "license": "Apache-2.0"
+}

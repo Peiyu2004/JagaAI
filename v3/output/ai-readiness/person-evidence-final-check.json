@@ -1,0 +1,66 @@
+{
+  "descriptions": 51,
+  "unchecked": [],
+  "new_analysis": [
+    {
+      "video": "demo-stairs-entry",
+      "processed_at": "2026-10-16T15:52:41.995426+00:00",
+      "provider": "CUDAExecutionProvider",
+      "evidence": [
+        {
+          "second": 0.0,
+          "person_supported": false
+        },
+        {
+          "second": 5.6,
+          "person_supported": true
+        },
+        {
+          "second": 7.4,
+          "person_supported": true
+        }
+      ]
+    },
+    {
+      "video": "demo-stairs-empty",
+      "processed_at": "2026-10-16T15:53:43.112778+00:00",
+      "provider": "CUDAExecutionProvider",
+      "evidence": [
+        {
+          "second": 0.0,
+          "person_supported": false
+        }
+      ]
+    }
+  ],
+  "known_false_frame": [
+    {
+      "text": "A surveillance view of a parking area with several vehicles. In the foreground, a black Hummer SUV is parked. A red pickup truck is on the left, and a red sedan is parked in the middle. An orange aerial work platform is on the right. A white SUV is parked near the right edge. A person in red upper clothing is visible near the red pickup truck. The background shows buildings and trees. The sky is overcast. Visibility: blur, size, occlusion",
+      "person_supported": false,
+      "evidence": {
+        "version": 1,
+        "method": "frame_and_person_crop",
+        "detector": "YOLOX-S",
+        "provider": "CUDAExecutionProvider",
+        "observed_at_sec": 90.0,
+        "keyframe": "sample-000090000.jpg",
+        "boxes": [],
+        "rejected_candidates": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "video_id": "demo-stairs-entry",
+      "rule_id": "R3"
+    },
+    {
+      "video_id": "demo-landing-entry",
+      "rule_id": "R3"
+    },
+    {
+      "video_id": "demo-courtyard-entry",
+      "rule_id": "R3"
+    }
+  ]
+}

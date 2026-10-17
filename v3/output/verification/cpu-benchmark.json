@@ -1,0 +1,25 @@
+{
+  "input": "Original 640x360 synthetic graphics, not CCTV or a held-out accuracy set.",
+  "accuracy_evaluated": false,
+  "iterations": 30,
+  "python": "3.12.14",
+  "runtime": {
+    "detector": "YOLOX-Tiny",
+    "installed": true,
+    "model_bytes": 20219662,
+    "providers": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "active_provider": "CPUExecutionProvider",
+    "tracker": "ByteTrack",
+    "rule_ids": [
+      "R1",
+      "R3"
+    ]
+  },
+  "mean_inference_ms": 31.85,
+  "p95_inference_ms": 36.28,
+  "detection_and_tracking_fps": 29.02,
+  "synthetic_clip": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\v3\\output\\verification\\synthetic-pipeline-smoke.mp4"
+}

@@ -1,0 +1,506 @@
+{
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "uuid": "GPU-a3c688d1-8f83-db69-3434-2d622cfdced1"
+  },
+  "reference": "Engineering expectations from visual inspection of public MEVA footage, not independent human ground truth. Daylight footage; R3 active hours are explicitly overridden to all day for this configured-boundary demonstration. Source dates are preserved under the existing MYT testing convention.",
+  "cases": [
+    {
+      "id": "stairs-entry",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 82,
+      "to": 96,
+      "location": "perimeter",
+      "name": "Demo · Stair access boundary",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-stairs-entry",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "913ff46ff1506ebf9c351fa9c933fcb54e3f7074360770c8f541cbaa14b15fdf",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 5.4,
+          "end_sec": 7.4,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-1",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a red door with a window, set in a white-tiled wall. A black mat is on the floor in front of the door. To the right, a red metal railing is visible, leading down a staircase. A long, white fluorescent light fixture is mounted above the door. No people or vehicles are visible in the frame. Visibility: The description is based on the visible elements in the image, adhering to the specified constraints.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "door",
+              "railing",
+              "light fixture",
+              "mat",
+              "stairs"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black and neon green hoodie is standing at the entrance of a building. The door is open, and the person is holding a white object. The building has a white tiled wall and a staircase with orange railings. A fluorescent light is above the door. No vehicles are visible. Visibility: The description is based on the visible elements in the image and does not include inferred details.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "staircase",
+              "light"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 6.0,
+            "keyframe": "sample-000006000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person wearing a black jacket and a bright green hoodie is standing in a hallway with a red door. The person is positioned near the bottom of a staircase with a red railing. The wall is tiled with white bricks. A long fluorescent light fixture is above the person. No vehicles are visible in the frame. Visibility: The description is based on the visible elements in the image and adheres to the specified constraints.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "door",
+              "staircase",
+              "railing",
+              "light"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 7.4,
+            "keyframe": "sample-000007400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_calls": 38,
+        "motion_skipped_calls": 32,
+        "mean_inference_ms": 69.75,
+        "detection_wall_sec": 5.438,
+        "sampled_frames_per_wall_sec": 12.87,
+        "detector": "YOLOX-Tiny ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 28.295,
+        "total_wall_sec": 38.816
+      },
+      "run_wall_sec": 39.06
+    },
+    {
+      "id": "stairs-empty",
+      "source": "2018-03-07.16-50-01.16-55-01.admin.G326",
+      "from": 0,
+      "to": 12,
+      "location": "perimeter",
+      "name": "Demo · Empty stair access",
+      "r3_line": [
+        [
+          0.52,
+          0.7
+        ],
+        [
+          0.52,
+          1.0
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-stairs-empty",
+      "source_sha256": "67e3a9273f5b2cd18465a2ecfd3f0b097acda8ed1d9388ad5928546a572fb8d7",
+      "derived_sha256": "e5a63ecab2fc98ee7a509a66779e867396a6280ccb78426174c2dcd8db4a433e",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [
+        {
+          "text": "A surveillance frame shows a closed orange door with a window, set in a white-tiled wall. A black mat is on the floor in front of the door. To the right, a staircase with an orange railing is visible. A long, white fluorescent light fixture is above the door. No people or vehicles are visible in the frame. Visibility: The frame is static and does not show any movement or activity.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "door",
+              "railing",
+              "light",
+              "mat",
+              "stairs",
+              "wall"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 360,
+        "sampled_frames": 60,
+        "detector_calls": 14,
+        "motion_skipped_calls": 46,
+        "mean_inference_ms": 49.68,
+        "detection_wall_sec": 2.318,
+        "sampled_frames_per_wall_sec": 25.88,
+        "detector": "YOLOX-Tiny ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": null,
+        "semantic_wall_sec": 31.882,
+        "total_wall_sec": 34.245
+      },
+      "run_wall_sec": 34.45
+    },
+    {
+      "id": "landing-entry",
+      "source": "2018-03-07.16-50-00.16-55-00.admin.G329",
+      "from": 85,
+      "to": 99,
+      "location": "perimeter",
+      "name": "Demo · Landing boundary",
+      "r3_line": [
+        [
+          0.2,
+          0.75
+        ],
+        [
+          0.7,
+          0.75
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-landing-entry",
+      "source_sha256": "07930d287198509b0de4a28028c75964aaf7a110bbd918064a7c05119a37722e",
+      "derived_sha256": "b288cac58898b7c988d54cdb10e8424566abcf26b7312201c027ff64ee973c64",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 1
+      },
+      "expectation_met": true,
+      "events": [
+        {
+          "rule_id": "R3",
+          "start_sec": 7.2,
+          "end_sec": 9.2,
+          "metrics": {
+            "crossed_line": true,
+            "entered_zone": false,
+            "track_id": "0-3",
+            "active_hours": "00:00–00:00"
+          }
+        }
+      ],
+      "captions": [
+        {
+          "text": "This surveillance frame shows an empty staircase in a building. The walls are tiled, and the stairs are metal with red railings. A window is visible at the top of the stairs, and a wooden door is on the right. There are no people or vehicles visible in the frame. Visibility: The description is based on the visible elements in the image, and the list of objects is limited to those that are clearly visible.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [],
+            "objects": [
+              "stairs",
+              "railing",
+              "window",
+              "door",
+              "wall",
+              "tiled wall"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person in a black jacket with a green hood is walking down a staircase in a building. The person is wearing black pants and white shoes. The staircase has red metal railings and a concrete floor. The walls are made of white tiles. A window is visible in the background. There are no vehicles or other people visible. Visibility: The description is based on the visible elements in the image and does not include inferred details.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "staircase",
+              "railing",
+              "window",
+              "wall"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 6.4,
+            "keyframe": "sample-000006400.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        },
+        {
+          "text": "A person is walking down a hallway in a building. The individual is wearing a black jacket with a bright green hood. The hallway has a metal staircase with orange railings. The person is walking towards the camera, and the wall is made of white tiles. There is a window and a door in the background. The person is the only visible person, and no vehicles are visible. Visibility: The description is based on the visible elements in the image. The person is walking down the hallway, and the staircase is on the right side of the image. The wall is on the left side of the image. The window and door are in the background. The railing is on the staircase. The floor is on the ground level. There are no vehicles visible in the image.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [
+              {
+                "clothing_color": "black"
+              },
+              {
+                "clothing_color": "green"
+              }
+            ],
+            "vehicles": [],
+            "objects": [
+              "person",
+              "staircase",
+              "wall",
+              "window",
+              "door",
+              "railing",
+              "floor"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 9.2,
+            "keyframe": "sample-000009200.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_calls": 49,
+        "motion_skipped_calls": 21,
+        "mean_inference_ms": 32.11,
+        "detection_wall_sec": 3.859,
+        "sampled_frames_per_wall_sec": 18.14,
+        "detector": "YOLOX-Tiny ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 3,
+        "description_error": null,
+        "semantic_wall_sec": 46.026,
+        "total_wall_sec": 49.975
+      },
+      "run_wall_sec": 50.17
+    },
+    {
+      "id": "courtyard-entry",
+      "source": "2018-03-12.10-45-00.10-50-00.school.G638",
+      "from": 285,
+      "to": 299,
+      "location": "perimeter",
+      "name": "Demo · Courtyard boundary",
+      "r3_line": [
+        [
+          0.4,
+          0.5
+        ],
+        [
+          0.4,
+          0.9
+        ]
+      ],
+      "expected_r1": 0,
+      "expected_r3": 1,
+      "split": "debug",
+      "video_id": "demo-courtyard-entry",
+      "source_sha256": "b99dd42cf44e446fcf290192210f54b6be89c32f92e063651f8a01fb4fbd87b7",
+      "derived_sha256": "35c60080a7d70d7e57bfb97dd1ab91c799c196eabe727983d583c25121fcee23",
+      "status": "ready",
+      "description_status": "ready",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": false,
+      "events": [],
+      "captions": [
+        {
+          "text": "A surveillance view of a school building courtyard. The building has multiple doors and large windows. A few vehicles are visible in the background, including a silver car and a red vehicle. The sky is clear, and the scene is well-lit. There are no people visible in the frame. Visibility: The description is based on the visible elements in the frame.",
+          "attributes": {
+            "schema_version": 2,
+            "people": [],
+            "vehicles": [
+              {
+                "color": "red",
+                "type": "car"
+              },
+              {
+                "color": "white",
+                "type": "car"
+              }
+            ],
+            "objects": [
+              "vehicle",
+              "vehicle",
+              "vehicle"
+            ],
+            "model_digest": "qwen3-vl:2b-instruct@ea422f1e73652a95479954d8572d3c8c6022f628ce2d38a1a04aae1b7f2d5300",
+            "sampled_frame_only": true,
+            "observed_at_sec": 0.0,
+            "keyframe": "sample-000000000.jpg",
+            "sampling": "periodic_and_activity_change"
+          }
+        }
+      ],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 420,
+        "sampled_frames": 70,
+        "detector_calls": 15,
+        "motion_skipped_calls": 55,
+        "mean_inference_ms": 49.4,
+        "detection_wall_sec": 2.867,
+        "sampled_frames_per_wall_sec": 24.42,
+        "detector": "YOLOX-Tiny ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 1,
+        "description_error": null,
+        "semantic_wall_sec": 36.04,
+        "total_wall_sec": 38.974
+      },
+      "run_wall_sec": 39.27
+    },
+    {
+      "id": "parking-people",
+      "source": "2018-03-07.17-05-00.17-10-00.bus.G340",
+      "from": 40,
+      "to": 90,
+      "location": "zone-b",
+      "name": "Demo · People near parked vehicles",
+      "r1": true,
+      "expected_r1": 0,
+      "expected_r3": 0,
+      "split": "debug",
+      "video_id": "demo-parking-people",
+      "source_sha256": "12a6a12df24caba423613022dd9318fdeb113c800afec68b7ca24ee9962afa4a",
+      "derived_sha256": "79ba76bb255078febe3ccf191147d7799a274c6a19f8f72e50b22c46fd7e637f",
+      "status": "ready",
+      "description_status": "failed",
+      "actual": {
+        "R1": 0,
+        "R3": 0
+      },
+      "expectation_met": true,
+      "events": [],
+      "captions": [],
+      "metrics": {
+        "sample_fps": 5.0,
+        "source_frames": 1500,
+        "sampled_frames": 250,
+        "detector_calls": 87,
+        "motion_skipped_calls": 163,
+        "mean_inference_ms": 40.17,
+        "detection_wall_sec": 12.862,
+        "sampled_frames_per_wall_sec": 19.44,
+        "detector": "YOLOX-Tiny ONNX",
+        "provider": "CUDAExecutionProvider",
+        "tracker": "ByteTrack (supervision 0.25.1)",
+        "rule_version": "1.1",
+        "identity_scope": "this video and camera only",
+        "source": "uploaded_recording",
+        "rejected_candidates": [],
+        "sample_budget_exceeded": false,
+        "description_frames": 0,
+        "description_error": "Unterminated string starting at: line 173 column 5 (char 2909)",
+        "semantic_wall_sec": 35.562,
+        "total_wall_sec": 48.521
+      },
+      "run_wall_sec": 48.83
+    }
+  ]
+}

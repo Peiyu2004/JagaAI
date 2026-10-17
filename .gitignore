@@ -1,0 +1,14 @@
+# Anchored to the legacy app root so nested folders (v3/data/ai-demo) can opt back in.
+node_modules/
+/dist/
+/data/
+/output/
+.env
+*.log
+test-results/
+.runtime/
+.playwright-cli/
+.venv/
+__pycache__/
+*.pyc
+.claude/

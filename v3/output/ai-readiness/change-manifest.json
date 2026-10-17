@@ -1,0 +1,162 @@
+[
+  {
+    "path": "backend/app/database.py",
+    "sha256": "734de5498c8b4635f366bc263c16e2a20916c4049f030c58506f110836cb4e36",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/event_index.py",
+    "sha256": "a9040d2a22ef66c7e4dd02c2dd69dca9f581d95c705e85a73c0baf15f665b7fa",
+    "change": "new"
+  },
+  {
+    "path": "backend/app/gpu.py",
+    "sha256": "64a8b8f77951d953ffa2d937fa308ad1fb2ad5da8662096584df3cdce36b675b",
+    "change": "new"
+  },
+  {
+    "path": "backend/app/local_ai.py",
+    "sha256": "25e377d41b13d56b254c922aff6b8453f24bb028db0dc79843c6c9d3b9039cbc",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/main.py",
+    "sha256": "d6c72055b717a3a52d25881ed365e7185fb88aa126c4d2198ca88ba4d58642bd",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/models.py",
+    "sha256": "7882d02e33f5236320016e2086b050b5b4eabf3d3aa1bc7b0145c8f34df4e73c",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/retrieval.py",
+    "sha256": "549d5276c8af4d38a27398464c67dccce6993f0bd50752d2a88437f39b89751b",
+    "change": "new"
+  },
+  {
+    "path": "backend/app/search.py",
+    "sha256": "711fd3e8cf5e238ce919c353f950bd2394a59d1682ee79a143ea8002f4854767",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/vision.py",
+    "sha256": "835adda7129e6b0ac3137192824fdaed1e637c879bfbdcb0c39fa5eb2aa8ce05",
+    "change": "modified"
+  },
+  {
+    "path": "backend/app/worker.py",
+    "sha256": "d165d2f75a7db6284e054668acacaa0adb58e18edfea6007f5f964f489ae1b42",
+    "change": "modified"
+  },
+  {
+    "path": "backend/tests/test_event_reanalysis.py",
+    "sha256": "fac562ae7cfdcbd4907e8c5eb910ddda62de2432bf4d90cb19a8f6cc0fc67898",
+    "change": "new"
+  },
+  {
+    "path": "backend/tests/test_gpu_selection.py",
+    "sha256": "54a6d2e7c85346aea71bb1ab15bc260f5fb6135acc3003724701f1dbe5b7a77d",
+    "change": "new"
+  },
+  {
+    "path": "backend/tests/test_retrieval_attributes.py",
+    "sha256": "148628330a77c738fff739da6a85985408f043a644ca7a4fb9f262b9a97b56e2",
+    "change": "new"
+  },
+  {
+    "path": "backend/tests/test_search_races.py",
+    "sha256": "c4c428541066bc2543ebf5e94275a824986bf9d976b60f3656013024d422c6a1",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/index.css",
+    "sha256": "5ed9417a833586312f1cdbfee1cbd718ef921e712730fcc984a7f1cd368984e0",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/types.ts",
+    "sha256": "c110c15d998e3cd96f59738d5265e5724fcfb3ce789ff4d1e7d73b6df97a278b",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/pages/Alerts.tsx",
+    "sha256": "92de4c79a2522871f3305e3124392d9f420cd6e5c3385b02f89f3043cfe1886f",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/pages/Ask.tsx",
+    "sha256": "3fc72fdaec533ff6656df08903b3bbd225aec4ec2c54e78427846e02671ffa75",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/pages/Cameras.tsx",
+    "sha256": "83840dc032785ccb942f8ac61c73b90ceccb65493fffc32a104425731d93ebe1",
+    "change": "modified"
+  },
+  {
+    "path": "frontend/src/pages/Command.tsx",
+    "sha256": "0edf8cd87a4f5dfb77f4e8a02c84836488bb480c39daf9953e3aba2408d619f6",
+    "change": "modified"
+  },
+  {
+    "path": "scripts/ai-demo-cases.json",
+    "sha256": "d23c8e612afc4a11c48e5446e7420defeb61672fded0c9a0d5821596be775e02",
+    "change": "new"
+  },
+  {
+    "path": "scripts/benchmark.py",
+    "sha256": "889d1928043769af06fd82f8c76c707111a75e9d3e12fb0a44d026310241f4c5",
+    "change": "modified"
+  },
+  {
+    "path": "scripts/check-r1-public-video.py",
+    "sha256": "a02daec273095a75ac14318588edddcf77c39089e94d216ff6c3030a48a6634d",
+    "change": "new"
+  },
+  {
+    "path": "scripts/prepare-ai-demo.py",
+    "sha256": "a2bb2b6f5e6f9f9a7248de83b13ba1cf60a9bc76f36db88873991dbe5ac3fc7d",
+    "change": "new"
+  },
+  {
+    "path": "scripts/prepare-local.py",
+    "sha256": "cc7f0e0c2f2ade89c81c74698dc035a8e8d39cab4a1e78f06f2e4b0953eebe67",
+    "change": "modified"
+  },
+  {
+    "path": "scripts/verify-ai-demo.py",
+    "sha256": "94fbfdbc812c9f6debefb4e71ed6bb2087ad79774e1f00c9a8f2a75ef7d3e435",
+    "change": "new"
+  },
+  {
+    "path": "scripts/verify-rtx3050.py",
+    "sha256": "cbf36803dc631dc6565397788f6a4b83b14d85583f183045f27de21ef31ce22b",
+    "change": "new"
+  },
+  {
+    "path": "docs/ai-demo.md",
+    "sha256": "2f7b728f6ea066cfad60a8c66266c74dcb2304be5b7b3b577b45f3af6cf867a5",
+    "change": "new"
+  },
+  {
+    "path": "run.py",
+    "sha256": "296c2c7467a93886563e0df07bd127bcde045ad4f1cce679842c1881b16c7e45",
+    "change": "modified"
+  },
+  {
+    "path": "Start-AI-Demo.cmd",
+    "sha256": "10b7708cd3d8e945546ac95f69c1405e75cfedd221bc85f3a0c73fd42f9950fb",
+    "change": "new"
+  },
+  {
+    "path": "README.md",
+    "sha256": "33767c06d8c177d0a2b4aa256cb2790229207ad64e80fbac9abe6fc3088e2fc7",
+    "change": "modified"
+  },
+  {
+    "path": "backend/requirements-vision.txt",
+    "sha256": "99814d56b237c58b9423ab533dd0403653b39e61d02e5ea6a5371908c95febbf",
+    "change": "modified"
+  }
+]

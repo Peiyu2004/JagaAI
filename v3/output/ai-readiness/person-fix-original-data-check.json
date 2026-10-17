@@ -1,0 +1,11 @@
+{
+  "backup": {
+    "integrity": "ok",
+    "sha256": "ad383cae8b887f346f8233929f601cf1e96f5fe66381b8605a9d3ec5d07c4cc3"
+  },
+  "current": {
+    "integrity": "ok",
+    "sha256": "ad383cae8b887f346f8233929f601cf1e96f5fe66381b8605a9d3ec5d07c4cc3"
+  },
+  "unchanged": true
+}

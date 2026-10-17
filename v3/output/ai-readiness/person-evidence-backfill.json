@@ -1,0 +1,1478 @@
+{
+  "checked_at": "2026-10-16T15:47:40.593501+00:00",
+  "data_dir": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\v3\\data\\ai-demo",
+  "frames": [
+    {
+      "description_id": "9664f0d9-0c79-449a-af1d-55a85cbbe923",
+      "video_id": "demo-stairs-entry",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "a0a0e224-3e70-46ae-ac58-3cdc6547666d",
+      "video_id": "demo-stairs-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 5.6,
+      "keyframe": "sample-000005600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.36359353065490724,
+            0.20857905540145746,
+            0.42719345092773436,
+            0.7859380812872023
+          ],
+          "score": 0.8054,
+          "crop_score": 0.8125
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "79c99779-94c3-467d-8377-5578261e7388",
+      "video_id": "demo-stairs-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "green"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 7.4,
+      "keyframe": "sample-000007400.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.4538105487823486,
+            0.3078183940812653,
+            0.6188849925994873,
+            0.9984079569327731
+          ],
+          "score": 0.9146,
+          "crop_score": 0.9258
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "d830f2be-ce2d-4b9c-92f1-8225f3417fd5",
+      "video_id": "demo-stairs-empty",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "83f08ee5-1629-4706-8fb2-5ef1809c2bf6",
+      "video_id": "demo-landing-entry",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "fd27cd29-8c4d-4bc0-8698-e78274870fc0",
+      "video_id": "demo-landing-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "white"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 5.0,
+      "keyframe": "sample-000005000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.5781277656555176,
+            0.2775048862318365,
+            0.6298125743865967,
+            0.4956575281479779
+          ],
+          "score": 0.707,
+          "crop_score": 0.6754
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "880b8359-66c9-4996-a524-f10c1c360940",
+      "video_id": "demo-landing-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "green"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 8.2,
+      "keyframe": "sample-000008200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.40523691177368165,
+            0.2926972119414172,
+            0.4794497489929199,
+            0.6443943055737921
+          ],
+          "score": 0.923,
+          "crop_score": 0.9277
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "6ae57f1b-4bd0-47b6-925a-2a93d34082af",
+      "video_id": "demo-courtyard-entry",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "c878f153-9d1b-4346-848d-51b1158236bb",
+      "video_id": "demo-courtyard-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 8.5,
+      "keyframe": "sample-000008500.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.37011942863464353,
+            0.4451146486426602,
+            0.3948830127716064,
+            0.5368507876783526
+          ],
+          "score": 0.6434,
+          "crop_score": 0.472
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "84977b03-08f0-43fb-a893-34520c423538",
+      "video_id": "demo-courtyard-entry",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 11.7,
+      "keyframe": "sample-000011700.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.586827278137207,
+            0.4424506435875131,
+            0.6088996887207031,
+            0.5447059011592918
+          ],
+          "score": 0.4923,
+          "crop_score": 0.5988
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "c7d8fcae-ffd2-458b-b3a2-68ef43137649",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "blue"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.043779623508453366,
+            0.7211391872829861,
+            0.1446672797203064,
+            1.0
+          ],
+          "score": 0.9033,
+          "crop_score": 0.8797
+        },
+        {
+          "box": [
+            0.011143001914024352,
+            0.592550065782335,
+            0.09416810274124146,
+            0.9739995320638021
+          ],
+          "score": 0.8872,
+          "crop_score": 0.9079
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "40d74e01-7e37-4651-9b58-04d37329bd00",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "blue"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 9.6,
+      "keyframe": "sample-000009600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.16271309852600097,
+            0.28955167134602866,
+            0.21798667907714844,
+            0.4766853332519531
+          ],
+          "score": 0.9022,
+          "crop_score": 0.9347
+        },
+        {
+          "box": [
+            0.038538122177124025,
+            0.3020929548475477,
+            0.08956469297409057,
+            0.5231803046332465
+          ],
+          "score": 0.8674,
+          "crop_score": 0.9207
+        },
+        {
+          "box": [
+            0.10012357234954834,
+            0.2671542697482639,
+            0.14055869579315186,
+            0.48944710625542537
+          ],
+          "score": 0.8399,
+          "crop_score": 0.8874
+        },
+        {
+          "box": [
+            0.0,
+            0.2983178456624349,
+            0.02247801423072815,
+            0.5141006893581814
+          ],
+          "score": 0.6402,
+          "crop_score": 0.8143
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "5e9bc4b2-c767-4a01-b69e-2845ead9dd44",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 13.6,
+      "keyframe": "sample-000013600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.11363931894302368,
+            0.2449122534857856,
+            0.14973218441009523,
+            0.4241278754340278
+          ],
+          "score": 0.8692,
+          "crop_score": 0.8932
+        },
+        {
+          "box": [
+            0.2410825729370117,
+            0.24062427944607204,
+            0.2736565113067627,
+            0.4082275814480252
+          ],
+          "score": 0.8533,
+          "crop_score": 0.9138
+        },
+        {
+          "box": [
+            0.1559997797012329,
+            0.22580668131510417,
+            0.20203135013580323,
+            0.43484954833984374
+          ],
+          "score": 0.825,
+          "crop_score": 0.8606
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "414db049-ca26-4cbd-b30f-ca27d671fb62",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "brown"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "pink"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 16.0,
+      "keyframe": "sample-000016000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.2884763956069946,
+            0.22209112379286025,
+            0.3229393243789673,
+            0.37469774881998696
+          ],
+          "score": 0.8791,
+          "crop_score": 0.9234
+        },
+        {
+          "box": [
+            0.17131184339523314,
+            0.2220589107937283,
+            0.20854535102844238,
+            0.38691045973036026
+          ],
+          "score": 0.8666,
+          "crop_score": 0.841
+        },
+        {
+          "box": [
+            0.2324773073196411,
+            0.22729657491048177,
+            0.26842689514160156,
+            0.3909122043185764
+          ],
+          "score": 0.8223,
+          "crop_score": 0.8759
+        },
+        {
+          "box": [
+            0.21478073596954345,
+            0.20196601019965277,
+            0.2428774356842041,
+            0.3699352264404297
+          ],
+          "score": 0.7969,
+          "crop_score": 0.8708
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "c4e478e6-19af-43db-88b5-49de50de4a13",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "blue"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "brown"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 19.6,
+      "keyframe": "sample-000019600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.2996347904205322,
+            0.19946055942111546,
+            0.32561705112457273,
+            0.3417395909627279
+          ],
+          "score": 0.8417,
+          "crop_score": 0.8665
+        },
+        {
+          "box": [
+            0.3217371940612793,
+            0.1979000727335612,
+            0.3462271213531494,
+            0.3265072292751736
+          ],
+          "score": 0.7961,
+          "crop_score": 0.8833
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "b21eacc7-ce56-41d5-a3cb-fbd05e4a31d3",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "yellow"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "pink"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 22.8,
+      "keyframe": "sample-000022800.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.28942601680755614,
+            0.1791335635715061,
+            0.31444783210754396,
+            0.3059221691555447
+          ],
+          "score": 0.7907,
+          "crop_score": 0.392
+        },
+        {
+          "box": [
+            0.33771319389343263,
+            0.17395240995619032,
+            0.3697645902633667,
+            0.30273369683159723
+          ],
+          "score": 0.7638,
+          "crop_score": 0.8513
+        },
+        {
+          "box": [
+            0.3109338045120239,
+            0.15964056650797526,
+            0.33485333919525145,
+            0.29410574171278214
+          ],
+          "score": 0.7262,
+          "crop_score": 0.7204
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "0997e876-1c81-4265-aefe-52024e9a8775",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "blue"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "pink"
+        },
+        {
+          "clothing_color": "yellow"
+        },
+        {
+          "clothing_color": "white"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 26.6,
+      "keyframe": "sample-000026600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.3328039884567261,
+            0.14447339375813803,
+            0.35353548526763917,
+            0.26568349202473956
+          ],
+          "score": 0.737,
+          "crop_score": 0.7808
+        }
+      ],
+      "rejected_candidates": 2
+    },
+    {
+      "description_id": "41f59b11-db33-469d-b921-b38b3901d132",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "blue"
+        },
+        {
+          "clothing_color": "yellow"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 30.0,
+      "keyframe": "sample-000030000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.3528786897659302,
+            0.14806916978624132,
+            0.3822264432907104,
+            0.2627746158175998
+          ],
+          "score": 0.7364,
+          "crop_score": 0.7403
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "f936bb36-9a59-4c95-a699-949a9d8791ca",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "blue"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 40.0,
+      "keyframe": "sample-000040000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.3469710826873779,
+            0.1526788075764974,
+            0.37515594959259035,
+            0.26397938198513454
+          ],
+          "score": 0.7086,
+          "crop_score": 0.8538
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "6329ed30-3fc9-4538-ab70-951e1e7e3af7",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "pink"
+        },
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 43.2,
+      "keyframe": "sample-000043200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.2831308126449585,
+            0.17595714992947048,
+            0.30906405448913576,
+            0.30587179395887587
+          ],
+          "score": 0.8235,
+          "crop_score": 0.8619
+        },
+        {
+          "box": [
+            0.34367823600769043,
+            0.15539626015557184,
+            0.3668827056884766,
+            0.2633719974093967
+          ],
+          "score": 0.8015,
+          "crop_score": 0.8801
+        },
+        {
+          "box": [
+            0.31058976650238035,
+            0.1521455552842882,
+            0.33373944759368895,
+            0.26944546169704864
+          ],
+          "score": 0.7792,
+          "crop_score": 0.7209
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "e7e54973-ab65-4cf1-b011-36e95f953f92",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        },
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 47.0,
+      "keyframe": "sample-000047000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.16150642633438111,
+            0.24126642015245225,
+            0.19928910732269287,
+            0.41370374891493056
+          ],
+          "score": 0.8673,
+          "crop_score": 0.8849
+        },
+        {
+          "box": [
+            0.3022517204284668,
+            0.18024671342637805,
+            0.3346040487289429,
+            0.316504881117079
+          ],
+          "score": 0.8537,
+          "crop_score": 0.9151
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "2ecd2151-d2e8-4d82-afb0-b382dae586aa",
+      "video_id": "demo-parking-people",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 49.2,
+      "keyframe": "sample-000049200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.22180430889129638,
+            0.21905625661214193,
+            0.2613215923309326,
+            0.391080813937717
+          ],
+          "score": 0.8941,
+          "crop_score": 0.9264
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "3e9e1d2e-bdff-49e8-be72-c0e6279a4f9f",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "d9bbf6d6-ed26-459d-b727-972d5f6b73a8",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 15.0,
+      "keyframe": "sample-000015000.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "4f2de47a-9109-4cd1-a283-33a2ff482d8c",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 30.0,
+      "keyframe": "sample-000030000.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "6af75e85-640e-446a-8047-73c3887817ce",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 45.0,
+      "keyframe": "sample-000045000.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "b721c3a9-5ef8-412b-805f-b44790f38b09",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 60.0,
+      "keyframe": "sample-000060000.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "9bb9485c-f0d5-4cb6-b72a-2e7953ce6eec",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 65.4,
+      "keyframe": "sample-000065400.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "477ddb69-f3d8-40e3-a7aa-8eed5156ae99",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 76.4,
+      "keyframe": "sample-000076400.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "b0579636-0920-4e5d-b13a-0801bd3369f5",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "red"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 90.0,
+      "keyframe": "sample-000090000.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "bdc0e5ad-497d-4696-82f6-d7644516c4bb",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 93.2,
+      "keyframe": "sample-000093200.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "4f00fe99-5a4a-4d48-bbd6-341e4c5097d7",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 108.2,
+      "keyframe": "sample-000108200.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "b03ae818-7213-4f05-b11b-f28eabd87505",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 117.2,
+      "keyframe": "sample-000117200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.9807346343994141,
+            0.5562452952067057,
+            0.9994738578796387,
+            0.667521243625217
+          ],
+          "score": 0.8099,
+          "crop_score": 0.9011
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "9a8d4672-4974-4c1d-95b5-3235a5948777",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "white"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 119.6,
+      "keyframe": "sample-000119600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.9228970527648925,
+            0.5635809156629774,
+            0.9569598197937011,
+            0.6853836059570313
+          ],
+          "score": 0.7983,
+          "crop_score": 0.4224
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "a68d6ef6-3b55-4396-97c4-fd63dfbf85fb",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 123.0,
+      "keyframe": "sample-000123000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.804331111907959,
+            0.5685821109347873,
+            0.8371522903442383,
+            0.6904645707872179
+          ],
+          "score": 0.8588,
+          "crop_score": 0.8135
+        },
+        {
+          "box": [
+            0.7629065036773681,
+            0.5704684363471137,
+            0.7902762413024902,
+            0.6673667907714844
+          ],
+          "score": 0.806,
+          "crop_score": 0.3999
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "02834a81-2bab-4d2c-9c99-ca0239f9278e",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        },
+        {
+          "clothing_color": "white"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 125.0,
+      "keyframe": "sample-000125000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.8109637260437011,
+            0.5683312310112847,
+            0.8376486778259278,
+            0.687981457180447
+          ],
+          "score": 0.8702,
+          "crop_score": 0.7939
+        },
+        {
+          "box": [
+            0.6559970378875732,
+            0.5714964972601997,
+            0.6848462104797364,
+            0.6846702151828342
+          ],
+          "score": 0.8469,
+          "crop_score": 0.4107
+        },
+        {
+          "box": [
+            0.6975862503051757,
+            0.5703973558213976,
+            0.7202689170837402,
+            0.6970633188883464
+          ],
+          "score": 0.8261,
+          "crop_score": 0.6326
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "7c76db32-9a98-4e08-af85-031c66c4404b",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 130.2,
+      "keyframe": "sample-000130200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.46731133460998536,
+            0.5776803758409288,
+            0.4919870853424072,
+            0.7015614827473958
+          ],
+          "score": 0.8597,
+          "crop_score": 0.857
+        },
+        {
+          "box": [
+            0.44525985717773436,
+            0.5762112511528863,
+            0.46646509170532224,
+            0.6870336320665148
+          ],
+          "score": 0.8001,
+          "crop_score": 0.5579
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "affedf13-5292-4f48-961b-ff043945167b",
+      "video_id": "demo-parking-machine",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 132.6,
+      "keyframe": "sample-000132600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.3562833547592163,
+            0.5792891184488932,
+            0.39292254447937014,
+            0.7064298841688368
+          ],
+          "score": 0.8062,
+          "crop_score": 0.8524
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "d48ec5c6-536e-4804-b867-2a0731215ace",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "white"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 0.0,
+      "keyframe": "sample-000000000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "87129203-947e-4146-ba23-18bed5f3869d",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 15.0,
+      "keyframe": "sample-000015000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "351a764b-6798-4c26-9e78-167dfa0a881f",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 30.0,
+      "keyframe": "sample-000030000.jpg",
+      "boxes": [],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "e6283dbe-4358-4d23-87b0-3af846fc03e5",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 36.0,
+      "keyframe": "sample-000036000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.8186018943786622,
+            0.7046919964274773,
+            0.8326846122741699,
+            0.757879433511686
+          ],
+          "score": 0.5411,
+          "crop_score": 0.3515
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "05de2968-ae5d-4a7c-8732-e7895ee9f8b5",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 45.6,
+      "keyframe": "sample-000045600.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.6574979782104492,
+            0.679291498093378,
+            0.6705395698547363,
+            0.7280130680201768
+          ],
+          "score": 0.5271,
+          "crop_score": 0.6938
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "e5ec8d01-b3af-4b68-9e32-bd0e7588c0fe",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 51.0,
+      "keyframe": "sample-000051000.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.6155611991882324,
+            0.660183775658701,
+            0.6287373542785645,
+            0.7058415773535976
+          ],
+          "score": 0.56,
+          "crop_score": 0.6378
+        },
+        {
+          "box": [
+            0.04346727430820465,
+            0.7897415802258403,
+            0.059280800819396975,
+            0.8792029629234507
+          ],
+          "score": 0.5445,
+          "crop_score": 0.6565
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "966afc9c-7bba-4264-8055-061434a8e0b8",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 54.2,
+      "keyframe": "sample-000054200.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.1208798885345459,
+            0.7919336313627013,
+            0.1412692427635193,
+            0.8794215440082283
+          ],
+          "score": 0.7236,
+          "crop_score": 0.8645
+        },
+        {
+          "box": [
+            0.5924370288848877,
+            0.6498057474943102,
+            0.6044701099395752,
+            0.6944906624759278
+          ],
+          "score": 0.4062,
+          "crop_score": 0.5495
+        }
+      ],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "64abb936-9944-4d15-ad1e-5c1dee5f71b7",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 56.4,
+      "keyframe": "sample-000056400.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.18015284538269044,
+            0.790213961561187,
+            0.19754719734191895,
+            0.8742341541108631
+          ],
+          "score": 0.7991,
+          "crop_score": 0.7244
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "86d20e71-b446-48e1-9af2-c1ae9ddf092d",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 58.4,
+      "keyframe": "sample-000058400.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.23427772521972656,
+            0.7812802611278886,
+            0.25654211044311526,
+            0.8742409927838323
+          ],
+          "score": 0.3678,
+          "crop_score": 0.6191
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "b5e0ab4a-1b20-4614-b519-e35df1c5395d",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 60.8,
+      "keyframe": "sample-000060800.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.10318104028701783,
+            0.6860649899608281,
+            0.1173287034034729,
+            0.7435537813758316
+          ],
+          "score": 0.6625,
+          "crop_score": 0.5069
+        },
+        {
+          "box": [
+            0.3045091152191162,
+            0.7862250491016719,
+            0.3194230794906616,
+            0.8711163176207983
+          ],
+          "score": 0.6405,
+          "crop_score": 0.8165
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "4f8de73b-3441-4b0a-89a1-9c96dfd4181e",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 63.4,
+      "keyframe": "sample-000063400.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.37515013217926024,
+            0.787831367898722,
+            0.3944148302078247,
+            0.871922255230217
+          ],
+          "score": 0.7971,
+          "crop_score": 0.8288
+        }
+      ],
+      "rejected_candidates": 0
+    },
+    {
+      "description_id": "ac00fced-a8ac-48ed-8aa2-3c76a90a01cb",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 66.2,
+      "keyframe": "sample-000066200.jpg",
+      "boxes": [],
+      "rejected_candidates": 1
+    },
+    {
+      "description_id": "58b1b52f-bf0f-4db8-b0ed-f59d1e3de100",
+      "video_id": "demo-parking-holdout",
+      "vlm_people": [
+        {
+          "clothing_color": "black"
+        }
+      ],
+      "version": 1,
+      "method": "frame_and_person_crop",
+      "detector": "YOLOX-S",
+      "provider": "CUDAExecutionProvider",
+      "observed_at_sec": 69.8,
+      "keyframe": "sample-000069800.jpg",
+      "boxes": [
+        {
+          "box": [
+            0.5436125755310058,
+            0.7781346425288865,
+            0.5601122856140137,
+            0.8582104594767594
+          ],
+          "score": 0.8075,
+          "crop_score": 0.8818
+        }
+      ],
+      "rejected_candidates": 0
+    }
+  ],
+  "provider": "CUDAExecutionProvider"
+}

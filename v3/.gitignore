@@ -1,0 +1,20 @@
+.venv/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+# Runtime data stays local; the prepared demo (about 70 MB) is committed.
+data/*
+!data/ai-demo/
+data/ai-demo/logs/
+*.sqlite-shm
+*.sqlite-wal
+# Only the default detector ships; the bundled FFmpeg binaries (60-80 MB, GPL) do not.
+models/*.onnx
+!models/yolox_s.onnx
+tools/*.exe
+output/workflow-qa/
+__pycache__/
+.pytest_cache/
+*.pyc
+.playwright-cli/
+output/review/

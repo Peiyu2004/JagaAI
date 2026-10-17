@@ -1,0 +1,281 @@
+[
+  {
+    "video": "demo-parking-machine",
+    "second": 0,
+    "people": []
+  },
+  {
+    "video": "demo-parking-machine",
+    "second": 30,
+    "people": [
+      {
+        "box": [
+          0.06688882112503051,
+          0.45610584682888455,
+          0.08148519396781921,
+          0.5055255466037326
+        ],
+        "score": 0.3137699067592621,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-machine",
+    "second": 60,
+    "people": [
+      {
+        "box": [
+          0.06712965965270996,
+          0.45388179355197483,
+          0.08207620978355408,
+          0.5052924686008029
+        ],
+        "score": 0.30135637521743774,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-machine",
+    "second": 90,
+    "people": [
+      {
+        "box": [
+          0.06700354814529419,
+          0.4560233645968967,
+          0.08192704319953918,
+          0.5060041215684679
+        ],
+        "score": 0.3628128468990326,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-machine",
+    "second": 120,
+    "people": [
+      {
+        "box": [
+          0.8623076438903808,
+          0.5650354597303603,
+          0.8877758026123047,
+          0.6712533315022786
+        ],
+        "score": 0.8218742609024048,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.909149169921875,
+          0.5647141350640191,
+          0.934664535522461,
+          0.6854179382324219
+        ],
+        "score": 0.8039605617523193,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-people",
+    "second": 0,
+    "people": [
+      {
+        "box": [
+          0.043779623508453366,
+          0.7211391872829861,
+          0.1446672797203064,
+          1.0
+        ],
+        "score": 0.9033167958259583,
+        "check": {
+          "passed": true,
+          "score": 0.8797,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.011143001914024352,
+          0.592550065782335,
+          0.09416810274124146,
+          0.9739995320638021
+        ],
+        "score": 0.88722163438797,
+        "check": {
+          "passed": true,
+          "score": 0.9079,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.0002162329852581024,
+          0.6917457580566406,
+          0.021800771355628967,
+          0.974295891655816
+        ],
+        "score": 0.33644452691078186,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-people",
+    "second": 30,
+    "people": [
+      {
+        "box": [
+          0.3528786897659302,
+          0.14806916978624132,
+          0.3822264432907104,
+          0.2627746158175998
+        ],
+        "score": 0.7364293932914734,
+        "check": {
+          "passed": true,
+          "score": 0.7403,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.38041298389434813,
+          0.15274033016628688,
+          0.4079011917114258,
+          0.26315013037787544
+        ],
+        "score": 0.5483108162879944,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-parking-people",
+    "second": 47,
+    "people": [
+      {
+        "box": [
+          0.16150642633438111,
+          0.24126642015245225,
+          0.19928910732269287,
+          0.41370374891493056
+        ],
+        "score": 0.8673030138015747,
+        "check": {
+          "passed": true,
+          "score": 0.8849,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.3022517204284668,
+          0.18024671342637805,
+          0.3346040487289429,
+          0.316504881117079
+        ],
+        "score": 0.8537467122077942,
+        "check": {
+          "passed": true,
+          "score": 0.9151,
+          "method": "person_crop_recheck"
+        }
+      },
+      {
+        "box": [
+          0.37713487148284913,
+          0.140988466474745,
+          0.4025130271911621,
+          0.2631875779893663
+        ],
+        "score": 0.532223105430603,
+        "check": {
+          "passed": false,
+          "score": 0.0,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-stairs-entry",
+    "second": 0,
+    "people": []
+  },
+  {
+    "video": "demo-stairs-entry",
+    "second": 7.4,
+    "people": [
+      {
+        "box": [
+          0.4538105487823486,
+          0.3078183940812653,
+          0.6188849925994873,
+          0.9984079569327731
+        ],
+        "score": 0.9145541191101074,
+        "check": {
+          "passed": true,
+          "score": 0.9258,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  },
+  {
+    "video": "demo-stairs-empty",
+    "second": 0,
+    "people": []
+  },
+  {
+    "video": "demo-courtyard-entry",
+    "second": 8.9,
+    "people": [
+      {
+        "box": [
+          0.39202916622161865,
+          0.44157909745929624,
+          0.42105607986450194,
+          0.5433071360868567
+        ],
+        "score": 0.4910401999950409,
+        "check": {
+          "passed": true,
+          "score": 0.3568,
+          "method": "person_crop_recheck"
+        }
+      }
+    ]
+  }
+]

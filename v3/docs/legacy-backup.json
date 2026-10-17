@@ -1,0 +1,9 @@
+{
+  "created_at": "20261015T125609Z",
+  "source_archive": "legacy-source.zip",
+  "database_backup": "legacy.sqlite",
+  "media_preserved_in_place": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\data",
+  "models_preserved_in_place": "C:\\Users\\HP\\Downloads\\Sime darby\\jagaai\\.runtime",
+  "old_files_deleted": false,
+  "backup_directory": "C:\\Users\\HP\\Downloads\\Sime darby\\backups\\jagaai-before-v3-20261015T125609Z"
+}
