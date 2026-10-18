@@ -449,7 +449,7 @@ def test_thumbnail_requires_a_real_private_frame_and_unexpired_video(api):
     directory.mkdir(parents=True)
     Image.new("RGB", (16, 16), "gray").save(directory / "overview.jpg", "JPEG")
     thumbnail_url = client.get("/api/bootstrap").json()["videos"][0]["thumbnail_url"]
-    assert thumbnail_url == f"/api/videos/{video.id}/keyframes/overview.jpg"
+    assert thumbnail_url == f"/api/videos/{video.id}/thumbnail"
     assert client.get(thumbnail_url).status_code == 200
     with Session(engine) as session:
         row = session.get(Video, video.id)

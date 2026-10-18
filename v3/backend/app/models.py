@@ -152,6 +152,13 @@ class Lead(SQLModel, table=True):
     created_at: datetime = Field(default_factory=utcnow)
 
 
+class IncidentCreateRequest(SQLModel, table=True):
+    # One receipt per operator action, committed atomically with the incident.
+    key_hash: str = Field(primary_key=True)
+    request_hash: str
+    incident_id: str = Field(foreign_key="incident.id")
+
+
 class AuditLog(SQLModel, table=True):
     id: str = Field(default_factory=uid, primary_key=True)
     actor_id: str | None = None

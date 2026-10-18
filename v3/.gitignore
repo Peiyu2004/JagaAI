@@ -21,3 +21,10 @@ __pycache__/
 *.pyc
 .playwright-cli/
 output/review/
+# Local browser audits contain screenshots, database copies and runtime logs.
+output/playwright/
+output/design-v4/
+backend/pytest-of-*/
+# Private thumbnail caches are regenerated from the committed demo originals.
+data/ai-demo/frames/**/preview-*.webp
+data/ai-demo/frames/**/*-preview-*.webp

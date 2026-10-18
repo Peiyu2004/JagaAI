@@ -1,0 +1,270 @@
+/* Readable business data on stable surfaces, retaining the workspace colour field. */
+:root {
+  --muted: #526176;
+}
+.app-shell
+  :is(
+    .panel,
+    .stat,
+    .selection-card,
+    .incident-card,
+    .camera-selector > button,
+    .search-form
+  ),
+.resident-page
+  :is(
+    .resident-login,
+    .resident-report-form,
+    .resident-success,
+    .resident-report-card
+  ),
+.dialog-content {
+  background: var(--surface, #f9fbfe);
+}
+.app-shell .topbar,
+.resident-header {
+  background: var(--surface, #f8fafc);
+}
+.app-shell
+  :is(
+    .breadcrumb,
+    .topbar-time,
+    .stat-top,
+    .stat > small,
+    .panel-subtle,
+    .panel-description,
+    .empty p,
+    .coverage-bar,
+    .page-heading p,
+    .page-footer,
+    .tabs > button,
+    .board-empty,
+    .board-explainer,
+    .activity-list small,
+    .compact-leads small,
+    .attention-list small,
+    .first-recording small,
+    .workspace-ready p
+  ),
+.app-shell main small,
+.app-shell
+  :is(
+    .selection-card p,
+    .selection-card > span:last-child,
+    .selection-card .row-between > small,
+    .detail-title p,
+    .metrics-list dt,
+    .metrics-list dd,
+    .evidence-box p,
+    .verification-note,
+    .detail-foot,
+    .shortcut-hint,
+    .event-row-body > span,
+    .result-body > span,
+    .result-body > small,
+    .search-language,
+    .search-guidance,
+    .map-caption,
+    .record-id,
+    .camera-detail-title p,
+    .zone-toolbar,
+    .zone-empty-note,
+    .recording-name small,
+    .supported-note,
+    .coverage-note,
+    .nearest-results,
+    .nearest-results > summary,
+    .nearest-results > p,
+    .result-summary > span,
+    .info-strip,
+    .field > small,
+    .section-title > span,
+    .scene-note small,
+    .live-note,
+    .live-mode > button,
+    .live-state,
+    .inline-label,
+    .heatmap,
+    .location-bars,
+    .follow-up-stats span,
+    .chart-empty-note,
+    .panel-foot-link,
+    th
+  ),
+.dialog-content :is(.dialog-description, small, .field > small),
+.resident-page
+  :is(
+    .resident-intro > p,
+    .resident-welcome > p,
+    .resident-view-update,
+    .resident-footer,
+    .resident-report-form > p,
+    .resident-steps > li,
+    .resident-dev-note,
+    .resident-privacy,
+    .resident-photo small,
+    .resident-confirmation p,
+    .resident-time-options small,
+    .resident-report-card small,
+    .resident-report-card > button > p,
+    .resident-report-progress > small,
+    .resident-tabs > button,
+    .resident-reports > .row-between,
+    .resident-report-progress li
+  ) {
+  color: #526176;
+}
+.app-shell .connection.connected {
+  color: #346749;
+}
+.app-shell .tabs > button.active,
+.resident-tabs > button.active {
+  color: #1d4bc2;
+}
+.app-shell .sidebar {
+  overflow-y: auto;
+}
+.app-shell
+  .sidebar
+  :is(
+    .brand small,
+    .property-switch small,
+    .privacy-note,
+    .privacy-note small,
+    .account small
+  ) {
+  color: #bdcce2;
+}
+.app-shell .nav-item {
+  color: #c2d0e4;
+}
+.app-shell .nav-item.active {
+  color: #fff;
+}
+.app-shell .recorded-tile-info small,
+.app-shell .camera-blank small,
+.app-shell .camera-blank-status {
+  color: #edf3ff;
+}
+.app-shell .video-meta {
+  color: #cbd8eb;
+}
+.app-shell .zone-stage > video {
+  object-fit: contain;
+}
+.resident-header .brand-ai {
+  color: #24529a;
+}
+.resident-header .brand small {
+  color: #526176;
+}
+.resident-steps > li.complete {
+  color: #216142;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(
+    .badge-normal,
+    .badge-open,
+    .badge-supervisor,
+    .badge-dismissed,
+    .badge-offline,
+    .badge-uploaded
+  ) {
+  color: #405778;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(.badge-pending, .badge-received, .badge-queued, .badge-high) {
+  color: #754c08;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(.badge-confirmed, .badge-resolved, .badge-ready, .badge-closed) {
+  color: #216142;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(.badge-processing, .badge-in_progress, .badge-assigned, .badge-admin) {
+  color: #294f91;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(.badge-urgent, .badge-failed) {
+  color: #9b3027;
+}
+:is(.app-shell, .resident-page, .dialog-content) .btn-primary {
+  color: #fff;
+  background: linear-gradient(180deg, #315ed7, #244bbc);
+}
+:is(.app-shell, .resident-page, .dialog-content) .btn-primary:hover {
+  color: #fff;
+  background: linear-gradient(180deg, #254fbd, #1f419f);
+  filter: none;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(.btn-outline, .btn-secondary, .btn-ghost) {
+  color: #475972;
+}
+:is(.app-shell, .resident-page, .dialog-content)
+  :is(input, textarea)::placeholder {
+  color: #5c6d83;
+  opacity: 1;
+}
+.review-confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #24344b;
+}
+.review-confirmation input {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.confirm-alert-summary {
+  padding: 14px;
+  background: #edf2fa;
+  border: 1px solid #cbd7e8;
+  border-radius: 12px;
+}
+.confirm-alert-summary p {
+  margin: 6px 0;
+  color: #43546e;
+}
+.search-result-query {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #526176;
+  overflow-wrap: anywhere;
+}
+
+.app-shell :is(.suggestions>button,.search-guidance>span,.search-guidance strong,.page-tools>span,.board-head h2,.zone-toolbar>span,.rule-editor>p,.advanced-rule>summary,.workload-figures>div>span,.heat-row>span,.heat-hours>span,.heat-key>span,.location-bars>div>div:first-child,.location-bars>div>div:first-child>span,td,td strong,.access-grid h3,.access-grid p,.you-label){color:#526176}
+.app-shell .rule-id{color:#754c08}
+.app-shell .rule-id.red{color:#9b3027}
+.loading-screen .brand-ai{color:#24529a}
+.loading-screen :is(p,.brand small){color:#526176}
+
+.app-shell .account-trigger>.avatar{color:#345487}
+.app-shell .record-ref{color:#526176}
+
+.resident-page :is(.resident-dev-note strong,.resident-examples>span,.resident-safety>p,.resident-success>p,.resident-public-reply strong,.resident-public-reply p){color:#526176}
+.resident-page .map-caption,:is(.app-shell,.resident-page) .map-caption>span{color:#52674f}
+
+.app-shell .video-meta>span,.dialog-content .video-meta>span{color:#cbd8eb}
+.app-shell .camera-tile-info small{color:#edf3ff}
+.site-map svg text{font-size:12px}
+
+/* Larger operational labels must still fit the narrowest supported layout. */
+.app-shell .page-tools{flex-wrap:wrap;gap:10px}
+.app-shell .page-tools>.inline-label{flex-wrap:wrap;max-width:100%}
+
+/* Map labels stay at a readable CSS size instead of scaling with the SVG. */
+.site-map-graphic { position:relative; aspect-ratio:600 / 276; }
+.site-map-graphic > svg { display:block; width:100%; height:100%; }
+.site-map-pin { position:absolute; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; border:1px solid #617b67; border-radius:50%; background:#fff; color:#304b38; font-size:14px; font-weight:700; }
+button.site-map-pin { cursor:pointer; }
+.site-map-pin.selected { background:#245be7; border-color:#245be7; color:#fff; }
+.site-map-legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:8px 14px; margin:0; padding:12px; list-style:none; background:#f7faf7; color:#304b38; }
+.site-map-legend li { display:flex; align-items:center; gap:8px; font-size:14px; line-height:1.5; overflow-wrap:anywhere; }
+.site-map-number { display:inline-flex; flex:0 0 24px; height:24px; justify-content:center; align-items:center; border:1px solid #617b67; border-radius:50%; font-size:14px; font-weight:700; }
+.site-map-legend li.selected { font-weight:700; color:#1748bd; }
+.site-map-pin:focus-visible, .review-side:focus-visible, .heatmap:focus-visible { outline:3px solid #245be7; outline-offset:3px; }

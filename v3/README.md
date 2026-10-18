@@ -17,7 +17,7 @@ Needs **Python 3.12**, **Node.js 20+** (tested on 24) and, for AI search, **[Oll
    ollama pull qwen3-embedding:0.6b
    ollama pull qwen3-vl:2b-instruct
    ```
-3. **Double-click `Start-AI-Demo.cmd`** for the prepared demo with seven analysed public clips, or `Start-V3.cmd` for an empty workspace. The browser opens http://127.0.0.1:5174.
+3. **Double-click `Start-AI-Demo.cmd`** for the prepared demo with eight analysed public clips, or `Start-V3.cmd` for an empty workspace. The browser opens http://127.0.0.1:5174.
 
 Sign in as **`admin@jagaai.local`** / **`JagaAI-demo-2026!`** (also `supervisor@jagaai.local`, same password). The resident page is http://127.0.0.1:5174/resident. These are local demo accounts; change them before any real use.
 
@@ -30,6 +30,8 @@ Ports: web 5174, API 8766, Ollama 11435 (a dedicated v3 server), all loopback on
 GPU selection: the launcher picks the first NVIDIA GPU reported by `nvidia-smi` and pins it by UUID; AMD ROCm and Vulkan are then disabled for its child processes so Ollama cannot fall back to an integrated GPU. If CUDA cannot start, detection logs a warning and uses the CPU. Set `JAGAAI_GPU=RTX 3050` to prefer a specific card or `JAGAAI_DEVICE=cpu` to force CPU. Ollama: the portable copy in `../.runtime/` is used when present, otherwise the installed `ollama` on PATH.
 
 See `docs/ai-demo.md` for the demo scenarios, limits and repeatable evaluation.
+
+See [the 2026-10-18 quality verification](docs/quality-verification-20261018.md) for P1/P2 regression coverage and live Chinese, English and Malay semantic-search results.
 
 ## Rebuild the environment
 

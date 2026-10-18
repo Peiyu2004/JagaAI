@@ -35,7 +35,7 @@ def camera_json(camera):
 def video_json(video):
     result = record_json(video, {"path"})
     thumbnail = database.DATA_DIR / "frames" / video.id / "overview.jpg"
-    result["thumbnail_url"] = f"/api/videos/{video.id}/keyframes/overview.jpg" if aware(video.expires_at) > utcnow() and thumbnail.is_file() else None
+    result["thumbnail_url"] = f"/api/videos/{video.id}/thumbnail" if aware(video.expires_at) > utcnow() and thumbnail.is_file() else None
     return result
 
 

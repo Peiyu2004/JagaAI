@@ -31,7 +31,7 @@ from sqlmodel import Session, select
 from . import jobs, live
 from .auth import COOKIE_NAME, admin, authenticated, aware, current_user, establish_session, hash_password, resident, staff, user_json, verify_password
 from .database import DATA_DIR, get_session, init_db, session_scope
-from .models import Alert, AppSettings, AuditLog, AuthSession, Camera, Event, Guard, Incident, Lead, Location, User, Video, uid, utcnow
+from .models import Alert, AppSettings, AuditLog, AuthSession, Camera, Event, Guard, Incident, IncidentCreateRequest, Lead, Location, User, Video, uid, utcnow
 from .realtime import publish_refresh, snapshot
 from .retention import expire_videos, private_path
 from .serializers import alert_json, camera_json, lead_json, record_json, video_json
@@ -96,7 +96,7 @@ class UploadBodyLimit:
 
 app.add_middleware(UploadBodyLimit)
 app.add_middleware(CORSMiddleware, allow_origins=sorted(ALLOWED_ORIGINS), allow_credentials=True,
-                   allow_methods=["GET", "POST", "PATCH", "PUT", "OPTIONS"], allow_headers=["Content-Type", "Range"])
+                   allow_methods=["GET", "POST", "PATCH", "PUT", "OPTIONS"], allow_headers=["Content-Type", "Range", "Idempotency-Key"])
 
 
 @app.exception_handler(RequestValidationError)
@@ -474,7 +474,19 @@ def review_alert(alert_id: str, payload: ReviewPayload, session: Session = Depen
 
 
 @app.post("/api/incidents")
-def create_incident(payload: IncidentCreate, session: Session = Depends(get_session), user: User = Depends(staff)):
+def create_incident(payload: IncidentCreate, request: Request, session: Session = Depends(get_session), user: User = Depends(staff)):
+    key = request.headers.get("Idempotency-Key")
+    key_hash = request_hash = None
+    if key is not None:
+        if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", key):
+            raise HTTPException(422, "Use a valid incident creation key.")
+        key_hash = hashlib.sha256(f"{user.id}:{key}".encode()).hexdigest()
+        request_hash = hashlib.sha256(json.dumps(payload.model_dump(), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        receipt = session.get(IncidentCreateRequest, key_hash)
+        if receipt:
+            if receipt.request_hash != request_hash:
+                raise HTTPException(409, "This creation request was already used. Open a new incident form for a different record.")
+            return record_json(require_record(session, Incident, receipt.incident_id))
     require_record(session, Location, payload.location_id)
     priority_value(payload.priority)
     if not payload.title.strip() or len(payload.title.strip()) < 3:
@@ -486,12 +498,34 @@ def create_incident(payload: IncidentCreate, session: Session = Depends(get_sess
                         timeline=[timeline_item(user, "created", "Incident created." )])
     session.add(incident)
     session.flush()
+    if key_hash:
+        # On SQLite the first write waits for another creator's transaction.
+        # Recheck its committed receipt before attaching shared leads/alerts.
+        receipt = session.get(IncidentCreateRequest, key_hash)
+        if receipt:
+            saved_id, saved_hash = receipt.incident_id, receipt.request_hash
+            session.rollback()
+            if saved_hash != request_hash:
+                raise HTTPException(409, "This creation request was already used for different details.")
+            return record_json(require_record(session, Incident, saved_id))
     if payload.alert_id:
         attach_alert(session, require_record(session, Alert, payload.alert_id), incident, user)
     if payload.lead_id:
         attach_lead(session, require_record(session, Lead, payload.lead_id), incident, user)
+    if key_hash:
+        session.add(IncidentCreateRequest(key_hash=key_hash, request_hash=request_hash, incident_id=incident.id))
     audit(session, user, "incident.create", incident.id)
-    commit_refresh(session, "incident", incident.id)
+    try:
+        commit_refresh(session, "incident", incident.id)
+    except IntegrityError:
+        # A concurrent retry may have committed the same receipt while we waited.
+        session.rollback()
+        receipt = session.get(IncidentCreateRequest, key_hash) if key_hash else None
+        if not receipt:
+            raise
+        if receipt.request_hash != request_hash:
+            raise HTTPException(409, "This creation request was already used for different details.")
+        return record_json(require_record(session, Incident, receipt.incident_id))
     return record_json(incident)
 
 
@@ -736,6 +770,25 @@ def video_media(video_id: str, request: Request, session: Session = Depends(get_
     return StreamingResponse(chunks(), status_code=206, media_type="video/mp4", headers=headers)
 
 
+@app.get("/api/videos/{video_id}/thumbnail")
+def thumbnail(video_id: str, width: int = 480, frame: str = "overview.jpg", session: Session = Depends(get_session), user: User = Depends(staff)):
+    video = require_record(session, Video, video_id)
+    if aware(video.expires_at) <= utcnow():
+        raise HTTPException(410, "This recording has expired.")
+    if width not in {160, 480, 960}:
+        raise HTTPException(422, "Thumbnail width must be 160, 480 or 960 pixels.")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+\.(jpg|jpeg|png)", frame):
+        raise HTTPException(422, "Choose a frame belonging to this recording.")
+    from .thumbnails import preview_path
+    try:
+        path = preview_path(private_path(str(DATA_DIR / "frames" / video_id / frame)), width)
+    except (OSError, ValueError, UnidentifiedImageError):
+        raise HTTPException(404, "The preview is unavailable.")
+    audit(session, user, "thumbnail.view", video_id, {"width": width})
+    session.commit()
+    return FileResponse(path, media_type="image/webp")
+
+
 @app.get("/api/videos/{video_id}/keyframes/{filename}")
 def keyframe(video_id: str, filename: str, session: Session = Depends(get_session), user: User = Depends(staff)):
     video = require_record(session, Video, video_id)
@@ -751,7 +804,7 @@ def keyframe(video_id: str, filename: str, session: Session = Depends(get_sessio
     return FileResponse(path, media_type="image/png" if path.suffix == ".png" else "image/jpeg")
 
 
-def validate_rules(rules):
+def validate_rules(rules, require_geometry=True):
     if set(rules) - {"R1", "R3"}:
         raise HTTPException(422, "Only R1 vehicle loitering and R3 restricted entry are supported in this workspace.")
     defaults = {"R1": {"enabled", "loiter_sec", "window_sec", "min_vehicles", "min_dwell_sec", "zone"},
@@ -769,20 +822,27 @@ def validate_rules(rules):
                 raise HTTPException(422, "Active hours must use HH:MM in Malaysia time.")
         for key in ("zone", "line"):
             points = values.get(key)
-            if points is None:
+            if points is None or points == []:
                 continue
             required = 2 if key == "line" else 3
             if not isinstance(points, list) or not required <= len(points) <= (2 if key == "line" else 16):
                 raise HTTPException(422, "A zone needs 3–16 points and a line needs two points.")
             if any(not isinstance(point, list) or len(point) != 2 or any(type(v) not in {int, float} or not math.isfinite(v) or not 0 <= v <= 1 for v in point) for point in points):
                 raise HTTPException(422, "Zone coordinates must be normalized between zero and one.")
+        if require_geometry and values.get("enabled"):
+            if rule == "R1" and not values.get("zone"):
+                raise HTTPException(422, "An enabled parking rule needs a parking area.")
+            if rule == "R3" and not (values.get("zone") or values.get("line")):
+                raise HTTPException(422, "An enabled restricted entry rule needs an area or a crossing line.")
 
 
 @app.put("/api/cameras/{camera_id}/rules")
 def camera_rules(camera_id: str, payload: RulesPayload, session: Session = Depends(get_session), user: User = Depends(staff)):
     camera = require_record(session, Camera, camera_id)
-    validate_rules(payload.rules)
-    camera.rules = {**camera.rules, **{key: {**camera.rules.get(key, {}), **value} for key, value in payload.rules.items()}}
+    validate_rules(payload.rules, require_geometry=False)
+    merged = {**camera.rules, **{key: {**camera.rules.get(key, {}), **value} for key, value in payload.rules.items()}}
+    validate_rules(merged)
+    camera.rules = merged
     session.add(camera)
     audit(session, user, "camera.rules", camera.id, {"rules": payload.rules})
     commit_refresh(session, "camera", camera.id)
