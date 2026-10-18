@@ -1,8 +1,10 @@
-export { default as CommandPage } from "./pages/Command";
-export { default as AlertsPage } from "./pages/Alerts";
-export { default as AskPage } from "./pages/Ask";
-export { default as LeadsPage } from "./pages/Leads";
-export { default as IncidentsPage } from "./pages/Incidents";
-export { default as CamerasPage } from "./pages/Cameras";
-export { default as InsightsPage } from "./pages/Insights";
-export { default as SettingsPage } from "./pages/Settings";
+import { lazy } from "react";
+
+export const CommandPage = lazy(() => import("./pages/Command"));
+export const AlertsPage = lazy(() => import("./pages/Alerts"));
+export const AskPage = lazy(() => import("./pages/Ask"));
+export const LeadsPage = lazy(() => import("./pages/Leads"));
+export const IncidentsPage = lazy(() => import("./pages/Incidents"));
+export const CamerasPage = lazy(() => import("./pages/Cameras"));
+export const InsightsPage = lazy(() => import("./pages/Insights"));
+export const SettingsPage = lazy(() => import("./pages/Settings"));

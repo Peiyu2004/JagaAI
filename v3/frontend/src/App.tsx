@@ -3,6 +3,8 @@ import {
   useEffect,
   useCallback,
   useRef,
+  lazy,
+  Suspense,
   type FormEvent,
 } from "react";
 import {
@@ -38,6 +40,7 @@ import { AppContext } from "./context";
 import { Button } from "./components/ui/button";
 import { Dialog } from "./components/ui/dialog";
 import { Brand, Field, VideoPlayer } from "./components/shared";
+import { ViewBoundary, ViewLoading } from "./components/AsyncView";
 import {
   CommandPage,
   AlertsPage,
@@ -48,7 +51,7 @@ import {
   InsightsPage,
   SettingsPage,
 } from "./pages";
-import Resident from "./Resident";
+const Resident = lazy(() => import("./Resident"));
 const nav = [
   { id: "command", name: "Command centre", icon: LayoutDashboard },
   { id: "alerts", name: "Alerts", icon: Bell },
@@ -251,7 +254,13 @@ export default function App() {
       notify((e as Error).message);
     }
   };
-  if (resident) return <Resident key={sessionKey} user={user} setUser={changeUser} sessionError={error} />;
+  if (resident) return (
+    <ViewBoundary key={sessionKey}>
+      <Suspense fallback={<ViewLoading entry />}>
+        <Resident user={user} setUser={changeUser} sessionError={error} />
+      </Suspense>
+    </ViewBoundary>
+  );
   if (user === undefined)
     return (
       <div className="loading-screen">
@@ -554,6 +563,8 @@ export default function App() {
                 {error}
               </div>
             )}
+            <ViewBoundary key={activePage}>
+              <Suspense fallback={<ViewLoading />}>
             {activePage === "command" && <CommandPage />}
             {activePage === "alerts" && <AlertsPage />}
             {activePage === "ask" && <AskPage preset={preset} />}
@@ -562,6 +573,9 @@ export default function App() {
             {activePage === "cameras" && <CamerasPage />}
             {activePage === "insights" && <InsightsPage />}
             {activePage === "settings" && <SettingsPage />}
+                <span hidden data-page-ready={activePage} />
+              </Suspense>
+            </ViewBoundary>
             <footer className="page-footer">
               <span>
                 JagaAI · Local development workspace. Sample property setup;

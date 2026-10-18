@@ -1,0 +1,4 @@
+# Private workspace: allow HTML fetching so crawlers can read noindex.
+User-agent: *
+Allow: /
+Disallow: /api/

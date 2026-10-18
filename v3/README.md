@@ -33,6 +33,8 @@ See `docs/ai-demo.md` for the demo scenarios, limits and repeatable evaluation.
 
 See [the 2026-10-18 quality verification](docs/quality-verification-20261018.md) for P1/P2 regression coverage and live Chinese, English and Malay semantic-search results.
 
+See [the P3 performance follow-up](docs/p3-performance-20261018.md) for page loading, stylesheet cleanup, the private-app indexing policy and the final before/after measurements.
+
 ## Rebuild the environment
 
 ```
