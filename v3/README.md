@@ -1,27 +1,38 @@
 # JagaAI v3
 
-Local security command centre for property management. Plan: `../../JagaAI_Redesign_Plan_v3.md`. Legacy app in `../` is untouched.
+Local security command centre for property management. This is the current JagaAI submission; the earlier prototype is in the repository root.
 
-## Quick start for judges (Windows 10/11, 3 steps)
+## One-click start (Windows 10/11 x64)
 
-Needs **Python 3.12**, **Node.js 20+** (tested on 24) and, for AI search, **[Ollama](https://ollama.com)**. An NVIDIA GPU is optional: the launcher uses any NVIDIA CUDA card it finds and otherwise runs detection on the CPU (slower, same results).
+From the repository root, double-click **`Start-JagaAI.cmd`**. It installs missing Python 3.12, Node.js 24, Python/npm dependencies, FFmpeg and local Ollama models, then opens the prepared demo at **http://127.0.0.1:5174**. No administrator account or manual PATH configuration is needed. Internet access and sufficient disk space are needed for the first setup; allow at least 12 GB, with additional room for NVIDIA dependencies and recordings.
 
-1. **Install dependencies** (in `jagaai\v3`, first run only, takes a few minutes):
-   ```
-   py -3.12 -m venv .venv
-   .venv\Scripts\pip install -r backend\requirements.txt -r backend\requirements-vision.txt
-   cd frontend && npm ci && cd ..
-   ```
-2. **Pull the local AI models** (optional; about 2.5 GB; without them detection and alerts still work, semantic search and descriptions show as unavailable):
-   ```
-   ollama pull qwen3-embedding:0.6b
-   ollama pull qwen3-vl:2b-instruct
-   ```
-3. **Double-click `Start-AI-Demo.cmd`** for the prepared demo with eight analysed public clips, or `Start-V3.cmd` for an empty workspace. The browser opens http://127.0.0.1:5174.
+Later runs reuse the installation. `Start-AI-Demo.cmd` in this folder uses the same installer; `Start-V3.cmd` selects the separate workspace instead of the prepared demo. Keep the terminal open while using JagaAI, and press Ctrl+C to stop it.
+
+From a terminal in the repository root, use `.\Start-JagaAI.cmd -SkipAI` to skip Ollama/model downloads, or `.\Setup-JagaAI.cmd` to install without starting the app. `-Empty` selects the separate workspace and `-NoBrowser` suppresses browser launch. Without the models, detection and alerts still work; semantic search and descriptions are unavailable. Existing models are reused when present.
+
+Setup logs are in `../.runtime/setup/setup.log`. See [the root README](../README.md) for download sizes, troubleshooting and the installation details.
 
 Sign in as **`admin@jagaai.local`** / **`JagaAI-demo-2026!`** (also `supervisor@jagaai.local`, same password). The resident page is http://127.0.0.1:5174/resident. These are local demo accounts; change them before any real use.
 
-Uploading *new* recordings needs FFprobe: install FFmpeg (`winget install Gyan.FFmpeg`) or copy `ffmpeg.exe`/`ffprobe.exe` into `tools\`. The prepared demo does not need it.
+The automatic installer includes FFmpeg/FFprobe for new uploads. An NVIDIA GPU is optional: the installer chooses CPU dependencies on other computers, and detection falls back to the CPU if CUDA cannot initialise.
+
+## Manual installation
+
+For an existing development environment, install **Python 3.12**, **Node.js 24.11+ within 24.x**, and optionally **[Ollama](https://ollama.com)**. In PowerShell, from `v3/`:
+
+```powershell
+py -3.12 -m venv .venv
+# CPU installation (no NVIDIA GPU required):
+.\.venv\Scripts\python.exe -m pip install -r backend\requirements-cpu.txt
+# For NVIDIA CUDA, use requirements-vision.txt instead of requirements-cpu.txt.
+cd frontend
+npm ci --include=dev
+cd ..
+```
+
+For AI search, run `ollama pull qwen3-embedding:0.6b` and `ollama pull qwen3-vl:2b-instruct`. If a legacy portable Ollama exists in `../.runtime/ollama`, the launcher uses its `../.runtime/models` store; use the one-click installer to populate that store automatically.
+
+Run `.\.venv\Scripts\python.exe run.py --demo` to use the prepared demo, or omit `--demo` for the separate workspace. New uploads require FFprobe: install FFmpeg (`winget install Gyan.FFmpeg`) or place `ffmpeg.exe` and `ffprobe.exe` in `tools/`. The prepared demo does not require FFprobe. macOS/Linux developers must use their platform's Python, Node.js, Ollama and FFmpeg installations; the one-click `.cmd` launcher targets Windows x64 only.
 
 ## Run details
 
@@ -37,20 +48,21 @@ See [the P3 performance follow-up](docs/p3-performance-20261018.md) for page loa
 
 ## Rebuild the environment
 
-```
-python -m venv .venv
-.venv\Scripts\pip install -r backend\requirements.txt -r backend\requirements-vision.txt
-cd frontend && npm ci
-```
+Close JagaAI and rerun `../Setup-JagaAI.cmd`. Changed requirements and npm lock files are detected automatically. To replace a broken virtual environment, rename `.venv` to `.venv.old` first; runtime data is stored separately. For manual rebuilding, follow the manual installation steps above.
 
 `models/yolox_s.onnx` (Apache-2.0) is committed; `tools/ffmpeg.exe` and `tools/ffprobe.exe` are not (see above). Sources and licences are in `models/yolox-s-provenance.json` and `docs/licenses/`.
 
 ## Tests
 
-```
-cd backend && ..\.venv\Scripts\python.exe -m pytest -q
-cd frontend && node node_modules/typescript/bin/tsc -b
-.venv\Scripts\python.exe scripts\smoke-pipeline.py   # needs API + Ollama running
+```powershell
+# Run each block from v3/.
+cd backend
+..\.venv\Scripts\python.exe -m pytest -q
+cd ..
+cd frontend
+npm run build
+cd ..
+.\.venv\Scripts\python.exe scripts\smoke-pipeline.py   # needs API + Ollama running
 ```
 
 ## Public evaluation clips (MEVA, CC BY 4.0)

@@ -1,0 +1,2 @@
+-r requirements-vision-common.txt
+onnxruntime==1.26.0

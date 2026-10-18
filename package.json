@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "ffmpeg-static@5.2.0": true
+  },
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "api": "tsx apps/api/src/index.ts",
