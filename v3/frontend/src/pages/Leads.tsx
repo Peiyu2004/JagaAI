@@ -1,4 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
+import RubberSegment from "../components/RubberSegment";
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import {
   MessageSquare,
@@ -96,27 +96,23 @@ export default function Leads() {
   };
   return (
     <>
-      <div className="tabs tabs-wrap" role="tablist" onKeyDown={tabKeys} aria-label="Lead status">
-        {["all", "received", "in_progress", "resolved"].map((s) => (
-          <button
-            key={s}
-            role="tab"
-            aria-selected={filter === s}
-              tabIndex={filter === s ? 0 : -1}
-            className={filter === s ? "active" : ""}
-            onClick={() => setFilter(s)}
-          >
-            {s === "all"
+      <RubberSegment
+        semantics="tabs"
+        aria-label="Lead status"
+        className="lead-switch"
+        value={filter}
+        onChange={setFilter}
+        items={["all", "received", "in_progress", "resolved"].map((s) => ({
+          value: s,
+          label:
+            s === "all"
               ? "All leads"
               : s === "in_progress"
                 ? "In progress"
-                : s[0].toUpperCase() + s.slice(1)}
-            <span>
-              {data.leads.filter((l) => s === "all" || l.status === s).length}
-            </span>
-          </button>
-        ))}
-      </div>
+                : s[0].toUpperCase() + s.slice(1),
+          count: data.leads.filter((l) => s === "all" || l.status === s).length,
+        }))}
+      />
       {leads.length ? (
         <div className="split-layout">
           <div className="selection-list">

@@ -1,0 +1,174 @@
+/* App-wide button system. Loaded last.
+   The :is(html, .app-shell, .resident-page, .dialog-content) prefix matches every
+   button (html is always an ancestor) while taking class-level specificity, so these
+   rules tie the scoped .btn rules in index.css / readability.css and win by order. */
+
+:is(html, .app-shell, .resident-page, .dialog-content) .btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: none;
+  filter: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition:
+    background-color 160ms,
+    border-color 160ms,
+    box-shadow 160ms,
+    transform 120ms;
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn:disabled {
+  opacity: 0.5;
+}
+
+/* Variants (light theme): navy ink primary, white outline, quiet ghost */
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-primary {
+  background: #141a2e;
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(20, 26, 46, 0.18);
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-primary:hover:not(:disabled) {
+  background: #0b1020;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(20, 26, 46, 0.08);
+  filter: none;
+}
+:is(html, .app-shell, .resident-page, .dialog-content) :is(.btn-secondary, .btn-outline) {
+  background: #fff;
+  border-color: var(--border-strong, #cdd3e1);
+  color: var(--text, #141a2e);
+  box-shadow: 0 1px 2px rgba(20, 26, 46, 0.05);
+}
+:is(html, .app-shell, .resident-page, .dialog-content) :is(.btn-secondary, .btn-outline):hover:not(:disabled) {
+  background: #f5f7fc;
+  border-color: #aeb6c8;
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-2, #3d4660);
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-ghost:hover:not(:disabled) {
+  background: rgba(20, 26, 46, 0.05);
+}
+
+/* Resident portal stays light: previous light-theme button colours. */
+.resident-page .btn-primary {
+  background: #111827;
+  color: #fff;
+}
+.resident-page .btn-primary:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+  box-shadow: none;
+}
+.resident-page :is(.btn-secondary, .btn-outline) {
+  background: var(--surface);
+}
+.resident-page :is(.btn-secondary, .btn-outline):hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: #98a2b3;
+}
+.resident-page .btn-ghost {
+  color: #475972;
+}
+.resident-page .btn-ghost:hover:not(:disabled) {
+  background: rgba(16, 24, 40, 0.05);
+}
+
+/* The navy focal queue row on the Command centre inverts its buttons (see command.css). */
+/* .btn-danger keeps its existing red colours; it only takes the new shape above. */
+
+/* Sizes */
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-sm {
+  height: 30px;
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 12.5px;
+  border-radius: 8px;
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn-icon {
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+}
+
+/* Arrow nudge */
+.btn > svg {
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:hover:not(:disabled) > svg.lucide-arrow-right,
+.btn:hover:not(:disabled) > svg.lucide-chevron-right {
+  transform: translateX(3px);
+}
+
+/* Keyboard hint chips */
+.btn kbd {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border, #e4e7ec);
+  background: var(--surface-2, #f8f9fd);
+  color: var(--muted, #5b647d);
+}
+.btn-primary kbd {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.8);
+}
+.resident-page .btn kbd {
+  background: var(--surface-2);
+}
+.resident-page .btn-primary kbd {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Focus: a detection frame instead of an outline */
+:is(html, .app-shell, .resident-page, .dialog-content) .btn:focus-visible {
+  outline: none;
+}
+:is(html, .app-shell, .resident-page, .dialog-content) .btn:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  pointer-events: none;
+  border: 1px solid rgba(232, 162, 58, 0.55);
+  background:
+    linear-gradient(#e8a23a, #e8a23a) left top,
+    linear-gradient(#e8a23a, #e8a23a) right top,
+    linear-gradient(#e8a23a, #e8a23a) left bottom,
+    linear-gradient(#e8a23a, #e8a23a) right bottom;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(html, .app-shell, .resident-page, .dialog-content) .btn,
+  .btn > svg {
+    transition: none;
+  }
+  :is(html, .app-shell, .resident-page, .dialog-content) .btn:active:not(:disabled),
+  .btn:hover:not(:disabled) > svg {
+    transform: none;
+  }
+}

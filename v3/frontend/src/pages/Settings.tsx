@@ -1,5 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, type CSSProperties, type FormEvent } from "react";
 import {
   Plus,
   Users,
@@ -8,7 +7,15 @@ import {
   Pencil,
   History,
   Info,
+  Check,
+  Minus,
+  Clock3,
+  Phone,
+  Database,
+  Search,
+  Film,
 } from "lucide-react";
+import RubberSegment from "../components/RubberSegment";
 import { useApp } from "../context";
 import { api, json, dateTime, label } from "../api";
 import type { Guard, User, Settings as SettingsType } from "../types";
@@ -107,30 +114,54 @@ export default function Settings() {
       "Data policy saved",
     );
   };
+  const policyDirty =
+    days !== data.settings.retention_days ||
+    threshold !== data.settings.search_threshold;
+  const guards = settings?.guards || data.guards;
+  const matrixCell = (value: string) =>
+    value === "Yes" ? (
+      <span className="set-yes">
+        <Check size={13} strokeWidth={2.6} /> Yes
+      </span>
+    ) : value === "No" ? (
+      <span className="set-no">
+        <Minus size={13} /> No
+      </span>
+    ) : (
+      <span className="set-partial">{value}</span>
+    );
   return (
-    <>
-      <div className="tabs" role="tablist" onKeyDown={tabKeys} aria-label="Settings category">
-        {[
-          ["team", "Team & access"],
-          ["policy", "Data policy"],
-          ...(admin ? [["audit", "Audit log"]] : []),
-        ].map(([id, title]) => (
-          <button
-            key={id}
-            className={tab === id ? "active" : ""}
-            role="tab"
-            aria-selected={tab === id}
-              tabIndex={tab === id ? 0 : -1}
-            onClick={() => setTab(id)}
-          >
-            {title}
-          </button>
-        ))}
+    <div className="set-page">
+      <div className="set-bar">
+        <RubberSegment
+          semantics="tabs"
+          aria-label="Settings category"
+          className="set-switch"
+          value={tab}
+          onChange={setTab}
+          items={[
+            { value: "team", label: "Team & access", icon: <Users />, controls: "settings-team" },
+            { value: "policy", label: "Data policy", icon: <Database />, controls: "settings-policy" },
+            ...(admin
+              ? [{ value: "audit", label: "Audit log", icon: <History />, controls: "settings-audit" }]
+              : []),
+          ]}
+        />
+        <span className="set-role">
+          <ShieldCheck size={15} />
+          Signed in as <strong>{admin ? "Administrator" : "Supervisor"}</strong>
+        </span>
       </div>
       {error && <div className="error-banner">{error}</div>}
       {tab === "team" && (
-        <>
+        <div
+          className={"set-grid set-reveal" + (admin ? "" : " is-single")}
+          role="tabpanel"
+          id="settings-team"
+          aria-label="Team & access"
+        >
           <Panel
+            className="set-card set-roster"
             title="Duty roster"
             action={
               admin ? (
@@ -146,50 +177,38 @@ export default function Settings() {
               Assignment records for radio or phone coordination. Guards do not
               have login accounts.
             </p>
-            {(settings?.guards || data.guards).length ? (
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Shift</th>
-                      <th>Phone</th>
-                      {admin && (
-                        <th>
-                          <span className="sr-only">Actions</span>
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(settings?.guards || data.guards).map((g) => (
-                      <tr key={g.id}>
-                        <td>
-                          <span className="table-person">
-                            <span className="avatar">{g.name[0]}</span>
-                            <strong>{g.name}</strong>
-                          </span>
-                        </td>
-                        <td>{g.shift}</td>
-                        <td>
-                          <a href={"tel:" + g.phone}>{g.phone}</a>
-                        </td>
-                        {admin && (
-                          <td>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => openGuard(g)}
-                            >
-                              <Pencil size={14} /> Edit
-                            </Button>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            {guards.length ? (
+              <ul className="set-people">
+                {guards.map((g) => (
+                  <li key={g.id}>
+                    <span className="set-avatar">{g.name[0]}</span>
+                    <span className="set-person">
+                      <strong>{g.name}</strong>
+                      <small>
+                        <Clock3 size={12} /> {g.shift}
+                      </small>
+                    </span>
+                    <a
+                      className="set-phone"
+                      href={"tel:" + g.phone}
+                      aria-label={`Call ${g.name}, ${g.phone}`}
+                    >
+                      <Phone size={13} />
+                      <span>{g.phone}</span>
+                    </a>
+                    {admin && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        aria-label={"Edit " + g.name}
+                        onClick={() => openGuard(g)}
+                      >
+                        <Pencil size={14} /> Edit
+                      </Button>
+                    )}
+                  </li>
+                ))}
+              </ul>
             ) : (
               <Empty
                 compact
@@ -201,10 +220,11 @@ export default function Settings() {
           </Panel>
           {admin && (
             <Panel
+              className="set-card set-staff"
               title="Staff accounts"
               action={
                 <Button size="sm" variant="outline" onClick={addUser}>
-                  <Plus size={15} /> Add staff account
+                  <Plus size={15} /> Add staff
                 </Button>
               }
             >
@@ -212,40 +232,30 @@ export default function Settings() {
                 Administrators manage workspace access. Supervisors handle daily
                 security operations.
               </p>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {settings?.users?.map((u) => (
-                      <tr key={u.id}>
-                        <td>
-                          <strong>{u.name}</strong>
-                          {u.id === data.user.id && (
-                            <span className="you-label">You</span>
-                          )}
-                        </td>
-                        <td>{u.email}</td>
-                        <td>
-                          <Badge value={u.role}>
-                            {u.role === "admin"
-                              ? "Administrator"
-                              : "Supervisor"}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <ul className="set-people">
+                {settings?.users?.map((u) => (
+                  <li key={u.id}>
+                    <span className={"set-avatar " + (u.role === "admin" ? "is-admin" : "")}>
+                      {u.name[0]}
+                    </span>
+                    <span className="set-person">
+                      <strong>
+                        {u.name}
+                        {u.id === data.user.id && (
+                          <span className="you-label">You</span>
+                        )}
+                      </strong>
+                      <small title={u.email}>{u.email}</small>
+                    </span>
+                    <Badge value={u.role}>
+                      {u.role === "admin" ? "Administrator" : "Supervisor"}
+                    </Badge>
+                  </li>
+                ))}
+              </ul>
             </Panel>
           )}
-          <Panel title="Access boundaries">
+          <Panel className="set-card set-access" title="Who can do what">
             <div className="access-matrix-wrap">
               <table className="access-matrix">
                 <caption className="sr-only">
@@ -265,12 +275,12 @@ export default function Settings() {
                     ["Handle resident leads", "Yes", "Yes", "Own report only"],
                     ["Assign guards and update incidents", "Yes", "Yes", "No"],
                     ["Manage people and data policy", "Yes", "No", "No"],
-                  ].map(([capability, admin, supervisor, resident]) => (
+                  ].map(([capability, adminCan, supervisorCan, residentCan]) => (
                     <tr key={capability}>
                       <td>{capability}</td>
-                      <td>{admin}</td>
-                      <td>{supervisor}</td>
-                      <td>{resident}</td>
+                      <td>{matrixCell(adminCan)}</td>
+                      <td>{matrixCell(supervisorCan)}</td>
+                      <td>{matrixCell(residentCan)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -278,7 +288,7 @@ export default function Settings() {
             </div>
             <div className="access-grid">
               <div>
-                <ShieldCheck size={22} />
+                <ShieldCheck size={20} />
                 <h3>Staff workspace</h3>
                 <p>
                   Admins and supervisors can review footage, handle leads and
@@ -286,7 +296,7 @@ export default function Settings() {
                 </p>
               </div>
               <div>
-                <Users size={22} />
+                <Users size={20} />
                 <h3>Resident reporting</h3>
                 <p>
                   Residents see only their own report status and public replies.
@@ -295,105 +305,206 @@ export default function Settings() {
               </div>
             </div>
           </Panel>
-        </>
+        </div>
       )}
       {tab === "policy" && (
-        <Panel title="Recording retention & search">
-          <form className="policy-form" onSubmit={savePolicy}>
-            <Field
-              label="Recording retention (days)"
-              hint="Expired recordings and their derived tracks, events and keyframes are removed. Human review decisions are kept."
-            >
-              <input
-                type="number"
-                min="1"
-                max="365"
-                required
-                value={days}
-                disabled={!admin}
-                onChange={(e) => setDays(Number(e.target.value))}
-              />
-            </Field>
-            <div className="policy-impact">
-              <Info size={15} />
-              <span>
-                This workspace holds {data.videos.length} recording
-                {data.videos.length === 1 ? "" : "s"}. Lowering the retention
-                period can expire existing footage and its derived frames
-                immediately; human review decisions are kept.
-              </span>
-            </div>
-            <Field
-              label="Search match threshold"
-              hint="Descriptions below this threshold are kept out of confirmed search results and may be offered for manual review."
-            >
-              <input
-                type="number"
-                min="0.1"
-                max="1"
-                step="0.01"
-                required
-                value={threshold}
-                disabled={!admin}
-                onChange={(e) => setThreshold(Number(e.target.value))}
-              />
-            </Field>
-            {admin ? (
-              <Button type="submit">
-                <Save size={16} /> Save data policy
-              </Button>
-            ) : (
-              <div className="info-strip">
-                <Info size={16} />
-                Only administrators can change data policies.
+        <div
+          className="set-policy set-reveal"
+          role="tabpanel"
+          id="settings-policy"
+          aria-label="Data policy"
+        >
+          <Panel
+            className="set-card"
+            title="Recording retention & search"
+            action={
+              policyDirty ? (
+                <span className="set-dirty">Unsaved changes</span>
+              ) : (
+                <span className="panel-subtle">Saved</span>
+              )
+            }
+          >
+            <form className="policy-form" onSubmit={savePolicy}>
+              <Field
+                label="Recording retention (days)"
+                hint="Expired recordings and their derived tracks, events and keyframes are removed. Human review decisions are kept."
+              >
+                <span className="set-range">
+                  <input
+                    type="range"
+                    min="1"
+                    max="365"
+                    value={days}
+                    disabled={!admin}
+                    aria-label="Recording retention in days"
+                    style={{ "--p": `${((days - 1) / 364) * 100}%` } as CSSProperties}
+                    onChange={(e) => setDays(Number(e.target.value))}
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="365"
+                    required
+                    value={days}
+                    disabled={!admin}
+                    onChange={(e) => setDays(Number(e.target.value))}
+                  />
+                </span>
+              </Field>
+              <div className={"policy-impact" + (days < data.settings.retention_days ? " is-warn" : "")}>
+                <Info size={15} />
+                <span>
+                  This workspace holds {data.videos.length} recording
+                  {data.videos.length === 1 ? "" : "s"}. Lowering the retention
+                  period can expire existing footage and its derived frames
+                  immediately; human review decisions are kept.
+                </span>
               </div>
-            )}
-          </form>
-        </Panel>
+              <Field
+                label="Search match threshold"
+                hint="Descriptions below this threshold are kept out of confirmed search results and may be offered for manual review."
+              >
+                <span className="set-range">
+                  <input
+                    type="range"
+                    min="0.1"
+                    max="1"
+                    step="0.01"
+                    value={threshold}
+                    disabled={!admin}
+                    aria-label="Search match threshold"
+                    style={{ "--p": `${((threshold - 0.1) / 0.9) * 100}%` } as CSSProperties}
+                    onChange={(e) => setThreshold(Number(e.target.value))}
+                  />
+                  <input
+                    type="number"
+                    min="0.1"
+                    max="1"
+                    step="0.01"
+                    required
+                    value={threshold}
+                    disabled={!admin}
+                    onChange={(e) => setThreshold(Number(e.target.value))}
+                  />
+                </span>
+              </Field>
+              {admin ? (
+                <div className="set-actions">
+                  <Button type="submit" disabled={!policyDirty}>
+                    <Save size={16} /> Save data policy
+                  </Button>
+                  {policyDirty && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => {
+                        setDays(data.settings.retention_days);
+                        setThreshold(data.settings.search_threshold);
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                <div className="info-strip">
+                  <Info size={16} />
+                  Only administrators can change data policies.
+                </div>
+              )}
+            </form>
+          </Panel>
+          <aside className="set-card set-facts" aria-label="Current policy">
+            <span className="set-eyebrow">In force now</span>
+            <div className="set-fact">
+              <Database size={18} />
+              <div>
+                <strong>{data.settings.retention_days} days</strong>
+                <small>Recordings are kept, then removed with their frames</small>
+              </div>
+            </div>
+            <div className="set-fact">
+              <Search size={18} />
+              <div>
+                <strong>{data.settings.search_threshold.toFixed(2)}</strong>
+                <small>Minimum match score for confirmed search results</small>
+              </div>
+            </div>
+            <div className="set-fact">
+              <Film size={18} />
+              <div>
+                <strong>
+                  {data.videos.length} recording{data.videos.length === 1 ? "" : "s"}
+                </strong>
+                <small>Currently held in this workspace</small>
+              </div>
+            </div>
+            <p className="set-facts-note">
+              <ShieldCheck size={14} />
+              Human review decisions are always kept, even after footage expires.
+            </p>
+          </aside>
+        </div>
       )}
       {tab === "audit" && admin && (
-        <Panel
-          title="Audit log"
-          action={<span className="panel-subtle">Most recent activity</span>}
-        >
-          {settings?.audit_logs?.length ? (
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>When (MYT)</th>
-                    <th>Actor</th>
-                    <th>Action</th>
-                    <th>Record</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {settings.audit_logs.map((log) => (
-                    <tr key={log.id}>
-                      <td className="mono">{dateTime(log.created_at)}</td>
-                      <td>
-                        {settings.users?.find((u) => u.id === log.actor_id)
-                          ?.name ||
-                          log.actor_id ||
-                          "System"}
-                      </td>
-                      <td>{label(log.action)}</td>
-                      <td className="audit-target" title={log.target}>
-                        {log.target}
-                      </td>
+        <div className="set-reveal" role="tabpanel" id="settings-audit" aria-label="Audit log">
+          <Panel
+            className="set-card"
+            title="Audit log"
+            action={
+              <span className="panel-subtle">
+                {settings?.audit_logs?.length || 0} recent entries
+              </span>
+            }
+          >
+            {settings?.audit_logs?.length ? (
+              <div className="table-wrap">
+                <table className="set-audit">
+                  <thead>
+                    <tr>
+                      <th>When (MYT)</th>
+                      <th>Actor</th>
+                      <th>Action</th>
+                      <th>Record</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <Empty
-              icon={History}
-              title="No audit activity yet"
-              text="Private footage views and changes to key records are recorded here."
-            />
-          )}
-        </Panel>
+                  </thead>
+                  <tbody>
+                    {settings.audit_logs.map((log) => {
+                      const actor =
+                        settings.users?.find((u) => u.id === log.actor_id)?.name ||
+                        log.actor_id ||
+                        "System";
+                      return (
+                        <tr key={log.id}>
+                          <td className="mono">{dateTime(log.created_at)}</td>
+                          <td>
+                            <span className="set-actor">
+                              <span className="set-avatar is-small">{actor[0]}</span>
+                              {actor}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="set-action">{label(log.action)}</span>
+                          </td>
+                          <td className="audit-target" title={log.target}>
+                            {log.target}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <Empty
+                icon={History}
+                title="No audit activity yet"
+                text="Private footage views and changes to key records are recorded here."
+              />
+            )}
+          </Panel>
+        </div>
       )}
       <Dialog
         open={!!dialog}
@@ -474,6 +585,6 @@ export default function Settings() {
           </Button>
         </form>
       </Dialog>
-    </>
+    </div>
   );
 }

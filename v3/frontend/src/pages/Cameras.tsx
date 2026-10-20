@@ -1,4 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
+import RubberSegment from "../components/RubberSegment";
 import {
   useState,
   useEffect,
@@ -228,24 +228,22 @@ export default function Cameras() {
                 {video ? label(video.status) : "No recording"}
               </Badge>
             </div>
-            <div className="camera-tabs" role="tablist" onKeyDown={tabKeys} aria-label="Camera detail">
-              {[
-                ["coverage", "Coverage"],
-                ["rules", "Rules"],
-                ["recordings", `Recordings (${videos.length})`],
-                ["live", "Live input"],
-              ].map(([id, name]) => (
-                <button
-                  key={id}
-                  role="tab"
-                  aria-selected={tab === id}
-              tabIndex={tab === id ? 0 : -1}
-                  className={tab === id ? "active" : ""}
-                  onClick={() => setTab(id as typeof tab)}
-                >
-                  {name}
-                </button>
-              ))}
+            <div className="camera-switch-row">
+              <RubberSegment
+                semantics="tabs"
+                aria-label="Camera detail"
+                className="camera-switch"
+                size="sm"
+                equalSlots={false}
+                value={tab}
+                onChange={(id) => setTab(id as typeof tab)}
+                items={[
+                  { value: "coverage", label: "Coverage" },
+                  { value: "rules", label: "Rules" },
+                  { value: "recordings", label: "Recordings", count: videos.length },
+                  { value: "live", label: "Live input" },
+                ]}
+              />
             </div>
             {dirty && (
               <div className="unsaved-bar" role="status">

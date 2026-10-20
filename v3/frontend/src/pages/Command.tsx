@@ -1,20 +1,21 @@
-import {
-  ArrowRight,
-  Bell,
-  Camera,
-  ChevronRight,
-  CircleCheck,
-  Clock3,
-  MessageSquare,
-  Plus,
-  ShieldCheck,
-  UserRound,
-} from "lucide-react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { useApp } from "../context";
 import { Button } from "../components/ui/button";
-import { Panel, Empty, Badge } from "../components/shared";
-import { dateTime, label, relativeTime, cameraName as displayCameraName } from "../api";
-import type { Alert } from "../types";
+import { label, relativeTime, cameraName as displayCameraName } from "../api";
+import type { Alert, Video } from "../types";
+import { ReviewQueue, type QueueItem } from "../components/command/ReviewQueue";
+import { EvidenceCard } from "../components/command/EvidenceCard";
+import { SiteMap } from "../components/command/SiteMap";
+import { CountUp } from "../components/command/CountUp";
+import { ZonesPanel, type ZoneRow } from "../components/command/ZonesPanel";
+import { ActivityFeed, type FeedItem } from "../components/command/ActivityFeed";
+import { canUseWebGL } from "../components/town/canUseWebGL";
+import type { TownZone, TownCamera } from "../components/town/TownScene";
+import "../command.css";
+
+// three.js lives in its own chunk; it is only fetched when the 3D view is used.
+const TownScene = lazy(() => import("../components/town/TownScene"));
 
 const priorityRank: Record<string, number> = {
   urgent: 0,
@@ -33,9 +34,62 @@ function reasonFor(alert: Alert) {
   return `Rule ${alert.event?.rule_id || "unknown"}`;
 }
 
+function previewFor(alert: Alert, videos: Video[], width: number) {
+  const video = videos.find((v) => v.id === alert.event?.video_id);
+  const frame =
+    alert.scene?.keyframe_url ||
+    alert.event?.keyframes?.find((url) => url.startsWith("/api/")) ||
+    video?.thumbnail_url;
+  const prefix = `/api/videos/${alert.event?.video_id}/keyframes/`;
+  return frame?.startsWith(prefix)
+    ? `/api/videos/${alert.event.video_id}/thumbnail?width=${width}&frame=${encodeURIComponent(frame.slice(prefix.length))}`
+    : frame
+      ? `${frame}?width=${width}`
+      : undefined;
+}
+
+function greeting() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour <= 11) return "Good morning";
+  if (hour >= 12 && hour <= 17) return "Good afternoon";
+  return "Good evening";
+}
+
+const isSevere = (a: Alert) => a.priority === "high" || a.priority === "urgent";
+
+function isTypingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  return (
+    target.isContentEditable ||
+    target.tagName === "INPUT" ||
+    target.tagName === "TEXTAREA" ||
+    target.tagName === "SELECT"
+  );
+}
+
+function SceneLoading() {
+  return (
+    <div className="cc-town cc-town-loading" role="status">
+      <span className="cc-label">Loading site model</span>
+    </div>
+  );
+}
+
 export default function Command() {
-  const { data, go, openAlert } = useApp();
-  const s = data.summary;
+  const { data, go, openAlert, play } = useApp();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
+  const [rowHoverZone, setRowHoverZone] = useState<string | null>(null);
+  const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
+  const [focusCameraId, setFocusCameraId] = useState<string | null>(null);
+  // Decided once on mount: 3D needs WebGL and room; otherwise the 2D map.
+  const [mode] = useState<"3d" | "2d">(() =>
+    canUseWebGL() && window.innerWidth >= 760 ? "3d" : "2d",
+  );
+  const [reducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
   const pending = data.alerts
     .filter((a) => a.status === "pending")
     .sort(
@@ -44,319 +98,424 @@ export default function Command() {
     );
   const cameraName = (id?: string) =>
     displayCameraName(data.cameras.find((c) => c.id === id)?.name);
-  const alertsForCamera = (id: string) =>
-    pending.filter((a) => a.event?.camera_id === id);
-  const orderedCameras = [...data.cameras].sort(
-    (a, b) => alertsForCamera(b.id).length - alertsForCamera(a.id).length,
-  );
-  const highPriority = pending.filter(
-    (a) => a.priority === "urgent" || a.priority === "high",
-  ).length;
-  const topCamera = Object.entries(
-    pending.reduce<Record<string, number>>((acc, alert) => {
-      const name = cameraName(alert.event?.camera_id);
-      acc[name] = (acc[name] || 0) + 1;
-      return acc;
-    }, {}),
-  ).sort((a, b) => b[1] - a[1])[0];
-  const recentLeads = data.leads.slice(0, 3);
+  const locationOf = (cameraId?: string) => {
+    const camera = data.cameras.find((c) => c.id === cameraId);
+    return data.locations.find((l) => l.id === camera?.location_id);
+  };
+
+  const items: QueueItem[] = pending.map((alert) => {
+    const location = locationOf(alert.event?.camera_id);
+    return {
+      alert,
+      title: label(alert.event?.type || "alert"),
+      reason: reasonFor(alert),
+      camera: cameraName(alert.event?.camera_id),
+      location: location?.name || "Property",
+      locationId: location?.id,
+      thumb: previewFor(alert, data.videos, 160),
+      when: relativeTime(alert.created_at),
+    };
+  });
+  const index = items.length ? Math.min(activeIndex, items.length - 1) : 0;
+  const current = items[index];
+
+  // Scene data, memoized on data so array identity is stable between renders.
+  const { zones, cameras } = useMemo(() => {
+    const pendingAlerts = data.alerts.filter((a) => a.status === "pending");
+    const cameraZone = new Map(data.cameras.map((c) => [c.id, c.location_id]));
+    const zones: TownZone[] = data.locations.map((l) => {
+      const here = pendingAlerts.filter(
+        (a) => cameraZone.get(a.event?.camera_id) === l.id,
+      );
+      return {
+        id: l.id,
+        name: l.name,
+        area: l.map_area,
+        pending: here.length,
+        severe: here.some(isSevere),
+      };
+    });
+    const cameras: TownCamera[] = data.cameras.map((c) => {
+      const here = pendingAlerts.filter((a) => a.event?.camera_id === c.id);
+      return {
+        id: c.id,
+        name: displayCameraName(c.name),
+        zoneId: c.location_id,
+        pending: here.length,
+        severe: here.some(isSevere),
+      };
+    });
+    return { zones, cameras };
+  }, [data]);
+
+  // User actions only: none of these run when data refreshes.
+  const activate = (i: number) => {
+    const item = items[i];
+    if (!item) return;
+    setActiveIndex(i);
+    const cameraId = item.alert.event?.camera_id ?? null;
+    setFocusCameraId(cameraId);
+    setSelectedCameraId(cameraId);
+  };
+  const selectCamera = (cameraId: string) => {
+    setSelectedCameraId(cameraId);
+    setFocusCameraId(cameraId);
+    const first = items.findIndex((i) => i.alert.event?.camera_id === cameraId);
+    if (first >= 0) setActiveIndex(first);
+  };
+  const selectZone = (zoneId: string) => {
+    const first = items.findIndex((i) => i.locationId === zoneId);
+    if (first >= 0) {
+      activate(first);
+      return;
+    }
+    const camera = data.cameras.find((c) => c.location_id === zoneId);
+    if (camera) {
+      setFocusCameraId(camera.id);
+      setSelectedCameraId(null);
+    }
+  };
+  const overview = () => {
+    setFocusCameraId(null);
+    setSelectedCameraId(null);
+  };
+
+  // Clicking anywhere outside the evidence card closes it; the map view stays as it is.
+  useEffect(() => {
+    if (!selectedCameraId) return;
+    const onDown = (e: PointerEvent) => {
+      const target = e.target as Element | null;
+      if (target?.closest(".cc-ecard, .town-pin")) return;
+      setSelectedCameraId(null);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [selectedCameraId]);
+
+  // Keyboard: J/K move through the queue, Enter opens, Escape returns to overview.
+  const live = useRef({ items, index, activate, overview, openAlert });
+  live.current = { items, index, activate, overview, openAlert };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey)
+        return;
+      if (isTypingTarget(e.target)) return;
+      if (document.querySelector('[role="dialog"]')) return;
+      const { items, index, activate, overview, openAlert } = live.current;
+      const key = e.key.toLowerCase();
+      if (key === "escape") {
+        overview();
+        return;
+      }
+      if (!items.length) return;
+      if (key === "j") {
+        e.preventDefault();
+        activate((index + 1) % items.length);
+      } else if (key === "k") {
+        e.preventDefault();
+        activate((index - 1 + items.length) % items.length);
+      } else if (key === "enter") {
+        // Enter on a focused control belongs to that control.
+        const t = e.target as HTMLElement | null;
+        if (t && t.closest("button, a, summary, [role='button']")) return;
+        e.preventDefault();
+        openAlert(items[index].alert.id);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const renderCard = (cameraId: string) => {
+    const camAlerts = items.filter((i) => i.alert.event?.camera_id === cameraId);
+    const activeHere = camAlerts.findIndex((i) => i.alert.id === current?.alert.id);
+    const shown = activeHere >= 0 ? activeHere : 0;
+    const item = camAlerts[shown];
+    const latestVideo = data.videos
+      .filter((v) => v.camera_id === cameraId)
+      .sort((a, b) => (a.recorded_at < b.recorded_at ? 1 : -1))[0];
+    return (
+      <EvidenceCard
+        camera={cameraName(cameraId)}
+        zone={locationOf(cameraId)?.name || "Property"}
+        alerts={camAlerts.map((i) => i.alert)}
+        current={shown}
+        preview={item ? previewFor(item.alert, data.videos, 480) : undefined}
+        title={item?.title}
+        reason={item?.reason}
+        latestVideo={latestVideo}
+        onNext={() => {
+          const next = camAlerts[(shown + 1) % camAlerts.length];
+          activate(items.indexOf(next));
+        }}
+        onClose={() => setSelectedCameraId(null)}
+        onOpen={openAlert}
+        onPlay={play}
+        onCameras={() => go("cameras")}
+      />
+    );
+  };
+
+  const highPriority = pending.filter(isSevere).length;
+  const firstName = data.user.name.trim().split(/\s+/)[0] || data.user.name;
+  const count = pending.length;
+  const s = data.summary;
+
+  // Events with the moment they happened (recording start + offset into the clip), newest first.
+  const alertByEvent = new Map(data.alerts.map((a) => [a.event_id, a]));
+  const timed = data.events
+    .flatMap((event) => {
+      const video = data.videos.find((v) => v.id === event.video_id);
+      const at = video?.recorded_at
+        ? new Date(new Date(video.recorded_at).getTime() + (event.start_sec || 0) * 1000)
+        : null;
+      return at && !Number.isNaN(at.getTime()) ? [{ event, at }] : [];
+    })
+    .sort((a, b) => b.at.getTime() - a.at.getTime());
+  const clock = (d: Date) =>
+    d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const day = (d: Date) =>
+    d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+  const zoneRows: ZoneRow[] = zones.map((z) => {
+    const latest = timed.find(({ event }) => locationOf(event.camera_id)?.id === z.id);
+    return {
+      id: z.id,
+      name: z.name,
+      pending: z.pending,
+      severe: z.severe,
+      cameras: cameras
+        .filter((c) => c.zoneId === z.id)
+        .map((c) => ({ id: c.id, name: c.name, alerting: c.pending > 0, severe: c.severe })),
+      latest: latest
+        ? { title: label(latest.event.type), when: `${day(latest.at)} ${clock(latest.at)}` }
+        : undefined,
+    };
+  });
+
+  const feed: FeedItem[] = timed.slice(0, 6).map(({ event, at }) => {
+    const alert = alertByEvent.get(event.id);
+    const pendingAlert = alert?.status === "pending";
+    const severe = !!alert && isSevere(alert);
+    return {
+      id: event.id,
+      time: clock(at),
+      date: day(at),
+      title: label(event.type),
+      place: `${cameraName(event.camera_id)} · ${locationOf(event.camera_id)?.name ?? "Property"}`,
+      state: pendingAlert ? "pending" : alert ? "done" : "logged",
+      severe: pendingAlert && severe,
+      status: pendingAlert
+        ? severe
+          ? "High · review"
+          : "Needs review"
+        : alert
+          ? label(alert.status)
+          : "Logged",
+      onOpen: () => (alert ? openAlert(alert.id) : play(event.video_id, event.start_sec)),
+    };
+  });
+
+  // Sections (and the rows inside them) fade and rise in as they scroll into view.
+  // Content stays visible if this never runs; reduced-motion users skip it entirely.
+  const pageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const root = pageRef.current;
+    if (!root || reducedMotion || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add("is-in");
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.06 },
+    );
+    const observe = () =>
+      root.querySelectorAll("[data-reveal]:not(.is-in)").forEach((el) => io.observe(el));
+    root.classList.add("reveal-ready");
+    observe();
+    const mo = new MutationObserver(observe);
+    mo.observe(root, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, [reducedMotion]);
+
+  // From the Zones panel: fly the map to the zone and bring the map into view.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const showZone = (zoneId: string) => {
+    selectZone(zoneId);
+    stageRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "nearest" });
+  };
   const median =
-    s.median_ack_sec === null
-      ? "No reviews yet"
-      : Math.round(s.median_ack_sec / 60) + " min";
+    s.median_ack_sec === null ? null : Math.max(1, Math.round(s.median_ack_sec / 60));
+  const initials = (name: string) =>
+    name
+      .split(/\s+/)
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+
+  const siteMap2D = (
+    <SiteMap
+      locations={data.locations}
+      cameras={data.cameras}
+      alerts={items.map((item) => ({
+        locationId: item.locationId,
+        cameraId: item.alert.event?.camera_id,
+        high: isSevere(item.alert),
+      }))}
+      hoveredLocation={hoveredLocation ?? rowHoverZone}
+      onHoverLocation={setHoveredLocation}
+      onZoneClick={selectZone}
+      cameraLabel={(camera) => displayCameraName(camera.name)}
+    />
+  );
 
   return (
-    <>
-      <section className="shift-strip" aria-label="Shift summary">
-        <div className="shift-metrics">
-          <div className="shift-metric">
-            <span>To review</span>
-            <strong>{pending.length}</strong>
-            <small>Alerts awaiting a decision</small>
-          </div>
-          <div className="shift-metric">
-            <span>High priority</span>
-            <strong>{highPriority}</strong>
-            <small>Urgent or high alerts</small>
-          </div>
-          <div className="shift-metric">
-            <span>Median review</span>
-            <strong>{median}</strong>
-            <small>Alert to first human review</small>
-          </div>
-          <div className="shift-metric">
-            <span>Guards on roster</span>
-            <strong>{data.guards.length}</strong>
-            <small>Assigned by radio or phone</small>
-          </div>
-        </div>
-        <Button
-          onClick={() =>
-            pending.length ? openAlert(pending[0].id) : go("alerts")
-          }
-        >
-          {pending.length ? "Review next" : "Open alert queue"}
-          <ArrowRight size={16} />
-        </Button>
-      </section>
-
-      <p className="shift-brief">
-        {pending.length ? (
-          <>
-            <strong>{pending.length} alerts need review.</strong>{" "}
-            {topCamera
-              ? `${topCamera[1]} at ${topCamera[0]}${highPriority ? ` · ${highPriority} high priority` : ""}.`
-              : "Every alert requires a human decision."}
-          </>
-        ) : (
-          <>
-            <strong>The review queue is clear.</strong> New alerts appear here
-            as soon as an analysed recording triggers a rule.
-          </>
-        )}
-      </p>
-
-      <div className="command-v4">
-        <section className="panel attention-panel" aria-labelledby="attention-title">
-          <div className="panel-head">
-            <div>
-              <h2 id="attention-title">Needs attention</h2>
-              <p className="panel-subtle">
-                Sorted by priority · newest first within a priority
-              </p>
-            </div>
-            <span className="count-pill">{pending.length}</span>
-          </div>
-          {pending.length ? (
-            <div className="attention-list-v4">
-              {pending.map((alert) => {
-                const video = data.videos.find(
-                  (v) => v.id === alert.event?.video_id,
-                );
-                const frame =
-                  alert.scene?.keyframe_url ||
-                  alert.event?.keyframes?.find((url) =>
-                    url.startsWith("/api/"),
-                  ) ||
-                  video?.thumbnail_url;
-                const prefix = `/api/videos/${alert.event?.video_id}/keyframes/`;
-                const preview = frame?.startsWith(prefix)
-                  ? `/api/videos/${alert.event.video_id}/thumbnail?width=160&frame=${encodeURIComponent(frame.slice(prefix.length))}`
-                  : frame ? `${frame}?width=160` : undefined;
-                return (
-                  <button
-                    key={alert.id}
-                    className={
-                      "attention-row" +
-                      (alert.priority === "high" ||
-                      alert.priority === "urgent"
-                        ? " is-high"
-                        : "")
-                    }
-                    onClick={() => openAlert(alert.id)}
-                  >
-                    <span className="attention-thumb">
-                      {frame ? (
-                        <img src={preview} alt="" width={160} height={90} loading="lazy" decoding="async" />
-                      ) : (
-                        <Bell size={19} />
-                      )}
-                    </span>
-                    <span className="attention-body">
-                      <span className="attention-title">
-                        <strong>{label(alert.event?.type || "alert")}</strong>
-                        <Badge value={alert.priority} />
-                      </span>
-                      <span className="attention-meta">
-                        {cameraName(alert.event?.camera_id)} ·{" "}
-                        {reasonFor(alert)}
-                      </span>
-                    </span>
-                    <span className="attention-action">
-                      <time
-                        dateTime={alert.created_at}
-                        title={dateTime(alert.created_at)}
-                      >
-                        {relativeTime(alert.created_at)}
-                      </time>
-                      <span className="attention-review">
-                        Review <ArrowRight size={14} />
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <Empty
-              compact
-              icon={CircleCheck}
-              title="Review queue is clear"
-              text={
-                s.video_count
-                  ? "New alerts will appear here when an analysed recording triggers a configured rule."
-                  : "Upload a recording to start checking for configured behaviours."
-              }
-              action={
-                !s.video_count ? (
-                  <Button variant="outline" size="sm" onClick={() => go("cameras")}>
-                    <Plus size={14} /> Add a recording
-                  </Button>
-                ) : undefined
-              }
-            />
+    <div className="cc-page" ref={pageRef}>
+      <header className="cc-head">
+        <div className="cc-head-text">
+          <p className="cc-label cc-kicker">
+            {greeting()}, {firstName} · Serenia City
+          </p>
+          <h1 className="cc-title">
+            {count === 0 ? (
+              "No alerts need review."
+            ) : (
+              <>
+                <span className="sr-only">{count}</span>
+                <CountUp value={count} className="cc-count" />{" "}
+                {count === 1 ? "alert needs review." : "alerts need review."}
+              </>
+            )}
+          </h1>
+          {highPriority > 0 && items[0] && (
+            <p className="cc-sub">
+              {highPriority} high priority at {items[0].location}.
+            </p>
           )}
-          <button className="panel-foot-link" onClick={() => go("alerts")}>
-            Open alert queue <ArrowRight size={15} />
-          </button>
+        </div>
+        <div className="cc-actions">
+          <Button variant="outline" onClick={() => go("ask")}>
+            Ask JagaAI <kbd>/</kbd>
+          </Button>
+          <Button
+            onClick={() => (current ? openAlert(current.alert.id) : go("alerts"))}
+          >
+            Review next <ArrowRight size={16} />
+          </Button>
+        </div>
+      </header>
+
+      <div className="cc-main" ref={stageRef} data-reveal>
+        <section
+          className={"cc-card cc-site" + (mode === "3d" ? " is-3d" : "")}
+          aria-label="Site"
+        >
+          {mode === "3d" ? (
+            <Suspense fallback={<SceneLoading />}>
+              <TownScene
+                className="cc-town"
+                zones={zones}
+                cameras={cameras}
+                focusCameraId={focusCameraId}
+                selectedCameraId={selectedCameraId}
+                highlightZoneId={rowHoverZone}
+                onHoverZone={setHoveredLocation}
+                onSelectZone={selectZone}
+                onSelectCamera={selectCamera}
+                onOverview={overview}
+                renderCard={renderCard}
+                fallback={siteMap2D}
+                reducedMotion={reducedMotion}
+              />
+            </Suspense>
+          ) : (
+            siteMap2D
+          )}
+          <dl className="cc-stats">
+            <div>
+              <dt className="cc-label">To review</dt>
+              <dd>{count}</dd>
+            </div>
+            <div>
+              <dt className="cc-label">High priority</dt>
+              <dd className={highPriority ? "is-high" : ""}>{highPriority}</dd>
+            </div>
+            <div>
+              <dt className="cc-label">Cameras</dt>
+              <dd>{data.cameras.length}</dd>
+            </div>
+            <div>
+              <dt className="cc-label">Analysed</dt>
+              <dd>
+                {s.analysed_video_count}
+                <small>/{s.video_count}</small>
+              </dd>
+            </div>
+          </dl>
         </section>
 
-        <aside className="command-side" aria-label="Camera coverage and resident leads">
-          <Panel
-            title="Camera wall"
-            action={
-              <Button variant="ghost" size="sm" onClick={() => go("cameras")}>
-                Manage <ChevronRight size={14} />
-              </Button>
-            }
-          >
-            <div className="camera-wall-head">
-              <span>
-                <Camera size={14} /> {data.cameras.length} cameras
-              </span>
-              <span>
-                {data.cameras.filter((c) => alertsForCamera(c.id).length).length}{" "}
-                alerting
-              </span>
-            </div>
-            {orderedCameras.length ? (
-              <div className="camera-wall-v4">
-                {orderedCameras.slice(0, 4).map((camera, index) => {
-                  const video = data.videos.find(
-                    (v) => v.camera_id === camera.id,
-                  );
-                  const alerts = alertsForCamera(camera.id);
-                  return (
-                    <button
-                      key={camera.id}
-                      className={
-                        "camera-tile" + (alerts.length ? " has-alerts" : "")
-                      }
-                      onClick={() =>
-                        alerts.length ? openAlert(alerts[0].id) : go("cameras")
-                      }
-                    >
-                      {video?.thumbnail_url ? (
-                        <img
-                          src={video.thumbnail_url}
-                          srcSet={`${video.thumbnail_url}?width=480 480w, ${video.thumbnail_url}?width=960 960w`}
-                          sizes="(max-width:620px) calc(50vw - 33px), (max-width:820px) calc(50vw - 37px), (max-width:980px) calc(25vw - 91px), (max-width:1260px) 145px, 160px"
-                          alt=""
-                          width={480}
-                          height={270}
-                          loading={index < 2 ? "eager" : "lazy"}
-                          fetchPriority={index === 0 ? "high" : "low"}
-                          decoding="async"
-                        />
-                      ) : (
-                        <span className="camera-tile-empty">
-                          <Camera size={20} />
-                        </span>
-                      )}
-                      <span className="camera-tile-shade" />
-                      {alerts.length > 0 && (
-                        <span className="camera-tile-count">
-                          <Bell size={11} /> {alerts.length}
-                        </span>
-                      )}
-                      <span className="camera-tile-info">
-                        <strong>{displayCameraName(camera.name)}</strong>
-                        <small>
-                          {data.locations.find(
-                            (l) => l.id === camera.location_id,
-                          )?.name || "Property"}
-                          {alerts.length
-                            ? ` · ${alerts.length} pending`
-                            : video
-                              ? " · clear"
-                              : " · no source"}
-                        </small>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
-              <Empty
-                compact
-                icon={Camera}
-                title="No cameras configured"
-                text="Add a camera in Cameras to build coverage."
-                action={
-                  <Button variant="outline" size="sm" onClick={() => go("cameras")}>
-                    Open cameras
-                  </Button>
-                }
-              />
-            )}
-            {s.video_count === 0 && (
-              <div className="first-recording">
-                <span className="first-recording-icon">
-                  <Plus size={18} />
-                </span>
-                <span>
-                  <strong>Add your first recording</strong>
-                  <small>Upload MP4 footage to begin local analysis.</small>
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => go("cameras")}
-                >
-                  Upload
-                </Button>
-              </div>
-            )}
-            <div className="camera-wall-foot">
-              <span>
-                <Clock3 size={13} /> {s.analysed_video_count} /{" "}
-                {s.video_count} recordings analysed
-              </span>
-              <span>{s.pending_video_count} waiting</span>
-            </div>
-          </Panel>
-
-          <button
-            type="button"
-            className="side-link-row"
-            onClick={() => go("leads")}
-          >
-            <span className="side-link-icon">
-              <MessageSquare size={17} />
-            </span>
-            <span>
-              <strong>Resident leads</strong>
-              <small>
-                {recentLeads.length
-                  ? `${recentLeads.length} recent observation${recentLeads.length === 1 ? "" : "s"}`
-                  : "No new resident observations"}
-              </small>
-            </span>
-            {s.new_leads > 0 && <b className="side-link-count">{s.new_leads}</b>}
-            <ChevronRight size={16} />
-          </button>
-
-          <div className="command-footnote">
-            <ShieldCheck size={15} />
-            <span>
-              {data.videos.length
-                ? `${data.videos.length} local recordings · human review on every alert`
-                : "Local processing · no face recognition · no cloud"}
-            </span>
-            <UserRound size={15} />
-          </div>
-        </aside>
+        <ReviewQueue
+          items={items}
+          activeIndex={index}
+          dimOutside={hoveredLocation}
+          videoCount={s.video_count}
+          onActivate={activate}
+          onHoverRow={setRowHoverZone}
+          onOpen={openAlert}
+          onPlay={play}
+          onQueue={() => go("alerts")}
+          onAddRecording={() => go("cameras")}
+        />
       </div>
-    </>
+
+      <div className="cc-lower">
+        <ZonesPanel
+          rows={zoneRows}
+          hovered={hoveredLocation ?? rowHoverZone}
+          onSelect={showZone}
+          onHover={setRowHoverZone}
+        />
+        <ActivityFeed items={feed} onAll={() => go("alerts")} />
+      </div>
+
+      <section className="cc-team" aria-label="Team and follow-up" data-reveal>
+        <button type="button" className="cc-team-item" onClick={() => go("settings")}>
+          <span className="cc-label">On roster</span>
+          {data.guards.length ? (
+            <span className="cc-avatars">
+              {data.guards.slice(0, 4).map((g) => (
+                <i key={g.id} title={`${g.name} · ${g.shift}`}>
+                  {initials(g.name)}
+                </i>
+              ))}
+              {data.guards.length > 4 && <i>+{data.guards.length - 4}</i>}
+            </span>
+          ) : (
+            <b className="is-muted">No guards yet</b>
+          )}
+        </button>
+        <div className="cc-team-item">
+          <span className="cc-label">Median review</span>
+          <b className={median === null ? "is-muted" : ""}>
+            {median === null ? "No reviews yet" : `${median} min`}
+          </b>
+        </div>
+        <button type="button" className="cc-team-item" onClick={() => go("leads")}>
+          <span className="cc-label">Resident leads</span>
+          <b className={s.new_leads ? "" : "is-muted"}>{s.new_leads} new</b>
+        </button>
+        <button type="button" className="cc-team-item" onClick={() => go("incidents")}>
+          <span className="cc-label">Open incidents</span>
+          <b className={s.open_incidents ? "" : "is-muted"}>{s.open_incidents}</b>
+        </button>
+      </section>
+    </div>
   );
 }

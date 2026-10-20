@@ -17,19 +17,13 @@ import {
   ChartNoAxesCombined,
   Settings,
   LogOut,
-  ChevronRight,
   Menu,
   X,
   RefreshCw,
   ShieldCheck,
-  ArrowRight,
   AlertCircle,
   Cpu,
   Activity,
-  UserCheck,
-  Eye,
-  EyeOff,
-  KeyRound,
   ChevronDown,
   Wifi,
   UserRound,
@@ -39,8 +33,14 @@ import type { Bootstrap, User, SearchPreset } from "./types";
 import { AppContext } from "./context";
 import { Button } from "./components/ui/button";
 import { Dialog } from "./components/ui/dialog";
-import { Brand, Field, VideoPlayer } from "./components/shared";
+import { Brand, VideoPlayer } from "./components/shared";
 import { ViewBoundary, ViewLoading } from "./components/AsyncView";
+import { LoginWall } from "./components/LoginWall";
+import TechText from "./components/reactbits/TechText";
+import {
+  DetectionFrame,
+  type DetectionFrameState,
+} from "./components/login/DetectionFrame";
 import {
   CommandPage,
   AlertsPage,
@@ -627,6 +627,38 @@ function StaffLogin({
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(error);
+  const [focusTarget, setFocusTarget] = useState<
+    "email" | "password" | "submit" | null
+  >(null);
+  const [frameState, setFrameState] = useState<DetectionFrameState>("hidden");
+  const rootRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const emailRowRef = useRef<HTMLLabelElement>(null);
+  const passwordRowRef = useRef<HTMLDivElement>(null);
+  const fieldsRef = useRef<HTMLDivElement>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
+  // Editing a field clears the error frame. Declared before the message effect
+  // so an initial error is not cleared on mount.
+  useEffect(() => {
+    setFrameState((s) => (s === "error" ? "focus" : s));
+  }, [email, password]);
+  useEffect(() => {
+    if (message) setFrameState("error");
+  }, [message]);
+  const exitTransition = () =>
+    new Promise<void>((resolve) => {
+      const root = rootRef.current;
+      if (
+        !root ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        resolve();
+        return;
+      }
+      setFrameState("success");
+      window.setTimeout(() => root.classList.add("jl-exiting"), 220);
+      window.setTimeout(resolve, 600);
+    });
   const signIn = async (nextEmail: string, nextPassword: string) => {
     setBusy(true);
     setMessage("");
@@ -635,6 +667,7 @@ function StaffLogin({
         method: "POST",
         body: json({ email: nextEmail, password: nextPassword }),
       });
+      await exitTransition();
       onLogin(r.user);
     } catch (e) {
       setMessage((e as Error).message);
@@ -653,251 +686,230 @@ function StaffLogin({
     setPassword(demoPassword);
     signIn(demoEmail, demoPassword);
   };
+  const focusOn = (target: "email" | "password" | "submit") => () => {
+    setFocusTarget(target);
+    setFrameState("focus");
+  };
+  // Moving between framed controls glides the frame; leaving them hides it.
+  const blur = (e: { relatedTarget: EventTarget | null }) => {
+    const next = e.relatedTarget;
+    if (!(next instanceof HTMLElement && next.dataset.jlFrame)) {
+      setFocusTarget(null);
+    }
+  };
+  const frame: {
+    target: HTMLElement | null;
+    label: string;
+    state: DetectionFrameState;
+  } =
+    frameState === "success"
+      ? { target: cardRef.current, label: "VERIFIED", state: "success" }
+      : busy
+        ? { target: submitRef.current, label: "VERIFYING", state: "busy" }
+        : frameState === "error"
+          ? { target: fieldsRef.current, label: "CHECK DETAILS", state: "error" }
+          : focusTarget === "email"
+            ? { target: emailRowRef.current, label: "EMAIL · 0.99", state: "focus" }
+            : focusTarget === "password"
+              ? {
+                  target: passwordRowRef.current,
+                  label: "PASSWORD · 0.99",
+                  state: "focus",
+                }
+              : focusTarget === "submit"
+                ? { target: submitRef.current, label: "SIGN IN", state: "focus" }
+                : { target: null, label: "", state: "hidden" };
+  const hour = new Date().getHours();
+  const greeting =
+    hour >= 5 && hour <= 11
+      ? "Good morning."
+      : hour >= 12 && hour <= 17
+        ? "Good afternoon."
+        : "Good evening.";
   return (
-    <div className="login-glass">
-      <div className="glass-bg" aria-hidden="true">
-        <LoginMap />
-        <span className="orb orb-a" />
-        <span className="orb orb-b" />
-        <span className="orb orb-c" />
-      </div>
-      <header className="glass-top">
-        <Brand />
-        <span className="glass glass-status">
-          <span className="kicker-dot" />
-          Local workspace
-        </span>
-      </header>
-      <main className="glass-main">
-        <section className="glass-hero">
-          <span className="glass glass-kicker">
-            Township security workspace
-          </span>
-          <h1>
-            A quieter control room.
-            <br />
-            <span>A clearer response.</span>
-          </h1>
-          <p>
-            Cameras, resident leads and incident records in one private
-            workspace. Every alert waits for a person to review it.
-          </p>
-          <span className="glass-flow-label">The workspace at a glance</span>
-          <div className="login-preview" aria-hidden="true">
-            <div className="login-preview-head">
-              <span>
-                <span className="preview-brand">JagaAI</span> Command centre
-              </span>
-              <span className="preview-live">
-                <span /> Live
-              </span>
-            </div>
-            <div className="login-preview-metrics">
-              <span>
-                <strong>4</strong> to review
-              </span>
-              <span>
-                <strong>1</strong> urgent
-              </span>
-              <span>
-                <strong>6 min</strong> median
-              </span>
-            </div>
-            <div className="login-preview-row">
-              <span className="preview-thumb">
-                <span className="preview-dot" />
-              </span>
-              <span>
-                <strong>Vehicle loitering</strong>
-                <small>Kerb-side · 12 min ago</small>
-              </span>
-              <em className="preview-badge warn">High</em>
-            </div>
-            <div className="login-preview-row">
-              <span className="preview-thumb">
-                <span className="preview-dot blue" />
-              </span>
-              <span>
-                <strong>Restricted entry</strong>
-                <small>Perimeter Walk · 34 min ago</small>
-              </span>
-              <em className="preview-badge">Normal</em>
-            </div>
-            <div className="login-preview-row">
-              <span className="preview-thumb">
-                <span className="preview-dot green" />
-              </span>
-              <span>
-                <strong>Resident lead resolved</strong>
-                <small>Reply shared · 1 h ago</small>
-              </span>
-              <em className="preview-badge ok">Done</em>
-            </div>
-            <div className="login-preview-foot">
-              Every alert waits for a person to review it.
-            </div>
-          </div>
-        </section>
-        <section className="glass glass-card">
-          <form className="glass-form" onSubmit={submit}>
-            <div className="glass-card-head">
-              <h2>Sign in</h2>
-              <p>For property managers and security supervisors.</p>
-            </div>
-            <Field label="Email address">
+    <div className="jl-root" ref={rootRef}>
+      <LoginWall />
+      <section className="jl-stage">
+        <div className="jl-mark" role="img" aria-label="JagaAI">
+          <TechText
+            text="JagaAI"
+            fontFamily='"IBM Plex Sans", "Segoe UI", sans-serif'
+            fontWeight={600}
+            fontSize={220}
+            letterSpacing={-0.04}
+            color="#EAF0FB"
+            accentColor="#F5B544"
+            align="center"
+            reveal="letter"
+            lineStyle="dashed"
+            dashLength={4}
+            dashGap={3}
+            strokeWidth={1.5}
+            specks={10}
+            selection
+            labels
+            draggable
+            bounce={0.35}
+            sweep
+            speed={0.8}
+            clickKick
+            intro="assemble"
+            introDuration={1.6}
+            guides={false}
+            reach={200}
+            softness={0.7}
+          />
+        </div>
+        <h1 className="jl-tagline">Every frame, understood.</h1>
+      </section>
+      <div className="jl-card" ref={cardRef}>
+        <span className="jl-corner tl" aria-hidden="true" />
+        <span className="jl-corner tr" aria-hidden="true" />
+        <span className="jl-corner bl" aria-hidden="true" />
+        <span className="jl-corner br" aria-hidden="true" />
+        <p className="jl-kicker jl-s0">Serenia City · Security</p>
+        <h2 className="jl-greeting jl-s1">{greeting}</h2>
+        <p className="jl-sub jl-s2">Sign in to start your shift.</p>
+        <form className="jl-form" onSubmit={submit}>
+          <div className="jl-fields jl-s3" ref={fieldsRef}>
+            <label className="jl-field" htmlFor="jl-email" ref={emailRowRef}>
+              <span className="jl-caption">Email</span>
               <input
+                id="jl-email"
                 type="email"
                 autoComplete="username"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                data-jl-frame="email"
+                onFocus={focusOn("email")}
+                onBlur={blur}
               />
-            </Field>
-            <Field label="Password">
-              <span className="password-input">
+            </label>
+            <div className="jl-field" ref={passwordRowRef}>
+              <label className="jl-caption" htmlFor="jl-password">
+                Password
+              </label>
+              <span className="jl-field-input">
                 <input
+                  id="jl-password"
                   type={show ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
+                  data-jl-frame="password"
+                  onFocus={focusOn("password")}
+                  onBlur={blur}
                 />
                 <button
                   type="button"
+                  className="jl-toggle"
                   onClick={() => setShow(!show)}
                   aria-label={show ? "Hide password" : "Show password"}
                   aria-pressed={show}
+                  data-jl-frame="password"
+                  onFocus={focusOn("password")}
+                  onBlur={blur}
                 >
-                  {show ? <EyeOff size={17} /> : <Eye size={17} />}
+                  {show ? "Hide" : "Show"}
                 </button>
               </span>
-            </Field>
-            {message && (
-              <p className="glass-error" role="alert">
-                <AlertCircle size={15} />
-                {message}
-              </p>
-            )}
-            <button type="submit" className="glass-btn" disabled={busy}>
-              {busy ? "Signing in…" : "Sign in"}
-              <ArrowRight size={17} />
-            </button>
+            </div>
+          </div>
+          {message && (
+            <p className="jl-error" role="alert">
+              {message}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="jl-btn jl-s4"
+            disabled={busy}
+            ref={submitRef}
+            data-jl-frame="submit"
+            onFocus={focusOn("submit")}
+            onBlur={blur}
+          >
+            {busy ? "Signing in…" : "Sign in"}
+            <span className="jl-arrow" aria-hidden="true">
+              →
+            </span>
+          </button>
+          <div className="jl-demo-row jl-s5">
             <button
               type="button"
-              className="glass-demo"
+              className="jl-demo"
               onClick={useDemo}
               disabled={busy}
             >
-              <ShieldCheck size={16} />
-              <span>
-                Enter demo workspace
-                <small>Prepared data · one click</small>
+              Use demo account
+              <span className="jl-arrow" aria-hidden="true">
+                →
               </span>
-              <ArrowRight size={16} />
             </button>
-            <details className="glass-help">
+            <details className="jl-help">
               <summary>
-                <KeyRound size={14} />
                 Demo credentials
-                <ChevronRight size={14} className="glass-help-chevron" />
+                <span className="jl-plus" aria-hidden="true" />
               </summary>
-              <p>
-                Admin: admin@jagaai.local
-                <br />
-                Supervisor: supervisor@jagaai.local
-                <br />
-                Initial password: <code>JagaAI-demo-2026!</code>
-              </p>
-              <p>
-                Use the password set by your administrator if the initial
-                password was changed.
-              </p>
+              <div className="jl-help-body">
+                <p>
+                  Admin: admin@jagaai.local
+                  <br />
+                  Supervisor: supervisor@jagaai.local
+                  <br />
+                  Initial password: <code>JagaAI-demo-2026!</code>
+                </p>
+                <p>
+                  Use the password set by your administrator if the initial
+                  password was changed.
+                </p>
+                <p className="jl-credit">
+                  <a
+                    href="https://mevadata.org/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Demo footage: MEVA dataset (Kitware, IARPA) · CC BY 4.0
+                  </a>
+                </p>
+              </div>
             </details>
-          </form>
-          <div className="glass-divider">or</div>
-          <a className="glass-resident" href="/resident">
-            <span className="glass-resident-icon">
-              <MessageSquare size={16} />
-            </span>
-            <span>
-              Resident? Make a quick report
-              <small>No staff account needed</small>
-            </span>
-            <ChevronRight size={16} />
-          </a>
-        </section>
-      </main>
-      <footer className="glass-foot">
-        <ul>
-          <li>
-            <Cpu size={15} />
-            Processed on local hardware
-          </li>
-          <li>
-            <Activity size={15} />
-            Behaviour, not identity
-          </li>
-          <li>
-            <UserCheck size={15} />
-            Human review on every alert
-          </li>
-        </ul>
-        <span>
-          <ShieldCheck size={14} />
-          Recordings are analysed on this workspace's own hardware.
-        </span>
-      </footer>
-    </div>
-  );
-}
-function LoginMap() {
-  return (
-    <svg
-      className="login-map"
-      viewBox="0 0 600 900"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden="true"
-    >
-      <g fill="none" stroke="currentColor">
-        <path d="M-20 300H640" strokeWidth="14" opacity=".35" />
-        <path d="M410-20V920" strokeWidth="18" opacity=".45" />
-        <path
-          d="M-20 615c140-50 240 30 380-20s200-70 280-30"
-          strokeWidth="24"
-          opacity=".45"
+          </div>
+        </form>
+        <hr className="jl-rule jl-s6" />
+        <a className="jl-resident jl-s7" href="/resident">
+          Resident? Make a report
+          <span className="jl-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+        <div
+          className="jl-privacy jl-s8"
+          role="group"
+          aria-label="No face recognition. Human review on every alert. Private by design."
+        >
+          <span className="jl-privacy-bullet" aria-hidden="true" />
+          <span className="jl-ticker" aria-hidden="true">
+            <span>No face recognition</span>
+            <span>Human review on every alert</span>
+            <span>Private by design</span>
+          </span>
+          <span className="jl-ticker-static" aria-hidden="true">
+            No face recognition · Human review on every alert · Private by
+            design
+          </span>
+        </div>
+        <DetectionFrame
+          target={frame.target}
+          state={frame.state}
+          label={frame.label}
+          container={cardRef.current}
         />
-        <g strokeWidth="1.5" opacity=".8">
-          <rect x="440" y="40" width="125" height="80" rx="6" />
-          <rect x="440" y="140" width="125" height="125" rx="6" />
-          <rect x="440" y="335" width="70" height="95" rx="6" />
-          <rect x="522" y="335" width="60" height="95" rx="6" />
-          <rect x="440" y="450" width="142" height="110" rx="6" />
-          <rect x="290" y="335" width="95" height="150" rx="6" />
-          <rect x="290" y="40" width="95" height="225" rx="6" />
-        </g>
-      </g>
-      <path
-        d="M-10 770q160-60 310 0t310-15V910H-10Z"
-        fill="currentColor"
-        opacity=".3"
-      />
-      {[
-        [410, 300],
-        [480, 615],
-        [337, 520],
-      ].map(([x, y], i) => (
-        <g key={i} className="map-point">
-          <circle
-            cx={x}
-            cy={y}
-            r="16"
-            className="map-pulse"
-            style={{ animationDelay: i * 0.9 + "s" }}
-          />
-          <circle cx={x} cy={y} r="4" />
-        </g>
-      ))}
-    </svg>
+      </div>
+      <div className="jl-veil" aria-hidden="true" />
+    </div>
   );
 }
