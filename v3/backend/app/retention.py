@@ -31,6 +31,8 @@ def expire_videos(now=None):
             events = session.exec(select(Event).where(Event.video_id == video.id)).all()
             for event in events:
                 for alert in session.exec(select(Alert).where(Alert.event_id == event.id)).all():
+                    from .notifications import cancel_alert
+                    cancel_alert(session, alert.id, "Source recording expired.")
                     if alert.status == "pending":
                         session.delete(alert)
                     else:

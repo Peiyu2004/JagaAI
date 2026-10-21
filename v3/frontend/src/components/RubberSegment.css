@@ -1,0 +1,191 @@
+/* RubberSegment — light JagaAI palette: soft blue-grey track, navy thumb, white active text. */
+.rubber-segment {
+  --rs-track: #eef1f8;
+  --rs-track-line: #e3e7f0;
+  --rs-thumb: #141a2e;
+  --rs-ink: #141a2e;
+  --rs-ink-active: #ffffff;
+  --rs-radius: 12px;
+  --rs-inset: 4px;
+  --rs-thumb-radius: 8px;
+  --rs-h: 38px;
+  --rs-font: 13px;
+  --rs-pad: 16px;
+  --rs-min: 48px;
+  --rs-idle: 0.66;
+  --rs-hover: 0.92;
+  --rs-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  vertical-align: middle;
+  max-width: 100%;
+  padding: var(--rs-inset);
+  border-radius: var(--rs-radius);
+  background: var(--rs-track);
+  box-shadow: inset 0 0 0 1px var(--rs-track-line), inset 0 1px 2px rgba(20, 26, 46, 0.05);
+  font-family: inherit;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rubber-segment[data-equal] {
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+/* Full-width variant: equal columns that share the container. */
+.rubber-segment[data-block] {
+  display: grid;
+  width: 100%;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+/* Accent variant for a blue thumb (pass className="rubber-segment--accent"). */
+.rubber-segment--accent {
+  --rs-thumb: #2f5bea;
+}
+
+.rubber-segment[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.rubber-segment__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: var(--rs-min);
+  height: calc(var(--rs-h) - var(--rs-inset) * 2);
+  margin: 0;
+  padding: 0 var(--rs-pad);
+  border: 0;
+  border-radius: var(--rs-thumb-radius);
+  background: none;
+  color: var(--rs-ink);
+  opacity: var(--rs-idle);
+  font: inherit;
+  font-size: var(--rs-font);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms var(--rs-ease-out);
+}
+
+.rubber-segment[data-block] .rubber-segment__item {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.rubber-segment__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rubber-segment__item svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+}
+
+.rubber-segment__count {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(20, 26, 46, 0.08);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.rubber-segment__item[data-active] {
+  cursor: default;
+}
+
+.rubber-segment[data-draggable] .rubber-segment__item[data-active] {
+  cursor: grab;
+}
+
+.rubber-segment[data-held],
+.rubber-segment[data-held] .rubber-segment__item {
+  cursor: grabbing;
+}
+
+.rubber-segment__item[data-pressed] {
+  transform: scale(0.96);
+}
+
+.rubber-segment__item:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rubber-segment__item:not([data-active]):hover {
+    opacity: var(--rs-hover);
+  }
+}
+
+/* The lift layer carries the thumb's shadow; the thumb itself is clipped to the active slot. */
+.rubber-segment__lift {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgba(20, 26, 46, 0.2)) drop-shadow(0 1px 2px rgba(20, 26, 46, 0.18));
+}
+
+.rubber-segment__thumb {
+  position: absolute;
+  inset: var(--rs-inset);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  border-radius: var(--rs-thumb-radius);
+  background: var(--rs-thumb);
+  color: var(--rs-ink-active);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+.rubber-segment[data-equal] .rubber-segment__thumb,
+.rubber-segment[data-block] .rubber-segment__thumb {
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.rubber-segment__copy {
+  color: inherit;
+  opacity: 1;
+  cursor: default;
+}
+
+.rubber-segment__copy .rubber-segment__count {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rubber-segment__item {
+    transition: opacity 160ms ease;
+  }
+}
+
+@media print {
+  .rubber-segment {
+    display: none !important;
+  }
+}

@@ -18,6 +18,11 @@ from pathlib import Path
 from urllib.error import URLError
 from urllib.request import urlopen
 
+from dotenv import load_dotenv
+
+# Optional local provider configuration. Existing process variables take precedence.
+load_dotenv(Path(__file__).resolve().parents[2] / ".env.notifications", override=False)
+
 from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
@@ -28,10 +33,14 @@ from sqlalchemy import update
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from . import jobs, live
-from .auth import COOKIE_NAME, admin, authenticated, aware, current_user, establish_session, hash_password, resident, staff, user_json, verify_password
+from . import jobs, live, notifications
+from .notification_routes import router as notification_router
+from .auth import (COOKIE_NAME, MANAGER_ROLES, STAFF_ROLES, account_json, admin, authenticated, aware, current_user, establish_session,
+                   hash_password, manager, resident, revoke_sessions, staff, user_json, verify_password)
 from .database import DATA_DIR, get_session, init_db, session_scope
-from .models import Alert, AppSettings, AuditLog, AuthSession, Camera, Event, Guard, Incident, IncidentCreateRequest, Lead, Location, User, Video, uid, utcnow
+from .hosting import allowed_origins, mount_frontend
+from .models import (Activity, ActivitySignup, Alert, AppSettings, AuditLog, AuthSession, Camera, Event, Guard, Incident, IncidentCreateRequest, Lead,
+                     Location, PointEntry, Task, User, Video, uid, utcnow)
 from .realtime import publish_refresh, snapshot
 from .retention import expire_videos, private_path
 from .serializers import alert_json, camera_json, lead_json, record_json, video_json
@@ -39,7 +48,7 @@ from .serializers import alert_json, camera_json, lead_json, record_json, video_
 log = logging.getLogger(__name__)
 MAX_VIDEO_BYTES = int(os.environ.get("JAGAAI_MAX_VIDEO_MB", "512")) * 1024 * 1024
 MAX_PHOTO_BYTES = 8 * 1024 * 1024
-ALLOWED_ORIGINS = {"http://127.0.0.1:5174", "http://localhost:5174", "http://127.0.0.1:8766", "http://localhost:8766"}
+ALLOWED_ORIGINS = allowed_origins()
 _rates = defaultdict(deque)
 _rate_lock = threading.Lock()
 
@@ -50,6 +59,15 @@ async def retention_loop():
         await asyncio.to_thread(expire_videos)
 
 
+async def notification_loop():
+    while True:
+        await asyncio.sleep(2)
+        try:
+            await asyncio.to_thread(notifications.tick)
+        except Exception:
+            log.exception("Guard notification processing failed; pending records will be checked again")
+
+
 @asynccontextmanager
 async def lifespan(_app):
     init_db()
@@ -57,13 +75,16 @@ async def lifespan(_app):
     jobs.start_worker()
     live.start_all()
     task = asyncio.create_task(retention_loop())
+    notification_task = asyncio.create_task(notification_loop())
     yield
     task.cancel()
+    notification_task.cancel()
     await asyncio.to_thread(live.stop_all)
     jobs.stop_worker()
 
 
 app = FastAPI(title="JagaAI v3 local API", version="3.0.0", lifespan=lifespan)
+app.include_router(notification_router)
 
 
 class UploadBodyLimit:
@@ -132,9 +153,58 @@ class LoginPayload(Payload):
     password: str = PydanticField(min_length=1, max_length=256)
 
 
-class ResidentLogin(Payload):
+class RegisterPayload(Payload):
+    name: str = PydanticField(min_length=2, max_length=100)
     email: str = PydanticField(min_length=3, max_length=254)
-    code: str = PydanticField(min_length=1, max_length=12)
+    phone: str = PydanticField(min_length=6, max_length=40)
+    unit: str = PydanticField(min_length=1, max_length=40)
+    password: str = PydanticField(min_length=8, max_length=256)
+
+
+class AccountCreate(Payload):
+    name: str = PydanticField(min_length=2, max_length=100)
+    email: str = PydanticField(min_length=3, max_length=254)
+    phone: str = PydanticField(default="", max_length=40)
+    password: str = PydanticField(min_length=8, max_length=256)
+    role: str
+
+
+class AccountPatch(Payload):
+    status: str | None = None
+    role: str | None = None
+
+
+class TaskCreate(Payload):
+    title: str = PydanticField(min_length=3, max_length=180)
+    detail: str = PydanticField(default="", max_length=2000)
+    location_id: str | None = None
+    priority: str = "normal"
+    assignee_id: str | None = None
+    source: str = PydanticField(default="", max_length=120)
+
+
+class TaskPatch(Payload):
+    status: str | None = None
+    assignee_id: str | None = None
+    note: str | None = PydanticField(default=None, max_length=2000)
+
+
+class ActivityCreate(Payload):
+    title: str = PydanticField(min_length=3, max_length=160)
+    description: str = PydanticField(default="", max_length=2000)
+    location: str = PydanticField(min_length=2, max_length=160)
+    starts_at: datetime
+    capacity: int | None = PydanticField(default=None, ge=1, le=5000)
+    points: int = PydanticField(default=20, ge=0, le=500)
+
+
+class AttendancePayload(Payload):
+    user_id: str
+    attended: bool
+
+
+class RedeemPayload(Payload):
+    reward_id: str
 
 
 class ReviewPayload(Payload):
@@ -195,6 +265,7 @@ class GuardPayload(Payload):
     name: str = PydanticField(min_length=2, max_length=100)
     shift: str = PydanticField(min_length=1, max_length=120)
     phone: str = PydanticField(min_length=3, max_length=40)
+    notification_opt_in: bool = False
 
 
 class UserPayload(LoginPayload):
@@ -298,31 +369,31 @@ def login(payload: LoginPayload, request: Request, response: Response, session: 
     email = email_value(payload.email)
     rate_limit(("login", request.client.host if request.client else "local", email), 12, 300)
     user = session.exec(select(User).where(User.email == email)).first()
-    if not user or user.role not in {"admin", "supervisor"} or not verify_password(payload.password, user.password_hash):
+    if not user or not user.password_hash or not verify_password(payload.password, user.password_hash):
         raise HTTPException(401, "Email or password is incorrect.")
+    # Status is revealed only after the password matches.
+    if user.status == "pending":
+        raise HTTPException(403, "Your registration is waiting for approval from the management office.")
+    if user.status != "active":
+        raise HTTPException(403, "This account has been disabled. Contact the management office.")
     audit(session, user, "auth.login", user.id)
     establish_session(response, session, user)
     return {"user": user_json(user)}
 
 
-@app.post("/api/auth/resident")
-def resident_login(payload: ResidentLogin, request: Request, response: Response, session: Session = Depends(get_session)):
+@app.post("/api/auth/register")
+def register(payload: RegisterPayload, request: Request, session: Session = Depends(get_session)):
+    """Residents register themselves; the account stays pending until a manager verifies the unit."""
+    rate_limit(("register", request.client.host if request.client else "local"), 6, 600)
     email = email_value(payload.email)
-    rate_limit(("resident_login", request.client.host if request.client else "local", email), 12, 300)
-    if os.environ.get("JAGAAI_RESIDENT_DEMO", "1") != "1":
-        raise HTTPException(503, "Resident demo login is disabled. An OTP provider has not been configured.")
-    if payload.code != "246810":
-        raise HTTPException(401, "The demo verification code is incorrect.")
-    user = session.exec(select(User).where(User.email == email)).first()
-    if user and user.role != "resident":
-        raise HTTPException(403, "Use a resident email address for this entry.")
-    if not user:
-        user = User(email=email, name=email.split("@")[0], role="resident")
-        session.add(user)
-        session.flush()
-    audit(session, user, "auth.resident_demo_login", user.id)
-    establish_session(response, session, user)
-    return {"user": user_json(user)}
+    if session.exec(select(User).where(User.email == email)).first():
+        raise HTTPException(409, "This email already has an account. Sign in instead.")
+    user = User(email=email, name=payload.name.strip(), phone=payload.phone.strip(), unit=payload.unit.strip().upper(),
+                role="resident", status="pending", password_hash=hash_password(payload.password))
+    session.add(user)
+    audit(session, user, "auth.register", user.id, {"unit": user.unit})
+    commit_refresh(session, "account", user.id)
+    return {"status": "pending"}
 
 
 @app.post("/api/auth/logout")
@@ -346,7 +417,12 @@ def bootstrap(session: Session = Depends(get_session), user: User = Depends(staf
     leads = session.exec(select(Lead).order_by(Lead.created_at.desc())).all()
     incidents = session.exec(select(Incident).order_by(Incident.updated_at.desc())).all()
     ack = [(aware(item.reviewed_at) - aware(item.created_at)).total_seconds() for item in alerts if item.reviewed_at]
+    tasks = session.exec(select(Task).order_by(Task.updated_at.desc())).all()
+    staff_users = session.exec(select(User).where(User.role.in_(sorted(STAFF_ROLES)), User.status == "active")).all()
+    pending_residents = len(session.exec(select(User.id).where(User.role == "resident", User.status == "pending")).all()) if user.role in MANAGER_ROLES else 0
     return {"user": user_json(user),
+            "tasks": [record_json(item) for item in tasks],
+            "staff": [{"id": item.id, "name": item.name, "role": item.role} for item in staff_users],
             "locations": [record_json(item) for item in session.exec(select(Location)).all()],
             "cameras": [camera_json(item) for item in session.exec(select(Camera)).all()],
             "videos": [video_json(item) for item in videos],
@@ -358,9 +434,18 @@ def bootstrap(session: Session = Depends(get_session), user: User = Depends(staf
             "summary": {"alert_count": sum(item.status == "pending" for item in alerts),
                         "open_incidents": sum(item.status in {"open", "assigned"} for item in incidents),
                         "new_leads": sum(item.status == "received" for item in leads),
+                        "open_tasks": sum(item.status != "done" for item in tasks),
+                        "my_tasks": sum(item.status != "done" and item.assignee_id == user.id for item in tasks),
+                        "pending_residents": pending_residents,
                         "median_ack_sec": statistics.median(ack) if ack else None,
                         "video_count": len(videos), "analysed_video_count": sum(item.status == "ready" for item in videos),
                         "pending_video_count": sum(item.status in {"uploaded", "queued", "processing"} for item in videos)}}
+
+
+@app.get("/api/updates")
+def updates(_user: User = Depends(authenticated)):
+    revision, _ = snapshot()
+    return {"revision": revision}
 
 
 @app.get("/api/stream")
@@ -414,6 +499,7 @@ def attach_alert(session, alert, incident, user):
     session.add(incident)
     session.flush()
     session.refresh(alert)
+    notifications.link_incident(session, alert.id, incident)
 
 
 def attach_lead(session, lead, incident, user):
@@ -425,6 +511,7 @@ def attach_lead(session, lead, incident, user):
         return
     lead.incident_id = incident.id
     lead.status = "resolved" if incident.status in {"resolved", "closed"} else "in_progress"
+    sync_report_points(session, lead)
     incident.evidence = [*incident.evidence, {"lead_id": lead.id, "text": lead.text}]
     incident.timeline = [*incident.timeline, timeline_item(user, "lead_linked", "Resident lead linked to the incident.")]
     incident.updated_at = utcnow()
@@ -447,6 +534,7 @@ def review_alert(alert_id: str, payload: ReviewPayload, session: Session = Depen
         if result.rowcount != 1:
             raise HTTPException(409, "This alert was reviewed by another operator.")
         audit(session, user, "alert.dismiss", alert.id, {"reason": payload.dismiss_reason.strip()})
+        notifications.cancel_alert(session, alert.id, "Alert dismissed by " + user.name + ".")
         commit_refresh(session, "alert", alert.id)
         session.refresh(alert)
         return {"alert": alert_json(alert, session)}
@@ -568,6 +656,10 @@ def patch_incident(incident_id: str, payload: IncidentPatch, session: Session = 
         session.add(lead)
     session.add(incident)
     audit(session, user, "incident.update", incident.id, {"fields": list(changes), "status": incident.status})
+    if incident.status in {"resolved", "closed"}:
+        for evidence in incident.evidence:
+            if evidence.get("alert_id"):
+                notifications.cancel_alert(session, evidence["alert_id"], "Incident resolved or closed.")
     commit_refresh(session, "incident", incident.id)
     return record_json(incident)
 
@@ -588,7 +680,7 @@ def link_lead(lead_id: str, payload: LinkPayload, session: Session = Depends(get
 def patch_lead(lead_id: str, payload: LeadPatch, session: Session = Depends(get_session), user: User = Depends(staff)):
     lead = require_record(session, Lead, lead_id)
     if payload.status is not None:
-        if payload.status not in {"received", "in_progress", "resolved"}:
+        if payload.status not in LEAD_STATUSES:
             raise HTTPException(422, "Choose a valid lead status.")
         if lead.incident_id:
             incident = require_record(session, Incident, lead.incident_id)
@@ -596,6 +688,7 @@ def patch_lead(lead_id: str, payload: LeadPatch, session: Session = Depends(get_
             if payload.status != expected:
                 raise HTTPException(409, "This report follows its linked incident. Update the incident status instead.")
         lead.status = payload.status
+        sync_report_points(session, lead)
     if payload.public_reply is not None:
         lead.public_reply = payload.public_reply.strip()
     session.add(lead)
@@ -837,7 +930,7 @@ def validate_rules(rules, require_geometry=True):
 
 
 @app.put("/api/cameras/{camera_id}/rules")
-def camera_rules(camera_id: str, payload: RulesPayload, session: Session = Depends(get_session), user: User = Depends(staff)):
+def camera_rules(camera_id: str, payload: RulesPayload, session: Session = Depends(get_session), user: User = Depends(manager)):
     camera = require_record(session, Camera, camera_id)
     validate_rules(payload.rules, require_geometry=False)
     merged = {**camera.rules, **{key: {**camera.rules.get(key, {}), **value} for key, value in payload.rules.items()}}
@@ -887,7 +980,7 @@ def live_status(session: Session = Depends(get_session), user: User = Depends(st
 def settings(session: Session = Depends(get_session), user: User = Depends(staff)):
     result = {"settings": record_json(session.get(AppSettings, "global")), "guards": [record_json(item) for item in session.exec(select(Guard)).all()]}
     if user.role == "admin":
-        result["users"] = [user_json(item) for item in session.exec(select(User).where(User.role.in_(["admin", "supervisor"]))).all()]
+        result["users"] = [user_json(item) for item in session.exec(select(User).where(User.role.in_(sorted(STAFF_ROLES)))).all()]
         result["audit_logs"] = [record_json(item) for item in session.exec(select(AuditLog).order_by(AuditLog.created_at.desc()).limit(200)).all()]
     return result
 
@@ -912,10 +1005,12 @@ def patch_settings(payload: SettingsPatch, session: Session = Depends(get_sessio
 
 
 @app.post("/api/guards")
-def create_guard(payload: GuardPayload, session: Session = Depends(get_session), user: User = Depends(admin)):
-    guard = Guard(**{key: value.strip() for key, value in payload.model_dump().items()})
+def create_guard(payload: GuardPayload, session: Session = Depends(get_session), user: User = Depends(manager)):
+    guard = Guard(**{key: value.strip() if isinstance(value, str) else value for key, value in payload.model_dump().items()})
     if not all((guard.name, guard.shift, guard.phone)):
         raise HTTPException(422, "Complete the guard name, shift and phone.")
+    if guard.notification_opt_in:
+        guard.phone = notifications.phone_number(guard.phone)
     session.add(guard)
     audit(session, user, "guard.create", guard.id)
     commit_refresh(session, "guard", guard.id)
@@ -923,12 +1018,14 @@ def create_guard(payload: GuardPayload, session: Session = Depends(get_session),
 
 
 @app.patch("/api/guards/{guard_id}")
-def patch_guard(guard_id: str, payload: GuardPayload, session: Session = Depends(get_session), user: User = Depends(admin)):
+def patch_guard(guard_id: str, payload: GuardPayload, session: Session = Depends(get_session), user: User = Depends(manager)):
     guard = require_record(session, Guard, guard_id)
     for key, value in payload.model_dump().items():
-        if not value.strip():
+        if isinstance(value, str) and not value.strip():
             raise HTTPException(422, "Complete the guard name, shift and phone.")
-        setattr(guard, key, value.strip())
+        setattr(guard, key, value.strip() if isinstance(value, str) else value)
+    if guard.notification_opt_in:
+        guard.phone = notifications.phone_number(guard.phone)
     session.add(guard)
     audit(session, user, "guard.update", guard.id)
     commit_refresh(session, "guard", guard.id)
@@ -937,8 +1034,8 @@ def patch_guard(guard_id: str, payload: GuardPayload, session: Session = Depends
 
 @app.post("/api/users")
 def create_user(payload: UserPayload, session: Session = Depends(get_session), user: User = Depends(admin)):
-    if payload.role not in {"admin", "supervisor"}:
-        raise HTTPException(422, "Staff roles are admin or supervisor; guards do not have accounts.")
+    if payload.role not in STAFF_ROLES:
+        raise HTTPException(422, "Staff roles are guard, manager or admin.")
     email = email_value(payload.email)
     if session.exec(select(User).where(User.email == email)).first():
         raise HTTPException(409, "This email already has an account.")
@@ -1000,8 +1097,9 @@ async def submit_lead(location_id: str = Form(...), time_from: str = Form(...), 
         lead = Lead(resident_id=user.id, location_id=location_id, time_from=start, time_to=end, text=text.strip(), photo_path=str(path) if path else None)
         session.add(lead)
         audit(session, user, "lead.submit", lead.id)
+        awarded = reward_report(session, lead)
         commit_refresh(session, "lead", lead.id)
-        return lead_json(lead, public=True)
+        return {**lead_json(lead, public=True), "points_awarded": awarded}
     except Exception:
         if path:
             path.unlink(missing_ok=True)
@@ -1022,3 +1120,275 @@ def lead_photo(lead_id: str, session: Session = Depends(get_session), user: User
     audit(session, user, "lead.photo_view", lead.id)
     session.commit()
     return FileResponse(path, media_type="image/jpeg")
+
+
+# Accounts, guard tasks, community activities and resident points.
+# One sign-in serves every role; these routes decide what each role may see and change.
+
+REWARDS = [
+    {"id": "court", "name": "Free 1-hour court booking", "points": 100},
+    {"id": "carwash", "name": "Basement car wash voucher", "points": 150},
+    {"id": "cafe", "name": "RM10 clubhouse café voucher", "points": 200},
+]
+# Residents earn points for every report they send, so they keep sharing what they notice.
+# Only the first few reports each Malaysian day earn points, so points cannot be farmed with junk reports.
+REPORT_POINTS = 10
+REPORT_POINTS_PER_DAY = 3
+MYT = timedelta(hours=8)
+# "invalid": the team found nothing genuine in the report, so it loses the points it earned.
+LEAD_STATUSES = {"received", "in_progress", "resolved", "invalid"}
+TASK_STATUSES = {"open", "in_progress", "done"}
+
+
+class ActivityPatch(Payload):
+    status: str
+
+
+def manageable_roles(user):
+    # Managers look after residents and guards; only administrators handle other managers and admins.
+    return {"resident", "guard", "manager", "admin"} if user.role == "admin" else {"resident", "guard"}
+
+
+def award_points(session, user_id, points, reason, ref=""):
+    if ref and session.exec(select(PointEntry.id).where(PointEntry.user_id == user_id, PointEntry.ref == ref)).first():
+        return False
+    session.add(PointEntry(user_id=user_id, points=points, reason=reason, ref=ref))
+    return True
+
+
+def reward_report(session, lead):
+    """Points for sending a report; returns the points awarded (0 once today's limit is reached)."""
+    day_start = (utcnow() + MYT).replace(hour=0, minute=0, second=0, microsecond=0) - MYT
+    today = session.exec(select(PointEntry.id).where(PointEntry.user_id == lead.resident_id, PointEntry.ref.startswith("lead:"),
+                                                     PointEntry.created_at >= day_start)).all()
+    if len(today) >= REPORT_POINTS_PER_DAY:
+        return 0
+    return REPORT_POINTS if award_points(session, lead.resident_id, REPORT_POINTS, "Report sent to the security team", "lead:" + lead.id) else 0
+
+
+def sync_report_points(session, lead):
+    # Marking a report not valid withdraws the points it earned; moving it back to another status returns them.
+    # The original award stays in the ledger, so a withdrawn report still counts towards the daily limit.
+    ref = "lead-withdrawn:" + lead.id
+    withdrawn = session.exec(select(PointEntry).where(PointEntry.user_id == lead.resident_id, PointEntry.ref == ref)).first()
+    if lead.status == "invalid" and not withdrawn:
+        earned = session.exec(select(PointEntry).where(PointEntry.user_id == lead.resident_id, PointEntry.ref == "lead:" + lead.id)).first()
+        if earned:
+            session.add(PointEntry(user_id=lead.resident_id, points=-earned.points, reason="Points withdrawn: report marked as not valid", ref=ref))
+    elif lead.status != "invalid" and withdrawn:
+        session.delete(withdrawn)
+
+
+def point_balance(session, user_id):
+    return sum(session.exec(select(PointEntry.points).where(PointEntry.user_id == user_id)).all())
+
+
+@app.get("/api/accounts")
+def list_accounts(session: Session = Depends(get_session), user: User = Depends(manager)):
+    accounts = session.exec(select(User).order_by(User.created_at.desc())).all()
+    return {"accounts": [account_json(item) for item in accounts], "manageable_roles": sorted(manageable_roles(user))}
+
+
+@app.post("/api/accounts")
+def create_account(payload: AccountCreate, session: Session = Depends(get_session), user: User = Depends(manager)):
+    if payload.role not in manageable_roles(user):
+        raise HTTPException(403, "Your role cannot create this kind of account.")
+    email = email_value(payload.email)
+    if session.exec(select(User).where(User.email == email)).first():
+        raise HTTPException(409, "This email already has an account.")
+    account = User(email=email, name=payload.name.strip(), phone=payload.phone.strip(), role=payload.role,
+                   password_hash=hash_password(payload.password))
+    session.add(account)
+    audit(session, user, "account.create", account.id, {"role": account.role})
+    commit_refresh(session, "account", account.id)
+    return account_json(account)
+
+
+@app.patch("/api/accounts/{account_id}")
+def patch_account(account_id: str, payload: AccountPatch, session: Session = Depends(get_session), user: User = Depends(manager)):
+    account = require_record(session, User, account_id)
+    if account.id == user.id:
+        raise HTTPException(409, "You cannot change your own access.")
+    allowed = manageable_roles(user)
+    if account.role not in allowed:
+        raise HTTPException(403, "Only an administrator can change this account.")
+    if payload.role is not None and payload.role != account.role:
+        if payload.role not in allowed or payload.role not in STAFF_ROLES or account.role not in STAFF_ROLES:
+            raise HTTPException(403, "Staff roles can change between guard, manager and admin; residents keep their own accounts.")
+        account.role = payload.role
+    if payload.status is not None:
+        if payload.status not in {"active", "disabled"}:
+            raise HTTPException(422, "Choose active or disabled.")
+        approved = account.status == "pending" and payload.status == "active"
+        account.status = payload.status
+        if payload.status == "disabled":
+            revoke_sessions(session, account.id)
+        if approved and account.role == "resident":
+            award_points(session, account.id, 50, "Welcome to the community", "welcome")
+    session.add(account)
+    audit(session, user, "account.update", account.id, payload.model_dump(exclude_unset=True))
+    commit_refresh(session, "account", account.id)
+    return account_json(account)
+
+
+def task_assignee(session, assignee_id):
+    if not assignee_id:
+        return None
+    person = session.get(User, assignee_id)
+    if not person or person.role not in STAFF_ROLES or person.status != "active":
+        raise HTTPException(422, "Assign the task to an active guard or manager.")
+    return person.id
+
+
+@app.post("/api/tasks")
+def create_task(payload: TaskCreate, session: Session = Depends(get_session), user: User = Depends(staff)):
+    if payload.location_id:
+        require_record(session, Location, payload.location_id)
+    priority_value(payload.priority)
+    assignee = task_assignee(session, payload.assignee_id)
+    if user.role not in MANAGER_ROLES and assignee not in {None, user.id}:
+        raise HTTPException(403, "Guards can take a task themselves; a manager assigns it to others.")
+    task = Task(title=payload.title.strip(), detail=payload.detail.strip(), location_id=payload.location_id, priority=payload.priority,
+                assignee_id=assignee, created_by=user.id, source=payload.source.strip())
+    session.add(task)
+    audit(session, user, "task.create", task.id)
+    commit_refresh(session, "task", task.id)
+    return record_json(task)
+
+
+@app.patch("/api/tasks/{task_id}")
+def patch_task(task_id: str, payload: TaskPatch, session: Session = Depends(get_session), user: User = Depends(staff)):
+    task = require_record(session, Task, task_id)
+    is_manager = user.role in MANAGER_ROLES
+    changes = payload.model_dump(exclude_unset=True)
+    if "assignee_id" in changes:
+        assignee = task_assignee(session, changes["assignee_id"])
+        if not is_manager and (assignee != user.id or task.assignee_id not in {None, user.id}):
+            raise HTTPException(403, "Guards can take an unassigned task; a manager reassigns tasks.")
+        task.assignee_id = assignee
+    if not is_manager and task.assignee_id != user.id:
+        raise HTTPException(403, "Take this task before updating it.")
+    if payload.status is not None:
+        if payload.status not in TASK_STATUSES:
+            raise HTTPException(422, "Choose open, in progress or done.")
+        task.status = payload.status
+    if payload.note is not None:
+        task.note = payload.note.strip()
+    task.updated_at = utcnow()
+    session.add(task)
+    audit(session, user, "task.update", task.id, {"fields": list(changes), "status": task.status})
+    commit_refresh(session, "task", task.id)
+    return record_json(task)
+
+
+def activity_json(session, activity, user):
+    signups = session.exec(select(ActivitySignup).where(ActivitySignup.activity_id == activity.id)).all()
+    mine = next((item for item in signups if item.user_id == user.id), None)
+    result = {**record_json(activity), "signup_count": len(signups), "joined": mine is not None, "attended": bool(mine and mine.attended)}
+    if user.role in MANAGER_ROLES:
+        people = {item.id: item for item in session.exec(select(User).where(User.id.in_([s.user_id for s in signups]))).all()} if signups else {}
+        result["attendees"] = [{"user_id": s.user_id, "name": people[s.user_id].name if s.user_id in people else "Former resident",
+                                "unit": people[s.user_id].unit if s.user_id in people else "", "attended": s.attended} for s in signups]
+    return result
+
+
+@app.get("/api/activities")
+def list_activities(session: Session = Depends(get_session), user: User = Depends(authenticated)):
+    activities = session.exec(select(Activity).order_by(Activity.starts_at)).all()
+    if user.role not in MANAGER_ROLES:
+        activities = [item for item in activities if item.status == "published"]
+    return [activity_json(session, item, user) for item in activities]
+
+
+@app.post("/api/activities")
+def create_activity(payload: ActivityCreate, session: Session = Depends(get_session), user: User = Depends(manager)):
+    activity = Activity(title=payload.title.strip(), description=payload.description.strip(), location=payload.location.strip(),
+                        starts_at=iso_value(payload.starts_at), capacity=payload.capacity, points=payload.points, created_by=user.id)
+    session.add(activity)
+    audit(session, user, "activity.create", activity.id)
+    commit_refresh(session, "activity", activity.id)
+    return activity_json(session, activity, user)
+
+
+@app.patch("/api/activities/{activity_id}")
+def patch_activity(activity_id: str, payload: ActivityPatch, session: Session = Depends(get_session), user: User = Depends(manager)):
+    activity = require_record(session, Activity, activity_id)
+    if payload.status not in {"published", "cancelled"}:
+        raise HTTPException(422, "Choose published or cancelled.")
+    activity.status = payload.status
+    session.add(activity)
+    audit(session, user, "activity.update", activity.id, {"status": activity.status})
+    commit_refresh(session, "activity", activity.id)
+    return activity_json(session, activity, user)
+
+
+@app.post("/api/activities/{activity_id}/join")
+def join_activity(activity_id: str, session: Session = Depends(get_session), user: User = Depends(resident)):
+    activity = require_record(session, Activity, activity_id)
+    if activity.status != "published" or aware(activity.starts_at) <= utcnow():
+        raise HTTPException(409, "Sign-up for this activity has closed.")
+    signups = session.exec(select(ActivitySignup).where(ActivitySignup.activity_id == activity.id)).all()
+    if not any(item.user_id == user.id for item in signups):
+        if activity.capacity and len(signups) >= activity.capacity:
+            raise HTTPException(409, "This activity is full.")
+        session.add(ActivitySignup(activity_id=activity.id, user_id=user.id))
+        audit(session, user, "activity.join", activity.id)
+        commit_refresh(session, "activity", activity.id)
+    return activity_json(session, activity, user)
+
+
+@app.post("/api/activities/{activity_id}/leave")
+def leave_activity(activity_id: str, session: Session = Depends(get_session), user: User = Depends(resident)):
+    activity = require_record(session, Activity, activity_id)
+    signup = session.exec(select(ActivitySignup).where(ActivitySignup.activity_id == activity.id, ActivitySignup.user_id == user.id)).first()
+    if signup:
+        if signup.attended:
+            raise HTTPException(409, "Attendance has already been recorded for this activity.")
+        session.delete(signup)
+        audit(session, user, "activity.leave", activity.id)
+        commit_refresh(session, "activity", activity.id)
+    return activity_json(session, activity, user)
+
+
+@app.post("/api/activities/{activity_id}/attendance")
+def record_attendance(activity_id: str, payload: AttendancePayload, session: Session = Depends(get_session), user: User = Depends(manager)):
+    activity = require_record(session, Activity, activity_id)
+    signup = session.exec(select(ActivitySignup).where(ActivitySignup.activity_id == activity.id, ActivitySignup.user_id == payload.user_id)).first()
+    if not signup:
+        raise HTTPException(404, "This resident has not signed up for the activity.")
+    signup.attended = payload.attended
+    ref = "activity:" + activity.id
+    if payload.attended:
+        award_points(session, signup.user_id, activity.points, "Joined " + activity.title, ref)
+    else:
+        for entry in session.exec(select(PointEntry).where(PointEntry.user_id == signup.user_id, PointEntry.ref == ref)).all():
+            session.delete(entry)
+    session.add(signup)
+    audit(session, user, "activity.attendance", activity.id, {"user_id": signup.user_id, "attended": payload.attended})
+    commit_refresh(session, "activity", activity.id)
+    return activity_json(session, activity, user)
+
+
+@app.get("/api/resident/points")
+def resident_points(session: Session = Depends(get_session), user: User = Depends(resident)):
+    entries = session.exec(select(PointEntry).where(PointEntry.user_id == user.id).order_by(PointEntry.created_at.desc())).all()
+    return {"balance": sum(item.points for item in entries), "history": [record_json(item) for item in entries], "rewards": REWARDS,
+            "report_points": REPORT_POINTS, "report_points_per_day": REPORT_POINTS_PER_DAY}
+
+
+@app.post("/api/resident/points/redeem")
+def redeem_points(payload: RedeemPayload, session: Session = Depends(get_session), user: User = Depends(resident)):
+    reward = next((item for item in REWARDS if item["id"] == payload.reward_id), None)
+    if reward is None:
+        raise HTTPException(404, "This reward is not available.")
+    balance = point_balance(session, user.id)
+    if balance < reward["points"]:
+        raise HTTPException(409, f"You need {reward['points'] - balance} more points for this reward.")
+    session.add(PointEntry(user_id=user.id, points=-reward["points"], reason="Redeemed: " + reward["name"]))
+    audit(session, user, "points.redeem", reward["id"])
+    session.commit()
+    return resident_points(session, user)
+
+
+if os.environ.get("JAGAAI_FRONTEND_DIR"):
+    mount_frontend(app, os.environ["JAGAAI_FRONTEND_DIR"])

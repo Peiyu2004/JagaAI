@@ -69,7 +69,8 @@ def trigger_scene(event: Event, session: Session, tolerance=1.5):
 def lead_json(lead: Lead, public=False):
     fields = {"id", "location_id", "time_from", "time_to", "text", "status", "public_reply", "created_at"}
     if public:
-        return json_value({key: getattr(lead, key) for key in fields})
+        # Residents learn only that their report joined a case, never which incident or its notes.
+        return json_value({**{key: getattr(lead, key) for key in fields}, "linked_case": bool(lead.incident_id)})
     result = record_json(lead, {"resident_id", "photo_path"})
     result["photo_url"] = f"/api/leads/{lead.id}/photo" if lead.photo_path else None
     return result

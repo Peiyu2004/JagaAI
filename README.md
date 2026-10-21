@@ -2,6 +2,17 @@
 
 JagaAI is a local community safety and property management prototype. The current submission is **JagaAI v3**, with video detection, incident review, resident reports and local AI video search.
 
+## What v3 does
+
+| Who | What they get |
+| --- | --- |
+| Guards and managers | A command centre with a 3D model of the estate built from its zones, alert review with a slide-to-confirm check, incidents, recording search in English, Chinese or Malay (**Ask JagaAI**), cameras and detection rules, insights and tasks |
+| Residents | A phone-first app: report what they noticed in three steps (where on the estate map, what, when), follow its progress and the team's reply, join community activities, and earn and redeem points |
+| Managers | Approve resident sign-ups, create guard accounts, publish activities and record attendance |
+| Guards on duty | Alert notifications by WhatsApp, call or SMS with a mobile acceptance page. Simulation is the default; real delivery needs Twilio and has not been verified with a real phone |
+
+Everything runs on the local computer: detection and tracking (YOLOX-S, ByteTrack), video descriptions (Qwen3-VL) and search embeddings (Qwen3 embedding) through a dedicated Ollama server. There is no face recognition and no cloud inference.
+
 ## One-click start on Windows
 
 1. Clone this repository, or download and extract its ZIP file.
@@ -16,12 +27,16 @@ Use the same launcher on later runs. It reuses installed tools and models and de
 
 ### Demo accounts
 
-| Role | Email | Password |
-| --- | --- | --- |
-| Administrator | `admin@jagaai.local` | `JagaAI-demo-2026!` |
-| Supervisor | `supervisor@jagaai.local` | `JagaAI-demo-2026!` |
+Everyone signs in at the same page, **http://127.0.0.1:5174**. The role is bound to the account, so the app opens the matching workspace automatically:
 
-Resident entry: **http://127.0.0.1:5174/resident**. These are local demo accounts; change them before real use.
+| Role | Email | Opens |
+| --- | --- | --- |
+| Resident | `resident@jagaai.local` | Reports, report progress, community activities, points |
+| Guard | `guard@jagaai.local` | Monitoring, recording search, reports and alerts, tasks |
+| Manager | `manager@jagaai.local` | Guard features plus people, activities and resident approvals |
+| Administrator | `admin@jagaai.local` | Manager features plus system settings and admin accounts |
+
+All demo accounts use the password `JagaAI-demo-2026!`. Residents can register themselves on the sign-in page; a manager approves them under **Accounts** before they can sign in. Guard and manager accounts are created by a manager or administrator. The earlier `supervisor@jagaai.local` account now has the guard role. These are local demo accounts; change them before real use.
 
 ### Launch options
 
@@ -77,13 +92,26 @@ For support, share the last 20 lines of the terminal error and the relevant log,
 | `Setup-JagaAI.cmd` | Setup without launching |
 | `scripts/start-jagaai.ps1` | Windows installer implementation |
 | `v3/frontend`, `v3/backend` | Current React frontend and Python API |
+| `v3/frontend/src/components/town` | 3D command-centre scene and the site layout it shares with the flat estate map |
 | `v3/models` | Committed YOLOX-S detector and provenance |
 | `v3/data/ai-demo` | Prepared demo using public MEVA clips |
+| `v3/deploy/colab`, `v3/notebooks` | Temporary hosting on free Google Colab (see its README) |
+| `v3/docs` | Guides, API contract and dated verification notes |
 | `apps`, `packages` | Earlier Node.js prototype |
 
-See [the v3 README](v3/README.md) for manual setup, tests and evaluation tooling, [AI demo notes](v3/docs/ai-demo.md) for scenarios and limitations, and [acceptance notes](v3/docs/acceptance.md) for verification status.
+See [the v3 README](v3/README.md) for manual setup, tests and evaluation tooling, [AI demo notes](v3/docs/ai-demo.md) for scenarios and limitations, [the API contract](v3/docs/api-contract.md) for endpoints and roles, and [acceptance notes](v3/docs/acceptance.md) for verification status.
 
 Application inference uses local services. The demo uses public MEVA material; engineering checks do not establish accuracy on deployment footage. Runtime data, `.env`, virtual environments and downloaded models are excluded from Git. The launcher prepares each computer's environment after cloning.
+
+## Third-party material
+
+| Material | Source and licence |
+| --- | --- |
+| Demo footage, frames and the sign-in reel | [MEVA](https://mevadata.org/) public clips, CC BY 4.0 |
+| 3D town models | Kenney [Car Kit, City Kit Commercial, Roads and Suburban](https://kenney.nl), CC0; licence files sit beside the models in `v3/frontend/public/models/town` |
+| Command-centre lighting | "Modern Evening Street" HDRI from [Poly Haven](https://polyhaven.com), CC0 |
+| Detector and tracker | YOLOX-S (Apache-2.0) and supervision/ByteTrack (MIT); texts in `v3/docs/licenses` |
+| Fonts | IBM Plex Sans and IBM Plex Mono, SIL Open Font License 1.1 |
 
 ## Earlier prototype
 

@@ -8,3 +8,6 @@ export const IncidentsPage = lazy(() => import("./pages/Incidents"));
 export const CamerasPage = lazy(() => import("./pages/Cameras"));
 export const InsightsPage = lazy(() => import("./pages/Insights"));
 export const SettingsPage = lazy(() => import("./pages/Settings"));
+export const TasksPage = lazy(() => import("./pages/Tasks"));
+export const ActivitiesPage = lazy(() => import("./pages/Activities"));
+export const AccountsPage = lazy(() => import("./pages/Accounts"));

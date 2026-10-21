@@ -1,0 +1,217 @@
+/* Slide-to-confirm (light theme). A navy capsule grows from the left as you drag;
+   the label shimmers like a slide-to-unlock until you start. */
+.sc {
+  --sc-track: #eef1f8;
+  --sc-track-line: #dfe5f1;
+  --sc-ink: #141a2e;
+  --sc-on-ink: #ffffff;
+  --sc-ok: #0e8a5b;
+  --sc-no: #c8372d;
+  position: relative;
+  width: 100%;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+.sc-track {
+  position: relative;
+  width: 100%;
+  height: var(--sc-h);
+  border-radius: 999px;
+  background: var(--sc-track);
+  box-shadow: inset 0 0 0 1px var(--sc-track-line), inset 0 2px 6px rgba(20, 26, 46, 0.06);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.sc[data-held] .sc-track {
+  cursor: grabbing;
+}
+.sc[data-phase="pending"] .sc-track,
+.sc[data-phase="done"] .sc-track {
+  cursor: default;
+}
+.sc[data-disabled] .sc-track {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.sc[data-phase="error"] .sc-track {
+  animation: sc-shake 450ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Label in the empty part of the track */
+.sc-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: calc(var(--sc-grip) + 12px);
+  padding-right: 16px;
+  opacity: var(--sc-say);
+  pointer-events: none;
+}
+.sc-text {
+  grid-area: 1 / 1;
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: transparent;
+  background: linear-gradient(100deg, #5b647d 0%, #5b647d 40%, #c3cadb 50%, #5b647d 60%, #5b647d 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: sc-shimmer 2.6s linear infinite;
+  transition: opacity 200ms ease, filter 200ms ease;
+}
+.sc[data-disabled] .sc-text {
+  animation: none;
+}
+.sc-text-error {
+  color: var(--sc-no);
+  background: none;
+  animation: none;
+  opacity: 0;
+  filter: blur(2px);
+}
+.sc[data-phase="error"] .sc-text:not(.sc-text-error) {
+  opacity: 0;
+  filter: blur(2px);
+}
+.sc[data-phase="error"] .sc-text-error {
+  opacity: 1;
+  filter: none;
+}
+
+/* The growing capsule and its leading handle */
+.sc-fill {
+  position: absolute;
+  top: var(--sc-pad);
+  left: var(--sc-pad);
+  width: calc(var(--sc-grip) + var(--sc-x));
+  height: var(--sc-grip);
+  border-radius: 999px;
+  background: var(--sc-ink);
+  box-shadow: 0 6px 16px rgba(20, 26, 46, 0.22);
+  transition: background-color 220ms ease;
+}
+.sc-handle {
+  position: absolute;
+  top: var(--sc-pad);
+  left: calc(var(--sc-pad) + var(--sc-x));
+  width: var(--sc-grip);
+  height: var(--sc-grip);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--sc-on-ink);
+  outline: none;
+  transition: opacity 200ms ease, transform 200ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.sc:not([data-held]):not([data-disabled])[data-phase="idle"] .sc-track:hover .sc-handle {
+  transform: scale(1.06);
+}
+.sc-handle:focus-visible {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px #e8a23a;
+}
+.sc[data-phase="done"] .sc-fill {
+  background: var(--sc-ok);
+}
+.sc[data-phase="error"] .sc-fill {
+  background: var(--sc-no);
+}
+.sc[data-phase="done"] .sc-handle {
+  opacity: 0;
+}
+
+/* Success label over the full capsule */
+.sc-done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.sc[data-phase="done"] .sc-done {
+  opacity: 1;
+  transform: none;
+}
+
+.sc-spinner {
+  display: block;
+  animation: sc-spin 0.9s linear infinite;
+}
+.sc-hint {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  text-align: center;
+  color: #5b647d;
+}
+.sc-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes sc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes sc-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -150% 0;
+  }
+}
+@keyframes sc-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(6px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  75% { transform: translateX(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-text:not(.sc-text-error) {
+    animation: none;
+    color: #5b647d;
+    background: none;
+  }
+  .sc[data-phase="error"] .sc-track {
+    animation: none;
+  }
+  .sc-spinner {
+    animation: sc-breathe 1.4s ease-in-out infinite;
+  }
+  .sc-handle,
+  .sc-done {
+    transition: none;
+  }
+  @keyframes sc-breathe {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

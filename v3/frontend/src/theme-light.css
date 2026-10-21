@@ -1,0 +1,102 @@
+/* JagaAI light theme: one harmonious palette for the staff app.
+   Navy ink instead of pure black, a soft blue-tinted canvas, one brand blue,
+   amber reserved for "the AI detected this", and navy-tinted soft shadows.
+   Imported last in main.tsx, so these tokens win over design-v4.css / readability.css. */
+:root {
+  color-scheme: light;
+  --canvas: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #f8f9fd;
+  --surface-3: #eef1f8;
+  --rail: #121831;
+  --border: #e3e7f0;
+  --border-strong: #cdd3e1;
+  --text: #141a2e;
+  --text-2: #3d4660;
+  --muted: #5b647d;
+  --accent: #2f5bea;
+  --accent-hover: #1f47d1;
+  --accent-soft: #ebf0ff;
+  --warn: #b4570a;
+  --warn-bg: #fff6e6;
+  --danger: #c8372d;
+  --danger-bg: #fef1ef;
+  --success: #0e8a5b;
+  --success-bg: #e9f8f1;
+  --info: #2f5bea;
+  --info-bg: #eef3ff;
+  --shadow: 0 1px 2px rgba(20, 26, 46, 0.06), 0 1px 1px rgba(20, 26, 46, 0.04);
+  --shadow-lg: 0 18px 44px rgba(20, 26, 46, 0.14);
+  --ink: #141a2e;
+  --line: #e3e7f0;
+  --blue: #2f5bea;
+  --blue-soft: #ebf0ff;
+  --graphite: #121831;
+}
+
+/* A faint brand-blue glow at the top of the workspace, so the canvas is never flat grey. */
+.app-shell {
+  background:
+    radial-gradient(1100px 520px at 78% -160px, rgba(47, 91, 234, 0.08), transparent 70%),
+    var(--canvas);
+}
+::selection {
+  background: #d6e0ff;
+}
+
+/* ---------- Confirm-alert dialog: a clear summary, a real checkpoint, then the slide ---------- */
+.dialog-content .confirm-alert-summary {
+  padding: 16px 18px;
+  border: 1px solid #f6d9a8;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff6e6 100%);
+}
+.dialog-content .confirm-alert-summary strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  color: #141a2e;
+}
+.dialog-content .confirm-alert-summary p {
+  margin: 4px 0 6px;
+  font-size: 13.5px;
+  color: #3d4660;
+}
+.dialog-content .confirm-alert-summary small {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #9a5b0b;
+}
+.dialog-content .review-confirmation {
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid #dfe5f1;
+  border-radius: 14px;
+  background: #f8f9fd;
+  font-size: 14px;
+  color: #141a2e;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.dialog-content .review-confirmation:hover {
+  border-color: #c3cde3;
+}
+.dialog-content .review-confirmation:has(input:checked) {
+  border-color: #9fdcc0;
+  background: #e9f8f1;
+  box-shadow: 0 0 0 3px rgba(14, 138, 91, 0.08);
+}
+.dialog-content .review-confirmation input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #0e8a5b;
+  cursor: pointer;
+}
+.dialog-content .review-slide {
+  margin-top: 4px;
+}

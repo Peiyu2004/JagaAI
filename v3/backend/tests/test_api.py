@@ -11,7 +11,7 @@ from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine, select
 
 from app import database, jobs, main, retention
-from app.auth import COOKIE_NAME
+from app.auth import COOKIE_NAME, hash_password
 from app.models import Alert, AuditLog, Camera, Description, Event, Incident, Lead, Track, User, Video, utcnow
 from app.realtime import publish_refresh
 
@@ -45,8 +45,16 @@ def staff_login(client, role="admin"):
     return response.json()["user"]
 
 
+RESIDENT_PASSWORD = "resident-pass-2026"
+
+
 def resident_login(client, email="alice@example.com"):
-    response = client.post("/api/auth/resident", json={"email": email, "code": "246810"})
+    """Sign in through the shared entry as an approved resident, creating one if needed."""
+    with Session(database.engine) as session:
+        if not session.exec(select(User).where(User.email == email)).first():
+            session.add(User(email=email, name=email.split("@")[0], role="resident", unit="A-01-01", password_hash=hash_password(RESIDENT_PASSWORD)))
+            session.commit()
+    response = client.post("/api/auth/login", json={"email": email, "password": RESIDENT_PASSWORD})
     assert response.status_code == 200, response.text
     return response.json()["user"]
 
@@ -118,7 +126,9 @@ def test_resident_ownership_and_public_field_allowlist(api):
     client, _, _ = api
     resident_login(client)
     lead = submit_lead(client)
-    assert set(lead) == {"id", "location_id", "time_from", "time_to", "text", "status", "public_reply", "created_at"}
+    assert set(lead) == {"id", "location_id", "time_from", "time_to", "text", "status", "public_reply", "created_at", "linked_case", "points_awarded"}
+    assert lead["linked_case"] is False
+    assert set(client.get(f"/api/resident/leads/{lead['id']}").json()) == set(lead) - {"points_awarded"}
     assert len(client.get("/api/resident/leads").json()) == 1
     resident_login(client, "bob@example.com")
     assert client.get("/api/resident/leads").json() == []
@@ -127,27 +137,174 @@ def test_resident_ownership_and_public_field_allowlist(api):
     assert set(public) == {"locations"}
 
 
-def test_resident_code_cannot_authenticate_as_existing_admin(api):
+def test_one_sign_in_entry_returns_the_role_assigned_to_each_account(api):
     client, _, _ = api
-    response = client.post("/api/auth/resident", json={"email": "admin@jagaai.local", "code": "246810"})
-    assert response.status_code == 403
-    assert client.get("/api/auth/me").json()["user"] is None
-    assert client.post("/api/auth/resident", json={"email": "alice@example.com", "code": "wrong"}).status_code == 401
+    for role in ("guard", "manager", "admin"):
+        assert staff_login(client, role)["role"] == role
+    assert resident_login(client)["role"] == "resident"
+    # The role comes from the account; the request cannot choose one.
+    response = client.post("/api/auth/login", json={"email": "guard@jagaai.local", "password": "JagaAI-demo-2026!", "role": "admin"})
+    assert response.status_code == 422
+    assert client.post("/api/auth/login", json={"email": "guard@jagaai.local", "password": "wrong"}).status_code == 401
 
 
-def test_supervisor_permissions_and_guard_records(api):
+def test_resident_registration_waits_for_manager_approval(api):
     client, _, _ = api
-    staff_login(client, "supervisor")
+    details = {"name": "Nur Aisyah", "email": "aisyah@example.com", "phone": "012-3456789", "unit": "c-03-07", "password": "a-strong-pass"}
+    assert client.post("/api/auth/register", json=details).json() == {"status": "pending"}
+    assert client.post("/api/auth/register", json=details).status_code == 409
+    login = {"email": "aisyah@example.com", "password": "a-strong-pass"}
+    response = client.post("/api/auth/login", json=login)
+    assert response.status_code == 403 and "approval" in response.json()["detail"]
+    staff_login(client, "guard")
+    assert client.get("/api/accounts").status_code == 403
+    staff_login(client, "manager")
+    assert client.get("/api/bootstrap").json()["summary"]["pending_residents"] == 1
+    account = next(item for item in client.get("/api/accounts").json()["accounts"] if item["email"] == "aisyah@example.com")
+    assert account["status"] == "pending" and account["unit"] == "C-03-07" and account["role"] == "resident"
+    assert client.patch(f"/api/accounts/{account['id']}", json={"status": "active"}).json()["status"] == "active"
+    assert client.post("/api/auth/login", json=login).json()["user"]["role"] == "resident"
+    assert client.get("/api/resident/points").json()["balance"] == 50
+
+
+def test_managers_handle_residents_and_guards_but_not_admins(api):
+    client, _, _ = api
+    staff_login(client, "manager")
+    accounts = {item["email"]: item for item in client.get("/api/accounts").json()["accounts"]}
+    created = client.post("/api/accounts", json={"name": "Night guard", "email": "night@jagaai.local", "password": "guard-pass-1", "role": "guard"})
+    assert created.status_code == 200 and created.json()["role"] == "guard"
+    assert client.post("/api/accounts", json={"name": "Boss", "email": "boss@jagaai.local", "password": "admin-pass-1", "role": "admin"}).status_code == 403
+    assert client.patch(f"/api/accounts/{accounts['admin@jagaai.local']['id']}", json={"status": "disabled"}).status_code == 403
+    # Disabling an account ends its existing session.
+    manager_cookie = client.cookies.get(COOKIE_NAME)
+    staff_login(client, "guard")
+    guard_cookie = client.cookies.get(COOKIE_NAME)
+    client.cookies.clear()
+    client.cookies.set(COOKIE_NAME, manager_cookie)
+    assert client.patch(f"/api/accounts/{accounts['guard@jagaai.local']['id']}", json={"status": "disabled"}).status_code == 200
+    client.cookies.clear()
+    client.cookies.set(COOKIE_NAME, guard_cookie)
+    assert client.get("/api/bootstrap").status_code == 401
+    response = client.post("/api/auth/login", json={"email": "guard@jagaai.local", "password": "JagaAI-demo-2026!"})
+    assert response.status_code == 403 and "disabled" in response.json()["detail"]
+
+
+def test_guard_permissions_and_guard_records(api):
+    client, _, _ = api
+    staff_login(client, "guard")
     settings = client.get("/api/settings").json()
     assert "users" not in settings and "audit_logs" not in settings
     assert client.patch("/api/settings", json={"retention_days": 14}).status_code == 403
+    assert client.put("/api/cameras/cam-b1/rules", json={"rules": {"R1": {"enabled": False}}}).status_code == 403
     guard_data = {"name": "Duty guard", "shift": "19:00–07:00", "phone": "010-1234567"}
     assert client.post("/api/guards", json=guard_data).status_code == 403
-    staff_login(client)
+    staff_login(client, "manager")
     guard = client.post("/api/guards", json=guard_data).json()
+    assert client.patch("/api/settings", json={"retention_days": 14}).status_code == 403
+    staff_login(client)
     incident = client.post("/api/incidents", json={"title": "Resident property report", "location_id": "zone-b", "guard_id": guard["id"]}).json()
     assert incident["status"] == "assigned"
-    assert not any(user["role"] == "guard" for user in client.get("/api/settings").json()["users"])
+    assert {user["role"] for user in client.get("/api/settings").json()["users"]} == {"guard", "manager", "admin"}
+
+
+def test_guards_take_and_complete_tasks_managers_assign_them(api):
+    client, _, _ = api
+    guard = staff_login(client, "guard")
+    mine_before = client.get("/api/bootstrap").json()["summary"]["my_tasks"]
+    task = client.post("/api/tasks", json={"title": "Check the north gate", "location_id": "north-gate"}).json()
+    assert task["assignee_id"] is None and task["status"] == "open"
+    manager = staff_login(client, "manager")
+    assert client.post("/api/tasks", json={"title": "Taken by me", "assignee_id": manager["id"]}).status_code == 200
+    staff_login(client, "guard")
+    assert client.post("/api/tasks", json={"title": "For the manager", "assignee_id": manager["id"]}).status_code == 403
+    assert client.patch(f"/api/tasks/{task['id']}", json={"status": "done"}).status_code == 403
+    taken = client.patch(f"/api/tasks/{task['id']}", json={"assignee_id": guard["id"], "status": "in_progress"}).json()
+    assert taken["assignee_id"] == guard["id"] and taken["status"] == "in_progress"
+    done = client.patch(f"/api/tasks/{task['id']}", json={"status": "done", "note": "Gate locked."}).json()
+    assert done["status"] == "done" and done["note"] == "Gate locked."
+    # Taken (+1) then completed (-1): finished tasks leave the guard's open count.
+    assert client.get("/api/bootstrap").json()["summary"]["my_tasks"] == mine_before
+
+
+def test_activity_signup_attendance_points_and_redemption(api):
+    client, _, _ = api
+    staff_login(client, "manager")
+    starts = (utcnow() + timedelta(days=2)).isoformat()
+    activity = client.post("/api/activities", json={"title": "Lantern walk", "location": "Clubhouse", "starts_at": starts, "capacity": 1, "points": 120}).json()
+    resident = resident_login(client)
+    assert client.post(f"/api/activities/{activity['id']}/join").json()["joined"] is True
+    assert "attendees" not in client.get("/api/activities").json()[0]
+    resident_login(client, "bob@example.com")
+    assert client.post(f"/api/activities/{activity['id']}/join").status_code == 409
+    staff_login(client, "guard")
+    assert client.post(f"/api/activities/{activity['id']}/attendance", json={"user_id": resident["id"], "attended": True}).status_code == 403
+    staff_login(client, "manager")
+    marked = client.post(f"/api/activities/{activity['id']}/attendance", json={"user_id": resident["id"], "attended": True}).json()
+    assert marked["attendees"][0]["attended"] is True
+    client.post(f"/api/activities/{activity['id']}/attendance", json={"user_id": resident["id"], "attended": True})
+    resident_login(client)
+    points = client.get("/api/resident/points").json()
+    assert points["balance"] == 120
+    assert client.post("/api/resident/points/redeem", json={"reward_id": "cafe"}).status_code == 409
+    assert client.post("/api/resident/points/redeem", json={"reward_id": "court"}).json()["balance"] == 20
+
+
+def test_report_points_are_awarded_on_sending_up_to_the_daily_limit(api):
+    client, _, _ = api
+    resident_login(client)
+    sent = [submit_lead(client, text=f"Report number {n}") for n in range(4)]
+    assert [lead["points_awarded"] for lead in sent] == [10, 10, 10, 0]
+    # The team acting on a report does not award more points.
+    staff_login(client)
+    client.patch(f"/api/leads/{sent[0]['id']}", json={"status": "in_progress"})
+    client.patch(f"/api/leads/{sent[0]['id']}", json={"status": "resolved"})
+    resident_login(client)
+    points = client.get("/api/resident/points").json()
+    assert points["balance"] == 30 and points["report_points"] == 10 and points["report_points_per_day"] == 3
+    # Another resident has their own daily limit.
+    resident_login(client, "bob@example.com")
+    assert submit_lead(client)["points_awarded"] == 10
+
+
+def test_marking_a_report_not_valid_withdraws_its_points_once(api):
+    client, _, _ = api
+    resident_login(client)
+    junk = submit_lead(client, text="Junk report")
+    staff_login(client)
+    for _ in range(2):
+        assert client.patch(f"/api/leads/{junk['id']}", json={"status": "invalid"}).json()["status"] == "invalid"
+    resident_login(client)
+    points = client.get("/api/resident/points").json()
+    assert points["balance"] == 0
+    assert [h["points"] for h in points["history"]].count(-10) == 1
+    assert client.get(f"/api/resident/leads/{junk['id']}").json()["status"] == "invalid"
+    # Restoring the report gives the points back.
+    staff_login(client)
+    client.patch(f"/api/leads/{junk['id']}", json={"status": "received"})
+    resident_login(client)
+    assert client.get("/api/resident/points").json()["balance"] == 10
+    # A withdrawn report still counts towards the daily limit.
+    staff_login(client)
+    client.patch(f"/api/leads/{junk['id']}", json={"status": "invalid"})
+    resident_login(client)
+    assert [submit_lead(client, text=f"Report number {n}")["points_awarded"] for n in range(3)] == [10, 10, 0]
+    unpaid = client.get("/api/resident/leads").json()[0]
+    staff_login(client)
+    client.patch(f"/api/leads/{unpaid['id']}", json={"status": "invalid"})
+    resident_login(client)
+    assert client.get("/api/resident/points").json()["balance"] == 20
+
+
+def test_reports_linked_to_an_incident_cannot_be_marked_not_valid(api):
+    client, _, _ = api
+    resident_login(client)
+    lead = submit_lead(client)
+    staff_login(client)
+    incident = client.post("/api/incidents", json={"title": "Vehicle damage", "location_id": "zone-b"}).json()
+    assert client.post(f"/api/leads/{lead['id']}/link", json={"incident_id": incident["id"]}).status_code == 200
+    assert client.patch(f"/api/leads/{lead['id']}", json={"status": "invalid"}).status_code == 409
+    resident_login(client)
+    assert client.get("/api/resident/points").json()["balance"] == 10
 
 
 def test_alert_review_is_atomic_idempotent_and_audited(api):
@@ -233,6 +390,7 @@ def test_linking_report_to_resolved_incident_keeps_resident_resolved(api):
     resident_login(client)
     own = client.get(f"/api/resident/leads/{lead['id']}").json()
     assert own['status'] == 'resolved' and 'Internal result' not in str(own)
+    assert own['linked_case'] is True and incident['id'] not in str(own)
 
 
 def test_reports_cannot_be_linked_to_incidents_at_another_location(api):

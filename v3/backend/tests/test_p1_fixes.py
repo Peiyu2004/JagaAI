@@ -93,7 +93,7 @@ def test_creation_keys_are_scoped_to_staff_user(api):
     headers = {"Idempotency-Key": "p1-scoped-key-123456"}
     staff_login(client)
     first = client.post("/api/incidents", headers=headers, json=payload)
-    staff_login(client, "supervisor")
+    staff_login(client, "guard")
     second = client.post("/api/incidents", headers=headers, json=payload)
     assert first.status_code == second.status_code == 200
     assert first.json()["id"] != second.json()["id"]

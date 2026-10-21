@@ -1,3 +1,4 @@
+import type { Role } from "./types";
 export class ApiError extends Error {
   constructor(message: string, public readonly status: number) {
     super(message);
@@ -47,7 +48,7 @@ export async function api<T = Record<string, unknown>>(
       /* Keep status on non-JSON network responses. */
     }
     assertCurrent();
-    if (response.status === 401 && path !== "/auth/login" && path !== "/auth/resident") expireSession();
+    if (response.status === 401 && path !== "/auth/login" && path !== "/auth/register") expireSession();
     throw new ApiError(message, response.status);
   }
   if (response.status === 204) return undefined as T;
@@ -56,6 +57,9 @@ export async function api<T = Record<string, unknown>>(
   return result;
 }
 export const json = (value: unknown) => JSON.stringify(value);
+// Residents earn points for every report they send. Set VITE_JAGAAI_POINTS=0 to hide points,
+// rewards and the points field on activities in every view.
+export const showPoints = import.meta.env.VITE_JAGAAI_POINTS !== "0";
 export const dateTime = (value?: string) =>
   value
     ? new Intl.DateTimeFormat("en-MY", {
@@ -111,11 +115,19 @@ export const label = (value: string) =>
     in_progress: "In progress",
     received: "Received",
     resolved: "Resolved",
+    invalid: "Not valid",
     pending: "Pending review",
     confirmed: "Confirmed",
     dismissed: "Dismissed",
     open: "Open",
     assigned: "Assigned",
     closed: "Closed",
+    done: "Done",
+    disabled: "Disabled",
+    active: "Active",
+    cancelled: "Cancelled",
+    published: "Published",
   })[value] ||
   ((s) => s.charAt(0).toUpperCase() + s.slice(1))(value.replaceAll("_", " "));
+export const roleLabel = (role: Role) =>
+  ({ resident: "Resident", guard: "Security guard", manager: "Estate manager", admin: "System administrator" })[role];

@@ -1,0 +1,210 @@
+/* JagaAI 3D township — overlay styles (light theme). All classes prefixed .town-
+   The scene is a sunlit diorama; everything layered on it is white frosted glass. */
+.town {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  overflow: hidden;
+  /* Daylight sky behind the transparent canvas: soft blue above, warm sun haze, pale horizon. */
+  background:
+    radial-gradient(55% 45% at 22% 18%, rgba(255, 228, 186, 0.55), transparent 70%),
+    radial-gradient(70% 55% at 80% 85%, rgba(47, 91, 234, 0.08), transparent 70%),
+    linear-gradient(180deg, #cfe2ff 0%, #e4eeff 45%, #f3f7ff 78%, #f8faff 100%);
+  isolation: isolate;
+}
+.town canvas {
+  display: block;
+  touch-action: none;
+}
+
+.town-tag,
+.town-overview,
+.town-zone-label,
+.town-pin span,
+.town-loading span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* HUD row at the top of the scene (kept clear of the host's right-hand panel) */
+.town-hud {
+  position: absolute;
+  inset: 16px calc(18px + var(--town-hud-right, 0px)) auto 20px;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.town-tag {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  color: #3d4660;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.town-overview {
+  pointer-events: auto;
+  font-size: 10.5px;
+  color: #141a2e;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(20, 26, 46, 0.12);
+  border-radius: 999px;
+  padding: 6px 12px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 14px rgba(20, 26, 46, 0.1);
+  cursor: pointer;
+  transition:
+    background-color 160ms,
+    border-color 160ms,
+    transform 160ms;
+}
+.town-overview:hover {
+  background: #fff;
+  border-color: rgba(20, 26, 46, 0.22);
+  transform: translateY(-1px);
+}
+.town-overview:focus-visible {
+  outline: 1px solid #e8a23a;
+  outline-offset: 3px;
+}
+
+/* Zone labels (on hover) */
+.town-zone-label {
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  white-space: nowrap;
+  color: #141a2e;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(20, 26, 46, 0.12);
+  user-select: none;
+}
+.town-zone-label.is-alert {
+  color: #9a5b0b;
+}
+.town-zone-label.is-severe {
+  color: #b42318;
+}
+
+/* Alert pins at the top of the beams: white glass with a coloured count */
+.town-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px 3px 3px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 162, 58, 0.55);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(20, 26, 46, 0.16);
+  color: #8a520a;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 180ms ease,
+    background-color 160ms;
+}
+.town-pin b {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #e8a23a;
+  color: #fff;
+  font: 600 10.5px/1 "IBM Plex Mono", ui-monospace, monospace;
+}
+.town-pin span {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9.5px;
+}
+.town-pin:hover,
+.town-pin.is-active {
+  transform: translateY(-2px) scale(1.06);
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(20, 26, 46, 0.22);
+}
+.town-pin.is-severe {
+  border-color: rgba(217, 72, 59, 0.55);
+  color: #b42318;
+}
+.town-pin.is-severe b {
+  background: #d9483b;
+}
+.town-pin:focus-visible {
+  outline: 1px solid #e8a23a;
+  outline-offset: 3px;
+}
+
+/* Evidence card host: positioned next to the selected camera from the render loop. */
+.town-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50; /* above the HUD (40) so nothing covers the card's close button */
+  width: 300px;
+  animation: town-card-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes town-card-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+/* Loading */
+.town-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  background:
+    radial-gradient(rgba(20, 26, 46, 0.06) 1px, transparent 1.4px) 0 0 / 18px 18px,
+    linear-gradient(180deg, #dbe8ff 0%, #eef4ff 60%, #f8faff 100%);
+  transition: opacity 250ms ease;
+}
+.town-loading.is-done {
+  opacity: 0;
+}
+.town-loading span {
+  font-size: 10.5px;
+  color: #5b647d;
+}
+.town-loading i {
+  display: block;
+  width: 160px;
+  height: 2px;
+  border-radius: 2px;
+  background: #2f5bea;
+  transform-origin: left center;
+  transition: transform 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .town-card {
+    animation: none;
+  }
+  .town-pin,
+  .town-overview,
+  .town-loading,
+  .town-loading i {
+    transition: none;
+  }
+}

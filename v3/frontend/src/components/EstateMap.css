@@ -1,0 +1,274 @@
+/* EstateMap: the township from above. Light map tones, brand-blue zones, navy pins,
+   the same pill and mono-label language as the rest of the light theme. All classes em-. */
+
+.em-map {
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  border: 1px solid #dfe5d6;
+  border-radius: 16px;
+  background: #e3ebd7;
+  isolation: isolate;
+}
+.em-map.is-fill {
+  display: flex;
+  flex-direction: column;
+}
+.em-stage {
+  position: relative;
+  width: 100%;
+}
+.em-map.is-fill .em-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.em-stage > svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* A soft inner vignette so the crop edge reads as a window onto a larger site. */
+.em-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), inset 0 -30px 40px -30px rgba(20, 26, 46, 0.12);
+  border-radius: inherit;
+}
+
+/* ---------- Zones ---------- */
+.em-zone {
+  fill: rgba(47, 91, 234, 0);
+  stroke: rgba(47, 91, 234, 0.42);
+  stroke-width: 1.25px;
+  stroke-dasharray: 5 4;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill 200ms ease,
+    stroke 200ms ease,
+    stroke-width 200ms ease;
+}
+.em-map.is-interactive .em-zone {
+  cursor: pointer;
+}
+.em-zone.is-hover {
+  fill: rgba(47, 91, 234, 0.08);
+  stroke: rgba(47, 91, 234, 0.75);
+  stroke-dasharray: none;
+}
+.em-zone.is-selected {
+  fill: rgba(47, 91, 234, 0.13);
+  stroke: #2f5bea;
+  stroke-width: 2.25px;
+  stroke-dasharray: none;
+}
+/* Everything outside the selected zone fades back a little. */
+.em-dim {
+  fill: rgba(244, 246, 251, 0.36);
+  pointer-events: none;
+}
+
+/* ---------- Cameras (staff views) ---------- */
+.em-camera path {
+  fill: rgba(20, 26, 46, 0.08);
+}
+.em-camera circle {
+  fill: #141a2e;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+.em-camera.is-here path {
+  fill: rgba(47, 91, 234, 0.2);
+}
+.em-camera.is-here circle {
+  fill: #2f5bea;
+}
+
+/* ---------- Pins and labels ---------- */
+.em-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.em-pin,
+.em-label {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #fff;
+  color: #141a2e;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  white-space: nowrap;
+  pointer-events: auto;
+  /* Anchored proportionally, so a label near an edge never runs off the map. */
+  transform: translate(calc(var(--p) * -1%), -50%);
+  box-shadow:
+    0 0 0 1px rgba(20, 26, 46, 0.1),
+    0 6px 14px -6px rgba(20, 26, 46, 0.45);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.em-pin {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  cursor: pointer;
+}
+span.em-pin {
+  cursor: default;
+}
+.em-pin b {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  font: 600 13px/1 "IBM Plex Mono", ui-monospace, monospace;
+}
+.em-pin.is-hover,
+.em-label.is-hover {
+  scale: 1.08;
+}
+.em-pin.is-selected {
+  z-index: 2;
+  scale: 1.12;
+  background: #141a2e;
+  color: #fff;
+  box-shadow:
+    0 0 0 5px rgba(47, 91, 234, 0.3),
+    0 10px 22px -8px rgba(20, 26, 46, 0.65);
+}
+.em-pin:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+.em-label {
+  height: 22px;
+  padding: 0 8px;
+  border-width: 1px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #5b647d;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 2px 6px -2px rgba(20, 26, 46, 0.25);
+}
+.em-label.is-selected {
+  z-index: 2;
+  height: 30px;
+  padding: 0 12px 0 9px;
+  border-width: 2px;
+  gap: 5px;
+  font-size: 12.5px;
+  background: #2f5bea;
+  color: #fff;
+  font-weight: 600;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.92),
+    0 8px 18px -6px rgba(47, 91, 234, 0.6);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .em-pin.is-selected::after,
+  .em-label.is-selected::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 2px solid rgba(47, 91, 234, 0.45);
+    border-radius: 999px;
+    pointer-events: none;
+    animation: em-ping 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+  .em-pin.is-selected::after {
+    animation-name: em-ping-dot;
+  }
+  .em-dim {
+    animation: em-fade 420ms ease both;
+  }
+}
+@keyframes em-ping {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.12, 1.6);
+  }
+}
+@keyframes em-ping-dot {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+@keyframes em-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.em-compass {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px -2px rgba(20, 26, 46, 0.25);
+  color: #3d4660;
+  font: 600 10px/1 "IBM Plex Mono", ui-monospace, monospace;
+}
+.em-compass::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  border: 3px solid transparent;
+  border-bottom: 4px solid #e5534b;
+  border-top: 0;
+  transform: translateX(-50%);
+}
+
+.em-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(20, 26, 46, 0.06);
+  background: rgba(255, 255, 255, 0.72);
+  color: #5b647d;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.em-caption > span {
+  margin-left: auto;
+}
+@container (max-width: 360px) {
+  .em-caption > span {
+    display: none;
+  }
+}

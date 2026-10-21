@@ -115,7 +115,7 @@ def main():
         else:
             raise RuntimeError('Startup timed out. See v3/data/logs/.')
         print('JagaAI v3: http://127.0.0.1:5174',flush=True)
-        print('Resident entry: http://127.0.0.1:5174/resident',flush=True)
+        print('One sign-in for residents, guards and managers; the account role picks the workspace.',flush=True)
         print('API: http://127.0.0.1:8766/docs',flush=True)
         if args.demo and ollama_ready:
             print('Warming the local search model...',flush=True)

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, type FormEvent } from "react";
+import { NotificationPanel } from "../components/GuardNotifications";
 import {
   Plus,
   FolderKanban,
@@ -18,24 +19,7 @@ import { Field, Empty, Badge } from "../components/shared";
 import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
 import type { Incident } from "../types";
-const REPLY_TEMPLATES = [
-  {
-    label: "Area checked",
-    text: "Our security team checked the area and found nothing unusual. We have added extra evening patrols there.",
-  },
-  {
-    label: "Footage reviewed",
-    text: "We have reviewed the recordings for the time you reported. The relevant footage has been kept and passed to the management office.",
-  },
-  {
-    label: "Following up",
-    text: "Thank you for your report. Our security team is following up and will share an update here.",
-  },
-  {
-    label: "Facilities informed",
-    text: "We have passed this to the facilities team for repair. Thank you for letting us know.",
-  },
-];
+import { REPLY_TEMPLATES } from "../components/replyTemplates";
 const columns = [
   { id: "open", name: "Open" },
   { id: "assigned", name: "Assigned" },
@@ -355,9 +339,7 @@ function IncidentDetail({ incident }: { incident: Incident }) {
           {guard && (
             <div className="info-strip">
               <Radio size={16} />
-              Notify {data.guards.find((g) => g.id === guard)?.name} by radio or
-              phone: {data.guards.find((g) => g.id === guard)?.phone}. Guards do
-              not log in.
+              Contact {data.guards.find((g) => g.id === guard)?.name}: {data.guards.find((g) => g.id === guard)?.phone}. Check the notification record below for acceptance.
             </div>
           )}
           <Field label="Internal outcome">
@@ -405,6 +387,7 @@ function IncidentDetail({ incident }: { incident: Incident }) {
           </Button>
         </fieldset>
       </form>
+      <NotificationPanel incidentId={incident.id}/>
       <h3 className="section-heading">Evidence</h3>
       {incident.evidence?.length ? (
         <div className="evidence-list">

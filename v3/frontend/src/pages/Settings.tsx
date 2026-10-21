@@ -1,5 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, type CSSProperties, type FormEvent } from "react";
 import {
   Plus,
   Users,
@@ -8,9 +7,19 @@ import {
   Pencil,
   History,
   Info,
+  Check,
+  Minus,
+  Clock3,
+  Phone,
+  Database,
+  Search,
+  Film,
+  BellRing,
 } from "lucide-react";
+import { NotificationSettings } from "../components/GuardNotifications";
+import RubberSegment from "../components/RubberSegment";
 import { useApp } from "../context";
-import { api, json, dateTime, label } from "../api";
+import { api, json, dateTime, label, roleLabel, showPoints } from "../api";
 import type { Guard, User, Settings as SettingsType } from "../types";
 import { Panel, Field, Empty, Badge } from "../components/shared";
 import { Button } from "../components/ui/button";
@@ -41,10 +50,13 @@ export default function Settings() {
   const [name, setName] = useState("");
   const [shift, setShift] = useState("19:00–07:00");
   const [phone, setPhone] = useState("");
+  const [notificationConsent, setNotificationConsent] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("supervisor");
+  const [role, setRole] = useState("guard");
   const admin = data.user.role === "admin";
+  // Managers look after the guard roster; system-wide policy stays with administrators.
+  const canManage = admin || data.user.role === "manager";
   const load = () =>
     api<SettingsResponse>("/settings")
       .then((r) => {
@@ -60,13 +72,14 @@ export default function Settings() {
     setName(guard?.name || "");
     setShift(guard?.shift || "19:00–07:00");
     setPhone(guard?.phone || "");
+    setNotificationConsent(guard?.notification_opt_in || false);
     setDialog("guard");
   };
   const addUser = () => {
     setName("");
     setEmail("");
     setPassword("");
-    setRole("supervisor");
+    setRole("guard");
     setDialog("user");
   };
   const submit = async (e: FormEvent) => {
@@ -76,7 +89,7 @@ export default function Settings() {
         dialog === "guard"
           ? api("/guards" + (editGuard ? "/" + editGuard : ""), {
               method: editGuard ? "PATCH" : "POST",
-              body: json({ name, shift, phone }),
+              body: json({ name, shift, phone, notification_opt_in: notificationConsent }),
             })
           : api("/users", {
               method: "POST",
@@ -107,89 +120,103 @@ export default function Settings() {
       "Data policy saved",
     );
   };
+  const policyDirty =
+    days !== data.settings.retention_days ||
+    threshold !== data.settings.search_threshold;
+  const guards = settings?.guards || data.guards;
+  const matrixCell = (value: string) =>
+    value === "Yes" ? (
+      <span className="set-yes">
+        <Check size={13} strokeWidth={2.6} /> Yes
+      </span>
+    ) : value === "No" ? (
+      <span className="set-no">
+        <Minus size={13} /> No
+      </span>
+    ) : (
+      <span className="set-partial">{value}</span>
+    );
   return (
-    <>
-      <div className="tabs" role="tablist" onKeyDown={tabKeys} aria-label="Settings category">
-        {[
-          ["team", "Team & access"],
-          ["policy", "Data policy"],
-          ...(admin ? [["audit", "Audit log"]] : []),
-        ].map(([id, title]) => (
-          <button
-            key={id}
-            className={tab === id ? "active" : ""}
-            role="tab"
-            aria-selected={tab === id}
-              tabIndex={tab === id ? 0 : -1}
-            onClick={() => setTab(id)}
-          >
-            {title}
-          </button>
-        ))}
+    <div className="set-page">
+      <div className="set-bar">
+        <RubberSegment
+          semantics="tabs"
+          aria-label="Settings category"
+          className="set-switch"
+          value={tab}
+          onChange={setTab}
+          items={[
+            { value: "team", label: "Team & access", icon: <Users />, controls: "settings-team" },
+            { value: "policy", label: "Data policy", icon: <Database />, controls: "settings-policy" },
+            { value: "notifications", label: "Notifications", icon: <BellRing />, controls: "settings-notifications" },
+            ...(admin
+              ? [{ value: "audit", label: "Audit log", icon: <History />, controls: "settings-audit" }]
+              : []),
+          ]}
+        />
+        <span className="set-role">
+          <ShieldCheck size={15} />
+          Signed in as <strong>{roleLabel(data.user.role)}</strong>
+        </span>
       </div>
       {error && <div className="error-banner">{error}</div>}
       {tab === "team" && (
-        <>
+        <div
+          className={"set-grid set-reveal" + (admin ? "" : " is-single")}
+          role="tabpanel"
+          id="settings-team"
+          aria-label="Team & access"
+        >
           <Panel
+            className="set-card set-roster"
             title="Duty roster"
             action={
-              admin ? (
+              canManage ? (
                 <Button size="sm" variant="outline" onClick={() => openGuard()}>
                   <Plus size={15} /> Add guard
                 </Button>
               ) : (
-                <Badge value="supervisor">View only</Badge>
+                <Badge value="guard">View only</Badge>
               )
             }
           >
             <p className="panel-description">
-              Assignment records for radio or phone coordination. Guards do not
-              have login accounts.
+              Contacts for incident assignment and notifications. Guards accept
+              through a personal notification link or a phone keypad.
             </p>
-            {(settings?.guards || data.guards).length ? (
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Shift</th>
-                      <th>Phone</th>
-                      {admin && (
-                        <th>
-                          <span className="sr-only">Actions</span>
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(settings?.guards || data.guards).map((g) => (
-                      <tr key={g.id}>
-                        <td>
-                          <span className="table-person">
-                            <span className="avatar">{g.name[0]}</span>
-                            <strong>{g.name}</strong>
-                          </span>
-                        </td>
-                        <td>{g.shift}</td>
-                        <td>
-                          <a href={"tel:" + g.phone}>{g.phone}</a>
-                        </td>
-                        {admin && (
-                          <td>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => openGuard(g)}
-                            >
-                              <Pencil size={14} /> Edit
-                            </Button>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            {guards.length ? (
+              <ul className="set-people">
+                {guards.map((g) => (
+                  <li key={g.id}>
+                    <span className="set-avatar">{g.name[0]}</span>
+                    <span className="set-person">
+                      <strong>{g.name}</strong>
+                      <small>
+                        <Clock3 size={12} /> {g.shift}
+                        {g.notification_opt_in && <span className="gn-contact-consent">Notifications enabled</span>}
+                      </small>
+                    </span>
+                    <a
+                      className="set-phone"
+                      href={"tel:" + g.phone}
+                      aria-label={`Call ${g.name}, ${g.phone}`}
+                    >
+                      <Phone size={13} />
+                      <span>{g.phone}</span>
+                    </a>
+                    {canManage && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        aria-label={"Edit " + g.name}
+                        onClick={() => openGuard(g)}
+                      >
+                        <Pencil size={14} /> Edit
+                      </Button>
+                    )}
+                  </li>
+                ))}
+              </ul>
             ) : (
               <Empty
                 compact
@@ -201,51 +228,41 @@ export default function Settings() {
           </Panel>
           {admin && (
             <Panel
+              className="set-card set-staff"
               title="Staff accounts"
               action={
                 <Button size="sm" variant="outline" onClick={addUser}>
-                  <Plus size={15} /> Add staff account
+                  <Plus size={15} /> Add staff
                 </Button>
               }
             >
               <p className="panel-description">
-                Administrators manage workspace access. Supervisors handle daily
-                security operations.
+                Everyone signs in at the same page. Guards run daily security
+                operations; managers also handle people and activities. Resident
+                approvals are in People &amp; accounts.
               </p>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {settings?.users?.map((u) => (
-                      <tr key={u.id}>
-                        <td>
-                          <strong>{u.name}</strong>
-                          {u.id === data.user.id && (
-                            <span className="you-label">You</span>
-                          )}
-                        </td>
-                        <td>{u.email}</td>
-                        <td>
-                          <Badge value={u.role}>
-                            {u.role === "admin"
-                              ? "Administrator"
-                              : "Supervisor"}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <ul className="set-people">
+                {settings?.users?.map((u) => (
+                  <li key={u.id}>
+                    <span className={"set-avatar " + (u.role === "admin" ? "is-admin" : "")}>
+                      {u.name[0]}
+                    </span>
+                    <span className="set-person">
+                      <strong>
+                        {u.name}
+                        {u.id === data.user.id && (
+                          <span className="you-label">You</span>
+                        )}
+                      </strong>
+                      <small title={u.email}>{u.email}</small>
+                    </span>
+                    <Badge value={u.role}>{roleLabel(u.role)}</Badge>
+                  </li>
+                ))}
+              </ul>
             </Panel>
           )}
-          <Panel title="Access boundaries">
+          <Panel className="set-card set-access" title="Who can do what">
             <div className="access-matrix-wrap">
               <table className="access-matrix">
                 <caption className="sr-only">
@@ -254,23 +271,27 @@ export default function Settings() {
                 <thead>
                   <tr>
                     <th>Capability</th>
-                    <th>Administrator</th>
-                    <th>Supervisor</th>
+                    <th>Admin</th>
+                    <th>Manager</th>
+                    <th>Guard</th>
                     <th>Resident</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    ["Review alerts and footage", "Yes", "Yes", "No"],
-                    ["Handle resident leads", "Yes", "Yes", "Own report only"],
-                    ["Assign guards and update incidents", "Yes", "Yes", "No"],
-                    ["Manage people and data policy", "Yes", "No", "No"],
-                  ].map(([capability, admin, supervisor, resident]) => (
+                    ["Review alerts, live cameras and recordings", "Yes", "Yes", "Yes", "No"],
+                    ["Handle reports, incidents and tasks", "Yes", "Yes", "Yes", "Own reports"],
+                    ["Approve residents, manage guards and activities", "Yes", "Yes", "No", "No"],
+                    ["Camera rules", "Yes", "Yes", "No", "No"],
+                    ["Data policy, notifications and admin accounts", "Yes", "No", "No", "No"],
+                    [showPoints ? "Join activities and redeem points" : "Join activities", "No", "No", "No", "Yes"],
+                  ].map(([capability, adminCan, managerCan, guardCan, residentCan]) => (
                     <tr key={capability}>
                       <td>{capability}</td>
-                      <td>{admin}</td>
-                      <td>{supervisor}</td>
-                      <td>{resident}</td>
+                      <td>{matrixCell(adminCan)}</td>
+                      <td>{matrixCell(managerCan)}</td>
+                      <td>{matrixCell(guardCan)}</td>
+                      <td>{matrixCell(residentCan)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -278,7 +299,7 @@ export default function Settings() {
             </div>
             <div className="access-grid">
               <div>
-                <ShieldCheck size={22} />
+                <ShieldCheck size={20} />
                 <h3>Staff workspace</h3>
                 <p>
                   Admins and supervisors can review footage, handle leads and
@@ -286,7 +307,7 @@ export default function Settings() {
                 </p>
               </div>
               <div>
-                <Users size={22} />
+                <Users size={20} />
                 <h3>Resident reporting</h3>
                 <p>
                   Residents see only their own report status and public replies.
@@ -295,105 +316,207 @@ export default function Settings() {
               </div>
             </div>
           </Panel>
-        </>
+        </div>
       )}
       {tab === "policy" && (
-        <Panel title="Recording retention & search">
-          <form className="policy-form" onSubmit={savePolicy}>
-            <Field
-              label="Recording retention (days)"
-              hint="Expired recordings and their derived tracks, events and keyframes are removed. Human review decisions are kept."
-            >
-              <input
-                type="number"
-                min="1"
-                max="365"
-                required
-                value={days}
-                disabled={!admin}
-                onChange={(e) => setDays(Number(e.target.value))}
-              />
-            </Field>
-            <div className="policy-impact">
-              <Info size={15} />
-              <span>
-                This workspace holds {data.videos.length} recording
-                {data.videos.length === 1 ? "" : "s"}. Lowering the retention
-                period can expire existing footage and its derived frames
-                immediately; human review decisions are kept.
-              </span>
-            </div>
-            <Field
-              label="Search match threshold"
-              hint="Descriptions below this threshold are kept out of confirmed search results and may be offered for manual review."
-            >
-              <input
-                type="number"
-                min="0.1"
-                max="1"
-                step="0.01"
-                required
-                value={threshold}
-                disabled={!admin}
-                onChange={(e) => setThreshold(Number(e.target.value))}
-              />
-            </Field>
-            {admin ? (
-              <Button type="submit">
-                <Save size={16} /> Save data policy
-              </Button>
-            ) : (
-              <div className="info-strip">
-                <Info size={16} />
-                Only administrators can change data policies.
-              </div>
-            )}
-          </form>
-        </Panel>
-      )}
-      {tab === "audit" && admin && (
-        <Panel
-          title="Audit log"
-          action={<span className="panel-subtle">Most recent activity</span>}
+        <div
+          className="set-policy set-reveal"
+          role="tabpanel"
+          id="settings-policy"
+          aria-label="Data policy"
         >
-          {settings?.audit_logs?.length ? (
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>When (MYT)</th>
-                    <th>Actor</th>
-                    <th>Action</th>
-                    <th>Record</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {settings.audit_logs.map((log) => (
-                    <tr key={log.id}>
-                      <td className="mono">{dateTime(log.created_at)}</td>
-                      <td>
-                        {settings.users?.find((u) => u.id === log.actor_id)
-                          ?.name ||
-                          log.actor_id ||
-                          "System"}
-                      </td>
-                      <td>{label(log.action)}</td>
-                      <td className="audit-target" title={log.target}>
-                        {log.target}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <Panel
+            className="set-card"
+            title="Recording retention & search"
+            action={
+              policyDirty ? (
+                <span className="set-dirty">Unsaved changes</span>
+              ) : (
+                <span className="panel-subtle">Saved</span>
+              )
+            }
+          >
+            <form className="policy-form" onSubmit={savePolicy}>
+              <Field
+                label="Recording retention (days)"
+                hint="Expired recordings and their derived tracks, events and keyframes are removed. Human review decisions are kept."
+              >
+                <span className="set-range">
+                  <input
+                    type="range"
+                    min="1"
+                    max="365"
+                    value={days}
+                    disabled={!admin}
+                    aria-label="Recording retention in days"
+                    style={{ "--p": `${((days - 1) / 364) * 100}%` } as CSSProperties}
+                    onChange={(e) => setDays(Number(e.target.value))}
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="365"
+                    required
+                    value={days}
+                    disabled={!admin}
+                    onChange={(e) => setDays(Number(e.target.value))}
+                  />
+                </span>
+              </Field>
+              <div className={"policy-impact" + (days < data.settings.retention_days ? " is-warn" : "")}>
+                <Info size={15} />
+                <span>
+                  This workspace holds {data.videos.length} recording
+                  {data.videos.length === 1 ? "" : "s"}. Lowering the retention
+                  period can expire existing footage and its derived frames
+                  immediately; human review decisions are kept.
+                </span>
+              </div>
+              <Field
+                label="Search match threshold"
+                hint="Descriptions below this threshold are kept out of confirmed search results and may be offered for manual review."
+              >
+                <span className="set-range">
+                  <input
+                    type="range"
+                    min="0.1"
+                    max="1"
+                    step="0.01"
+                    value={threshold}
+                    disabled={!admin}
+                    aria-label="Search match threshold"
+                    style={{ "--p": `${((threshold - 0.1) / 0.9) * 100}%` } as CSSProperties}
+                    onChange={(e) => setThreshold(Number(e.target.value))}
+                  />
+                  <input
+                    type="number"
+                    min="0.1"
+                    max="1"
+                    step="0.01"
+                    required
+                    value={threshold}
+                    disabled={!admin}
+                    onChange={(e) => setThreshold(Number(e.target.value))}
+                  />
+                </span>
+              </Field>
+              {admin ? (
+                <div className="set-actions">
+                  <Button type="submit" disabled={!policyDirty}>
+                    <Save size={16} /> Save data policy
+                  </Button>
+                  {policyDirty && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => {
+                        setDays(data.settings.retention_days);
+                        setThreshold(data.settings.search_threshold);
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                <div className="info-strip">
+                  <Info size={16} />
+                  Only administrators can change data policies.
+                </div>
+              )}
+            </form>
+          </Panel>
+          <aside className="set-card set-facts" aria-label="Current policy">
+            <span className="set-eyebrow">In force now</span>
+            <div className="set-fact">
+              <Database size={18} />
+              <div>
+                <strong>{data.settings.retention_days} days</strong>
+                <small>Recordings are kept, then removed with their frames</small>
+              </div>
             </div>
-          ) : (
-            <Empty
-              icon={History}
-              title="No audit activity yet"
-              text="Private footage views and changes to key records are recorded here."
-            />
-          )}
-        </Panel>
+            <div className="set-fact">
+              <Search size={18} />
+              <div>
+                <strong>{data.settings.search_threshold.toFixed(2)}</strong>
+                <small>Minimum match score for confirmed search results</small>
+              </div>
+            </div>
+            <div className="set-fact">
+              <Film size={18} />
+              <div>
+                <strong>
+                  {data.videos.length} recording{data.videos.length === 1 ? "" : "s"}
+                </strong>
+                <small>Currently held in this workspace</small>
+              </div>
+            </div>
+            <p className="set-facts-note">
+              <ShieldCheck size={14} />
+              Human review decisions are always kept, even after footage expires.
+            </p>
+          </aside>
+        </div>
+      )}
+      {tab === "notifications" && <NotificationSettings />}
+      {tab === "audit" && admin && (
+        <div className="set-reveal" role="tabpanel" id="settings-audit" aria-label="Audit log">
+          <Panel
+            className="set-card"
+            title="Audit log"
+            action={
+              <span className="panel-subtle">
+                {settings?.audit_logs?.length || 0} recent entries
+              </span>
+            }
+          >
+            {settings?.audit_logs?.length ? (
+              <div className="table-wrap">
+                <table className="set-audit">
+                  <thead>
+                    <tr>
+                      <th>When (MYT)</th>
+                      <th>Actor</th>
+                      <th>Action</th>
+                      <th>Record</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {settings.audit_logs.map((log) => {
+                      const actor =
+                        settings.users?.find((u) => u.id === log.actor_id)?.name ||
+                        log.actor_id ||
+                        "System";
+                      return (
+                        <tr key={log.id}>
+                          <td className="mono">{dateTime(log.created_at)}</td>
+                          <td>
+                            <span className="set-actor">
+                              <span className="set-avatar is-small">{actor[0]}</span>
+                              {actor}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="set-action">{label(log.action)}</span>
+                          </td>
+                          <td className="audit-target" title={log.target}>
+                            {log.target}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <Empty
+                icon={History}
+                title="No audit activity yet"
+                text="Private footage views and changes to key records are recorded here."
+              />
+            )}
+          </Panel>
+        </div>
       )}
       <Dialog
         open={!!dialog}
@@ -409,7 +532,7 @@ export default function Settings() {
         }
         description={
           dialog === "user"
-            ? "Create access for a property manager or security supervisor."
+            ? "Create workstation access for a guard, manager or administrator."
             : "A roster record for incident assignment. This does not create a login."
         }
       >
@@ -436,10 +559,11 @@ export default function Settings() {
                   type="tel"
                   required
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => { setPhone(e.target.value); setNotificationConsent(false); }}
                   placeholder="+60…"
                 />
               </Field>
+              <label className="gn-check"><input type="checkbox" checked={notificationConsent} onChange={e => setNotificationConsent(e.target.checked)}/><span><strong>Consent to guard notifications recorded</strong><small>This contact agreed to receive WhatsApp alerts, automatic calls and SMS backups. Use an international phone number such as +60123456789.</small></span></label>
             </>
           ) : (
             <>
@@ -463,8 +587,9 @@ export default function Settings() {
               </Field>
               <Field label="Role">
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="supervisor">Supervisor</option>
-                  <option value="admin">Administrator</option>
+                  <option value="guard">Security guard</option>
+                  <option value="manager">Estate manager</option>
+                  <option value="admin">System administrator</option>
                 </select>
               </Field>
             </>
@@ -474,6 +599,6 @@ export default function Settings() {
           </Button>
         </form>
       </Dialog>
-    </>
+    </div>
   );
 }

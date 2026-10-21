@@ -1,4 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
+import RubberSegment from "../components/RubberSegment";
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import {
   Bell,
@@ -17,6 +17,8 @@ import { Empty, Badge, Field, VideoPlayer } from "../components/shared";
 import type { Alert } from "../types";
 import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
+import { SlideConfirm } from "../components/SlideConfirm";
+import { NotificationPanel } from "../components/GuardNotifications";
 
 const REASONS = [
   {
@@ -177,7 +179,7 @@ export default function Alerts() {
     setMode(value);
   };
 
-  const review = async (action: string) => {
+  const review = async (action: string, holdMs = 0): Promise<boolean> => {
     const target = data.alerts.find((a) => a.id === reviewTarget.current);
     if (
       !target ||
@@ -185,13 +187,14 @@ export default function Alerts() {
       reviewLock.current ||
       (action === "confirm" && !reviewed)
     )
-      return;
+      return false;
     reviewLock.current = true;
     const i = alerts.findIndex((a) => a.id === target.id);
     const next = alerts[i + 1] || alerts[i - 1];
     setBusy(true);
+    let ok = false;
     try {
-      const ok = await run(
+      ok = await run(
         () =>
           api("/alerts/" + target.id + "/review", {
             method: "POST",
@@ -208,15 +211,21 @@ export default function Alerts() {
             : "Alert dismissed",
       );
       if (ok) {
-        setMode(null);
-        setReason("");
-        setSelected(next?.id || "");
-        if (next) focusCard(next.id);
+        const close = () => {
+          setMode(null);
+          setReason("");
+          setSelected(next?.id || "");
+          if (next) focusCard(next.id);
+        };
+        // The slide-to-confirm keeps the dialog up a moment so its success state is seen.
+        if (holdMs > 0) window.setTimeout(close, holdMs);
+        else close();
       }
     } finally {
       reviewLock.current = false;
       setBusy(false);
     }
+    return ok;
   };
 
   useEffect(() => {
@@ -281,26 +290,21 @@ export default function Alerts() {
   return (
     <>
       <div className="alert-toolbar">
-        <div className="tabs" role="tablist" onKeyDown={tabKeys} aria-label="Alert status">
-          {["pending", "confirmed", "dismissed"].map((status) => (
-            <button
-              key={status}
-              role="tab"
-              aria-selected={filter === status}
-              tabIndex={filter === status ? 0 : -1}
-              className={filter === status ? "active" : ""}
-              onClick={() => {
-                setFilter(status);
-                setSelected("");
-              }}
-            >
-              {label(status)}
-              <span>
-                {data.alerts.filter((a) => a.status === status).length}
-              </span>
-            </button>
-          ))}
-        </div>
+        <RubberSegment
+          semantics="tabs"
+          aria-label="Alert status"
+          className="alert-switch"
+          value={filter}
+          onChange={(status) => {
+            setFilter(status);
+            setSelected("");
+          }}
+          items={["pending", "confirmed", "dismissed"].map((status) => ({
+            value: status,
+            label: status === "pending" ? "Pending" : label(status),
+            count: data.alerts.filter((a) => a.status === status).length,
+          }))}
+        />
         <div className="review-progress">
           <span className={"live-dot " + (pendingTotal ? "" : "off")} />
           {filter === "pending"
@@ -519,6 +523,7 @@ export default function Alerts() {
               </section>
             )}
 
+            <NotificationPanel key={alert.id} alertId={alert.id} dismissed={alert.status === "dismissed"}/>
             <div className="review-side-foot">
               <span className="record-ref">
                 Record <span className="record-id">{alert.id.slice(0, 8)}</span>
@@ -679,18 +684,26 @@ export default function Alerts() {
               </select>
             </Field>
           )}
-          <Button
-            disabled={busy || (mode === "confirm" && !reviewed)}
-            type="submit"
-          >
-            {busy
-              ? "Saving…"
-              : mode === "confirm"
-                ? "Confirm alert & create incident"
-                : mode === "dismiss"
-                  ? "Save dismissal"
-                  : "Link alert"}
-          </Button>
+          {mode === "confirm" ? (
+            <SlideConfirm
+              className="review-slide"
+              label="Slide to confirm & create incident"
+              doneLabel="Incident created"
+              errorLabel="Couldn't confirm. Try again"
+              disabled={!reviewed}
+              disabledHint="Tick the box above after reviewing the recording to unlock."
+              height={60}
+              onConfirm={() =>
+                review("confirm", 1100).then((ok) => {
+                  if (!ok) throw new Error("The alert was not confirmed.");
+                })
+              }
+            />
+          ) : (
+            <Button disabled={busy} type="submit">
+              {busy ? "Saving…" : mode === "dismiss" ? "Save dismissal" : "Link alert"}
+            </Button>
+          )}
         </form>
       </Dialog>
     </>

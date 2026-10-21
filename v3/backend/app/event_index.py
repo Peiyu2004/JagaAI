@@ -42,7 +42,11 @@ def save_events(session, video_id, camera_id, recorded_at, generated):
                               'note':'Tracking rule only; review the original video. Frame descriptions do not verify behaviour.'},**candidate)
             session.add(event)
             session.flush()
-            session.add(Alert(event_id=event.id,priority='high' if event.rule_id=='R1' else 'normal'))
+            alert=Alert(event_id=event.id,priority='high' if event.rule_id=='R1' else 'normal')
+            session.add(alert)
+            session.flush()
+            from .notifications import enqueue_alert
+            enqueue_alert(session,alert)
             retained.add(event.id)
     for old in own:
         if old.id in retained:
@@ -52,3 +56,5 @@ def save_events(session, video_id, camera_id, recorded_at, generated):
             if alert.status=='pending':
                 alert.status='dismissed'
                 alert.dismiss_reason='Automatically closed: event not reproduced by the latest analysis.'
+                from .notifications import cancel_alert
+                cancel_alert(session,alert.id,alert.dismiss_reason)

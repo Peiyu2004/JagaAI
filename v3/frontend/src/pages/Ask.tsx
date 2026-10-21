@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type FormEvent } from "react";
+import { useState, useEffect, useRef, type CSSProperties, type FormEvent } from "react";
 import {
   Search,
   ArrowUpRight,
@@ -8,11 +8,21 @@ import {
   ShieldCheck,
   Info,
   X,
+  Footprints,
+  Shirt,
+  Languages,
+  Ban,
+  Sparkles,
+  MapPin,
+  Activity,
+  Eye,
+  Lock,
 } from "lucide-react";
 import { useApp } from "../context";
 import { api, json, localInput, toUTC, duration } from "../api";
 import type { SearchPreset, SearchResult, Related } from "../types";
 import { Panel, Field, Empty, EventRow } from "../components/shared";
+import { useReveal } from "../components/useReveal";
 import { Button } from "../components/ui/button";
 export default function Ask({ preset }: { preset?: SearchPreset }) {
   const { data, play } = useApp();
@@ -26,6 +36,8 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
   const [editing, setEditing] = useState(false);
   const [conditionsApplied, setConditionsApplied] = useState(false);
   const requestId = useRef(0);
+  const pageRef = useRef<HTMLDivElement>(null);
+  useReveal(pageRef);
   const request = useRef<AbortController | null>(null);
   const [resultQuery, setResultQuery] = useState("");
   const search = async (values?: SearchPreset, apply = false) => {
@@ -97,21 +109,25 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
     {
       query: "Show restricted entry events",
       kind: "Behaviour",
+      icon: Footprints,
       hint: "Rule-triggered events, with the reason and time window.",
     },
     {
       query: "穿红衣服的人靠近白色汽车",
       kind: "Appearance",
+      icon: Shirt,
       hint: "Describe clothing, colour or an object; the local model searches descriptions.",
     },
     {
       query: "lelaki baju merah dekat kereta",
       kind: "Bahasa Melayu",
+      icon: Languages,
       hint: "Ask in Malay, English or Chinese. Results show what was analysed.",
     },
     {
       query: "有没有人打架",
       kind: "Unsupported",
+      icon: Ban,
       hint: "Fighting is not supported. The answer says so instead of inventing a match.",
     },
   ];
@@ -158,214 +174,150 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
         <ArrowUpRight size={18} />
       </button>
     ));
+  const searchBox = (
+    <form className={"ask-box" + (result ? " is-compact" : "")} onSubmit={submit}>
+      <Search size={result ? 18 : 22} />
+      <label className="sr-only" htmlFor="search-query">
+        Search recordings
+      </label>
+      <input
+        id="search-query"
+        placeholder="Ask about a moment, a place or a behaviour…"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        autoComplete="off"
+        required
+      />
+      <Button disabled={busy}>
+        {busy ? "Searching…" : "Search"}
+        <ArrowUpRight size={16} />
+      </Button>
+    </form>
+  );
+  const locationName =
+    data.locations.find((l) => l.id === locationId)?.name || "All locations";
+  const appearance = result
+    ? Array.isArray(result.interpreted.appearance)
+      ? result.interpreted.appearance.join(", ") || "Any"
+      : result.interpreted.appearance || "Any"
+    : "Any";
+  const coveragePct = result?.coverage.total
+    ? (result.coverage.analysed / result.coverage.total) * 100
+    : 0;
   return (
-    <>
-      <Panel className="search-panel">
-        <form className="search-form" onSubmit={submit}>
-          <Search size={22} />
-          <label className="sr-only" htmlFor="search-query">
-            Search recordings
-          </label>
-          <input
-            id="search-query"
-            placeholder="Ask about a moment, a place or a behaviour…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            required
-          />
-          <Button disabled={busy}>
-            {busy ? "Searching…" : "Search"}
-            <ArrowUpRight size={16} />
-          </Button>
-        </form>
-        <div className="search-language">
-          Ask in English, 中文 or Bahasa Melayu. Results always show what was
-          analysed.
-        </div>
-        {!result && (
-          <div className="suggestions example-grid">
-            {snippets.map((s) => (
+    <div className={"ask-page wx-reveal" + (result ? " has-result" : "")} ref={pageRef}>
+      {!result ? (
+        <>
+          <section className="ask-hero" data-reveal>
+            <span className="ask-badge">
+              <Lock size={13} /> Local AI · footage never leaves the site
+            </span>
+            <h2>What do you want to find?</h2>
+            <p>
+              A place, a rough time and one detail is enough. Ask in English,
+              中文 or Bahasa Melayu.
+            </p>
+            {searchBox}
+            <div className="ask-langs" aria-hidden="true">
+              <span>EN</span>
+              <span>中文</span>
+              <span>BM</span>
+            </div>
+          </section>
+          {error && (
+            <div className="error-banner" role="alert">
+              {error}
+            </div>
+          )}
+          <div className="ask-examples-head" data-reveal>
+            <Sparkles size={14} /> Try one of these
+          </div>
+          <div className="ask-examples">
+            {snippets.map((s, i) => (
               <button
                 key={s.query}
-                className="example-card"
+                type="button"
+                className={"ask-example" + (s.kind === "Unsupported" ? " is-muted" : "")}
+                data-reveal
+                style={{ "--i": i } as CSSProperties}
+                disabled={busy}
                 onClick={() => {
                   setQuery(s.query);
                   search({ query: s.query });
                 }}
               >
-                <span>{s.kind}</span>
+                <span className="ask-example-icon">
+                  <s.icon size={17} />
+                </span>
+                <span className="ask-example-kind">{s.kind}</span>
                 <strong>{s.query}</strong>
                 <small>{s.hint}</small>
+                <ArrowUpRight className="ask-example-go" size={16} />
               </button>
             ))}
           </div>
-        )}
-      </Panel>
-      {error && (
-        <div className="error-banner" role="alert">
-          {error}
-        </div>
-      )}
-      {result ? (
-        <>
-          <Panel className="search-understood">
-            <div className="panel-head">
+          <ol className="ask-steps" data-reveal>
+            <li>
+              <span>1</span>
               <div>
-                <h2>System understood</h2>
-                <p className="search-result-query">
-                  Results for “{resultQuery}”
-                </p>
+                <strong>Say what you remember</strong>
+                <small>Plain words. No filters needed.</small>
               </div>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setEditing(!editing)}
-              >
-                <SlidersHorizontal size={15} />
-                {editing ? "Close conditions" : "Edit conditions"}
-              </Button>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <strong>See what JagaAI understood</strong>
+                <small>Place, behaviour, appearance and coverage.</small>
+              </div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>
+                <strong>Play the matching clip</strong>
+                <small>Every result opens the original recording.</small>
+              </div>
+            </li>
+          </ol>
+        </>
+      ) : (
+        <>
+          <div className="ask-topbar">
+            {searchBox}
+            <div className="ask-topbar-meta">
+              <span>
+                Results for <strong>“{resultQuery}”</strong>
+              </span>
+              <span className="ask-counts">
+                <b>{result.events.length}</b> events · <b>{result.related.length}</b> clips
+              </span>
             </div>
-            <div className="result-overview">
-              <span>
-                <strong>{result.events.length}</strong> behaviour events
-              </span>
-              <span>
-                <strong>{result.related.length}</strong> related clips
-              </span>
-              <span>
-                <strong>
-                  {result.coverage.analysed}/{result.coverage.total}
-                </strong>{" "}
-                recordings analysed
-              </span>
-              {result.coverage.pending > 0 && (
-                <span className="warn">
-                  {result.coverage.pending} not fully analysed
-                </span>
-              )}
+          </div>
+          {error && (
+            <div className="error-banner" role="alert">
+              {error}
             </div>
-            <div className="context-chips">
-              <span>
-                Location{" "}
-                <strong>
-                  {data.locations.find((l) => l.id === locationId)?.name ||
-                    "All locations"}
-                </strong>
-              </span>
-              <span>
-                Behaviour{" "}
-                <strong>
-                  {result.interpreted.behaviour?.replaceAll("_", " ") || "Any"}
-                </strong>
-              </span>
-              <span>
-                Appearance{" "}
-                <strong>
-                  {Array.isArray(result.interpreted.appearance)
-                    ? result.interpreted.appearance.join(", ") || "Any"
-                    : result.interpreted.appearance || "Any"}
-                </strong>
-              </span>
-              {result.interpreted.attribute_search_phrase && (
-                <span>
-                  Also searched
-                  <strong>{result.interpreted.attribute_search_phrase}</strong>
-                </span>
-              )}
-            </div>
-            {editing && (
-              <form className="conditions-form" onSubmit={submit}>
-                <Field label="Location">
-                  <select
-                    value={locationId}
-                    onChange={(e) => setLocationId(e.target.value)}
-                  >
-                    <option value="">All locations</option>
-                    {data.locations.map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.name}
-                      </option>
-                    ))}
-                  </select>
-                </Field>
-                <Field label="From (MYT)">
-                  <input
-                    type="datetime-local"
-                    value={from}
-                    onChange={(e) => setFrom(e.target.value)}
+          )}
+          <div className="ask-layout" aria-busy={busy}>
+            <div className={"ask-main" + (busy ? " is-busy" : "")}>
+              {!result.supported ? (
+                <Panel className="ask-card">
+                  <Empty
+                    icon={CircleHelp}
+                    title="This behaviour is not supported"
+                    text={result.message}
                   />
-                </Field>
-                <Field label="To (MYT)">
-                  <input
-                    type="datetime-local"
-                    value={to}
-                    min={from || undefined}
-                    onChange={(e) => setTo(e.target.value)}
-                  />
-                </Field>
-                <Button disabled={busy} type="submit">
-                  Apply conditions
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => {
-                    setFrom("");
-                    setTo("");
-                    setLocationId("");
-                    setConditionsApplied(true);
-                  }}
-                >
-                  <X size={15} /> Clear
-                </Button>
-              </form>
-            )}
-            <div className="coverage-note">
-              <ShieldCheck size={16} />
-              <span>
-                <strong>
-                  Analysis coverage: {result.coverage.analysed} of{" "}
-                  {result.coverage.total} recordings
-                </strong>
-                {result.coverage.pending > 0
-                  ? ` · ${result.coverage.pending} not fully analysed`
-                  : " · No pending recordings"}
-                {from && (
-                  <small>
-                    {from.replace("T", " ")} –{" "}
-                    {to ? to.replace("T", " ") : "now"} MYT
-                  </small>
-                )}
-              </span>
-            </div>
-          </Panel>
-          {!result.supported ? (
-            <Panel>
-              <Empty
-                icon={CircleHelp}
-                title="This behaviour is not supported"
-                text={result.message}
-              />
-              <div className="supported-note">
-                <strong>Supported in this workspace</strong>
-                <p>
-                  Vehicle loitering and restricted area entry, plus descriptions
-                  from recordings analysed by a local vision model. Fighting,
-                  falls and intent to steal are not identified.
-                </p>
-              </div>
-            </Panel>
-          ) : (
-            <>
-              <div className="result-summary">
-                <h2>Search results</h2>
-                <span>
-                  {result.events.length} behaviour events ·{" "}
-                  {result.related.length} related clips
-                </span>
-              </div>
-              {!result.events.length && !result.related.length ? (
-                <Panel>
+                  <div className="supported-note">
+                    <strong>Supported in this workspace</strong>
+                    <p>
+                      Vehicle loitering and restricted area entry, plus descriptions
+                      from recordings analysed by a local vision model. Fighting,
+                      falls and intent to steal are not identified.
+                    </p>
+                  </div>
+                </Panel>
+              ) : !result.events.length && !result.related.length ? (
+                <Panel className="ask-card">
                   <Empty
                     icon={Search}
                     title="No clear match"
@@ -393,7 +345,11 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
                     </div>
                   )}
                   {result.events.length > 0 && (
-                    <Panel title="Behaviour events">
+                    <Panel
+                      className="ask-card"
+                      title="Behaviour events"
+                      action={<span className="panel-subtle">{result.events.length} found</span>}
+                    >
                       <div className="event-results">
                         {result.events.map((e) => (
                           <EventRow key={e.id} event={e} />
@@ -402,16 +358,20 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
                     </Panel>
                   )}
                   {result.related.length > 0 && (
-                    <Panel title="Related footage">
-                      <div className="related-results">
+                    <Panel
+                      className="ask-card"
+                      title="Related footage"
+                      action={<span className="panel-subtle">Click a clip to play it</span>}
+                    >
+                      <div className="related-results ask-clips">
                         {footage(result.related)}
                       </div>
                     </Panel>
                   )}
                 </>
               )}
-              {result.nearest.length > 0 && (
-                <details className="nearest-results">
+              {result.supported && result.nearest.length > 0 && (
+                <details className="nearest-results ask-card">
                   <summary>
                     Closest footage for manual review ({result.nearest.length})
                   </summary>
@@ -422,29 +382,143 @@ export default function Ask({ preset }: { preset?: SearchPreset }) {
                   {footage(result.nearest, true)}
                 </details>
               )}
-            </>
-          )}
-        </>
-      ) : (
-        <section className="panel search-empty">
-          <div className="search-empty-copy">
-            <span className="empty-icon">
-              <Search size={24} strokeWidth={1.4} />
-            </span>
-            <div>
-              <h2>Start with what you remember</h2>
-              <p>
-                A place, a rough time and one detail is enough. The workspace
-                shows what it analysed and says when there is no clear match.
-              </p>
             </div>
+
+            <aside className="ask-rail" aria-label="What the system understood">
+              <section className="ask-understood">
+                <div className="ask-rail-head">
+                  <span className="ask-eyebrow">
+                    <Sparkles size={14} /> System understood
+                  </span>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setEditing(!editing)}
+                    aria-expanded={editing}
+                  >
+                    <SlidersHorizontal size={15} />
+                    {editing ? "Close" : "Edit"}
+                  </Button>
+                </div>
+                <dl className="ask-facts">
+                  <div>
+                    <dt>
+                      <MapPin size={14} /> Location
+                    </dt>
+                    <dd>{locationName}</dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <Activity size={14} /> Behaviour
+                    </dt>
+                    <dd>{result.interpreted.behaviour?.replaceAll("_", " ") || "Any"}</dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <Eye size={14} /> Appearance
+                    </dt>
+                    <dd>{appearance}</dd>
+                  </div>
+                  {result.interpreted.attribute_search_phrase && (
+                    <div>
+                      <dt>
+                        <Search size={14} /> Also searched
+                      </dt>
+                      <dd>{result.interpreted.attribute_search_phrase}</dd>
+                    </div>
+                  )}
+                  {from && (
+                    <div>
+                      <dt>
+                        <Film size={14} /> Time (MYT)
+                      </dt>
+                      <dd>
+                        {from.replace("T", " ")} – {to ? to.replace("T", " ") : "now"}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+                {editing && (
+                  <form className="conditions-form ask-conditions" onSubmit={submit}>
+                    <Field label="Location">
+                      <select
+                        value={locationId}
+                        onChange={(e) => setLocationId(e.target.value)}
+                      >
+                        <option value="">All locations</option>
+                        {data.locations.map((l) => (
+                          <option key={l.id} value={l.id}>
+                            {l.name}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
+                    <Field label="From (MYT)">
+                      <input
+                        type="datetime-local"
+                        value={from}
+                        onChange={(e) => setFrom(e.target.value)}
+                      />
+                    </Field>
+                    <Field label="To (MYT)">
+                      <input
+                        type="datetime-local"
+                        value={to}
+                        min={from || undefined}
+                        onChange={(e) => setTo(e.target.value)}
+                      />
+                    </Field>
+                    <div className="ask-conditions-actions">
+                      <Button disabled={busy} type="submit">
+                        Apply conditions
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() => {
+                          setFrom("");
+                          setTo("");
+                          setLocationId("");
+                          setConditionsApplied(true);
+                        }}
+                      >
+                        <X size={15} /> Clear
+                      </Button>
+                    </div>
+                  </form>
+                )}
+              </section>
+              <section className="ask-coverage">
+                <div className="ask-coverage-top">
+                  <ShieldCheck size={16} />
+                  <strong>
+                    {result.coverage.analysed} of {result.coverage.total} recordings analysed
+                  </strong>
+                </div>
+                <span className="ask-meter" aria-hidden="true">
+                  <span style={{ width: coveragePct + "%" }} />
+                </span>
+                <small>
+                  {result.coverage.pending > 0
+                    ? `${result.coverage.pending} not fully analysed — results may be incomplete.`
+                    : "No pending recordings. Results cover everything analysed."}
+                </small>
+              </section>
+              <button
+                type="button"
+                className="ask-new"
+                onClick={() => {
+                  setResult(null);
+                  setQuery("");
+                  setEditing(false);
+                }}
+              >
+                <Search size={14} /> Start a new search
+              </button>
+            </aside>
           </div>
-          <p className="search-empty-hint">
-            Try a place, a rough time, then one detail you remember. If nothing
-            clear is found, the answer says so and shows the coverage.
-          </p>
-        </section>
+        </>
       )}
-    </>
+    </div>
   );
 }

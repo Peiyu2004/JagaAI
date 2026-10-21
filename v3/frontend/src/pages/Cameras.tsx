@@ -1,4 +1,4 @@
-import { tabKeys } from "../components/tabKeys";
+import RubberSegment from "../components/RubberSegment";
 import {
   useState,
   useEffect,
@@ -37,14 +37,16 @@ import {
   Empty,
   Badge,
   EventRow,
-  SiteMap,
 } from "../components/shared";
+import { EstateMap } from "../components/EstateMap";
 import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
 import type { Rule } from "../types";
 import { LiveInput } from "../components/LiveInput";
 export default function Cameras() {
   const { data, run, play } = useApp();
+  // Guards monitor cameras; behaviour rules are site configuration for managers.
+  const canConfigure = data.user.role !== "guard";
   const [cameraId, setCameraId] = useState(
     data.cameras.find((c) => data.videos.some((v) => v.camera_id === c.id))
       ?.id ||
@@ -228,26 +230,24 @@ export default function Cameras() {
                 {video ? label(video.status) : "No recording"}
               </Badge>
             </div>
-            <div className="camera-tabs" role="tablist" onKeyDown={tabKeys} aria-label="Camera detail">
-              {[
-                ["coverage", "Coverage"],
-                ["rules", "Rules"],
-                ["recordings", `Recordings (${videos.length})`],
-                ["live", "Live input"],
-              ].map(([id, name]) => (
-                <button
-                  key={id}
-                  role="tab"
-                  aria-selected={tab === id}
-              tabIndex={tab === id ? 0 : -1}
-                  className={tab === id ? "active" : ""}
-                  onClick={() => setTab(id as typeof tab)}
-                >
-                  {name}
-                </button>
-              ))}
+            <div className="camera-switch-row">
+              <RubberSegment
+                semantics="tabs"
+                aria-label="Camera detail"
+                className="camera-switch"
+                size="sm"
+                equalSlots={false}
+                value={tab}
+                onChange={(id) => setTab(id as typeof tab)}
+                items={[
+                  { value: "coverage", label: "Coverage" },
+                  { value: "rules", label: "Rules" },
+                  { value: "recordings", label: "Recordings", count: videos.length },
+                  { value: "live", label: "Live input" },
+                ]}
+              />
             </div>
-            {dirty && (
+            {dirty && canConfigure && (
               <div className="unsaved-bar" role="status">
                 <span>Unsaved rule changes for this camera.</span>
                 <div>
@@ -451,9 +451,13 @@ export default function Cameras() {
                 </span>
                 <ChevronDown size={15} className="coverage-chevron" />
               </summary>
-              <SiteMap
+              <EstateMap
                 locations={data.locations}
+                cameras={data.cameras}
                 selected={camera.location_id}
+                labels="name"
+                aspect={1.6}
+                caption
               />
             </details>
             </div>
@@ -465,12 +469,17 @@ export default function Cameras() {
           <Panel
             title="Behaviour rules"
             action={
-              <Button size="sm" disabled={saving || !!drawing} onClick={save}>
-                <Check size={15} />
-                {saving ? "Saving…" : "Save rules"}
-              </Button>
+              canConfigure ? (
+                <Button size="sm" disabled={saving || !!drawing} onClick={save}>
+                  <Check size={15} />
+                  {saving ? "Saving…" : "Save rules"}
+                </Button>
+              ) : (
+                <Badge value="guard">View only · managers edit rules</Badge>
+              )
             }
           >
+            <fieldset className="rules-fieldset" disabled={!canConfigure}>
             <div className="rules-grid">
               <div className="rule-editor">
                 <div className="rule-heading">
@@ -595,6 +604,7 @@ export default function Cameras() {
                 )}
               </div>
             </div>
+            </fieldset>
           </Panel>
           </div>
           <div className={"camera-pane " + (tab === "recordings" ? "active" : "")}>

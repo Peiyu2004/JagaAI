@@ -73,7 +73,7 @@ def test_stream_settings_api_masks_credentials_and_requires_admin(api, monkeypat
     client, engine, _ = api
     synced = []
     monkeypatch.setattr(live, 'sync', lambda camera_id: synced.append(camera_id))
-    staff_login(client, 'supervisor')
+    staff_login(client, 'guard')
     assert client.put('/api/cameras/cam-b1/stream', json={'url': 'rtsp://cam/live', 'enabled': True}).status_code == 403
     client.post('/api/auth/logout')
     staff_login(client)

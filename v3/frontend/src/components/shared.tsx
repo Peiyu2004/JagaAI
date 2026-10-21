@@ -9,7 +9,6 @@ import {
 import {
   Camera,
   VideoOff,
-  MapPin,
   ArrowUpRight,
   ShieldCheck,
   ChevronRight,
@@ -17,7 +16,7 @@ import {
 import { Button } from "./ui/button";
 import { dateTime, label, duration, cameraName } from "../api";
 import { useApp } from "../context";
-import type { Event, Location, Video } from "../types";
+import type { Event, Video } from "../types";
 // JagaAI mark: a roof sheltering the J, for a team that looks after a community.
 export function LogoMark({ className = "" }: { className?: string }) {
   const id = "jg" + useId().replace(/[^a-zA-Z0-9]/g, "");
@@ -225,84 +224,6 @@ export function CameraBlank({
         <ArrowUpRight size={17} />
       </span>
     </button>
-  );
-}
-export function SiteMap({
-  locations,
-  selected,
-  onSelect,
-}: {
-  locations: Location[];
-  selected?: string;
-  onSelect?: (id: string) => void;
-}) {
-  return (
-    <div className="site-map" role="group" aria-label="Property zone overview">
-      <div className="site-map-graphic">
-      <svg viewBox="0 0 600 276" aria-hidden="true" focusable="false">
-        <rect width="600" height="276" fill="#e9efea" />
-        <path d="M0 228q90-13 160 25t240-10 200 8V276H0Z" fill="#bed4d6" />
-        <path
-          d="M0 150h600 M288 0v276 M486 0v276"
-          stroke="#fff"
-          strokeWidth="25"
-        />
-        <path
-          d="M0 150h600 M288 0v276 M486 0v276"
-          stroke="#d4ddd7"
-          strokeDasharray="6 7"
-        />
-        <g fill="#c3d2c3">
-          <rect x="30" y="26" width="220" height="102" rx="2" />
-          <rect x="319" y="28" width="137" height="104" rx="2" />
-          <rect x="319" y="181" width="137" height="48" rx="2" />
-          <rect x="507" y="27" width="72" height="104" rx="2" />
-        </g>
-        <path d="M30 195h220" stroke="#d5ccb4" strokeWidth="15" />
-        <g stroke="#f7faf6" strokeWidth="3">
-          {[48, 78, 108, 138, 168, 198, 228].map((x) => (
-            <path key={x} d={`M${x} 35v28 M${x} 93v28`} />
-          ))}
-        </g>
-        <g fill="#acc3aa">
-          {[
-            [20, 16],
-            [270, 17],
-            [271, 246],
-            [469, 248],
-            [596, 177],
-            [478, 18],
-            [17, 257],
-            [575, 245],
-          ].map(([x, y]) => (
-            <circle key={x + "-" + y} cx={x} cy={y} r="10" />
-          ))}
-        </g>
-      </svg>
-      {locations.slice(0, 5).map((loc, i) => {
-        const [x, y] = [[140, 80], [388, 80], [140, 196], [388, 204], [541, 80]][i];
-        const style = { left: `${x / 6}%`, top: `${y / 2.76}%` };
-        const className = "site-map-pin" + (selected === loc.id ? " selected" : "");
-        return onSelect ? (
-          <button key={loc.id} type="button" className={className} style={style}
-            aria-label={`${i + 1}. ${loc.name}`} aria-pressed={selected === loc.id}
-            onClick={() => onSelect(loc.id)}>{i + 1}</button>
-        ) : <span key={loc.id} className={className} style={style} aria-hidden="true">{i + 1}</span>;
-      })}
-      </div>
-      <ol className="site-map-legend" aria-label="Map locations">
-        {locations.slice(0, 5).map((loc, i) => (
-          <li key={loc.id} className={selected === loc.id ? "selected" : ""}>
-            <span className="site-map-number" aria-hidden="true">{i + 1}</span>
-            <span>{loc.name}</span>
-          </li>
-        ))}
-      </ol>
-      <div className="map-caption">
-        <MapPin size={13} /> Schematic property map{" "}
-        <span>Zone locations only</span>
-      </div>
-    </div>
   );
 }
 export function EventRow({

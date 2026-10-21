@@ -153,6 +153,7 @@ class Recorder:
                 self.stop_event.wait(60)
                 continue
             started = utcnow()
+            self.simulated_source = url.startswith('demo:')
             stderr = (folder / 'ffmpeg.log').open('wb')
             try:
                 self.process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=stderr,
@@ -217,6 +218,7 @@ class Recorder:
                                                           Video.status.in_(['queued', 'processing']))).all())
             local = recorded_at.astimezone(timezone(timedelta(hours=8)))
             video = Video(id=uid(), camera_id=self.camera_id, path=str(path), source='live', duration_sec=round(duration, 3),
+                          is_simulation=getattr(self, 'simulated_source', False),
                           filename=f'{name} · live {local:%d %b %H:%M:%S}'[:255], recorded_at=recorded_at,
                           expires_at=utcnow() + timedelta(days=retention), status='queued')
             if backlog >= MAX_BACKLOG:

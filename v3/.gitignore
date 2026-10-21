@@ -1,7 +1,12 @@
 .venv/
+.env.notifications
 node_modules/
 frontend/node_modules/
 frontend/dist/
+frontend/dist-colab/
+.runtime-colab/
+deploy/colab/samples/
+output/colab/
 # Runtime data stays local; the prepared demo (about 70 MB) is committed.
 data/*
 !data/ai-demo/
@@ -23,8 +28,12 @@ __pycache__/
 output/review/
 # Local browser audits contain screenshots, database copies and runtime logs.
 output/playwright/
+output/notification-verification/
 output/design-v4/
 backend/pytest-of-*/
 # Private thumbnail caches are regenerated from the committed demo originals.
 data/ai-demo/frames/**/preview-*.webp
 data/ai-demo/frames/**/*-preview-*.webp
+
+# Guard voice demo runs: recordings and database copies per run.
+output/voice-demo/
