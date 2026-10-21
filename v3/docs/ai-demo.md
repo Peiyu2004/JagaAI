@@ -56,3 +56,5 @@ Cameras 页每个摄像头都有 Live input 面板（仅管理员可改）：
 .\.venv\Scripts\python.exe scripts\backfill-person-evidence.py --data-dir data/ai-demo --report output/ai-readiness/person-evidence-backfill.json
 .\.venv\Scripts\python.exe scripts\verify-person-search.py --rounds 3
 ```
+
+3D models: Kenney (kenney.nl), CC0.
